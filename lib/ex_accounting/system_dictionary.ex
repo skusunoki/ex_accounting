@@ -1,4 +1,4 @@
-defmodule UserName do
+defmodule ExAccounting.SystemDictionary.UserName do
   @moduledoc """
   TODO
   """
@@ -20,7 +20,7 @@ defmodule UserName do
     iex> UserName.create("ng_case,")
     {:error, "invalid_user_name"}
   """
-  @spec create(charlist) :: UserName.t() | {:error, String.t()}
+  @spec create(charlist) :: t() | {:error, String.t()}
   def create(user_name) when is_list(user_name) and length(user_name) <= 16 do
     case validate_user_name(convert_to_lowercase(user_name)) do
       {:ok, user_name} -> %__MODULE__{user_name: user_name}

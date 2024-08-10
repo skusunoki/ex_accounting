@@ -20,7 +20,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-el_accounting_gl-*.tar
+ex_accounting-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/

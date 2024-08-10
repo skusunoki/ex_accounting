@@ -1,23 +1,23 @@
-# ElAccountingGl
+# ExAccounting
 
 **TODO: Add description**
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `el_accounting_gl` to your list of dependencies in `mix.exs`:
+by adding `ex_accounting` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:el_accounting_gl, "~> 0.1.0"}
+    {:ex_accounting, "~> 0.1.0"}
   ]
 end
 ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/el_accounting_gl>.
+be found at <https://hexdocs.pm/ex_accounting>.
 
 ## General Ledger Data Items Aggregation
 
@@ -51,11 +51,13 @@ classDiagram
 | AccountingDocumentHeader | PostedBy |
 | ReverseDocument | ReverseDocumentIndicator |
 | ReverseDocument | ReversedDocumentAccountingUnit |
+| ReverseDocument | ReversedDocumentFiscalYear |
 | ReverseDocument | ReversedDocumentAccountingDocument |
 | ReverseDocument | ReversedDocumentAccountingDocumentItem |
 | ReverseDocument | ReversedDocumentAccountingPeriod |
 | ClearingDocument | ClearingDocumentIndicator |
 | ClearingDocument | ClearedDocumentAccountingUnit |
+| ClearingDocument | ClearingDocumentFiscalYear |
 | ClearingDocument | ClearedDocumentAccountingDocument |
 | ClearingDocument | ClearedDocumentAccountingDocumentItem |
 | ClearingDocument | ClearedDocumentAccountingPeriod |
@@ -73,6 +75,8 @@ classDiagram
 | MaterialTransaction | Material |
 | BankTransaction | BankTransactionType |
 | BankTransaction | Bank |
+| PaymentServiceTransaction | PaymentServiceTransactionType |
+| PaymentServiceTransaction | PaymentService |
 | ProfitCenterTransaction | ProfitCenterTransactionType |
 | ProfitCenterTransaction | ProfitCenter |
 | FunctionalAreaTransaction | FunctionalAreaTransactionType |
@@ -92,23 +96,24 @@ classDiagram
 | PartnerAccount | PartnerCostCenter |
 | PartnerAccount | PartnerFunctionalArea |
 | AccountingUnitCurrencyAmount | AccountingUnitCurrency |
-| AccountingUnitCurrencyAmount | AmountOfAccountingUnitCurrency |
-| AccountingUnitCurrencyAmount | ExchangeRateType |
-| AccountingUnitCurrencyAmount | ExchangeRate |
-| AccountingUnitCurrencyAmount | ExchangeDate |
+| AccountingUnitCurrencyAmount | AmountInAccountingUnitCurrency |
+| AccountingUnitCurrencyAmount | ExchangeRateTypeToAccountingUnitCurrency |
+| AccountingUnitCurrencyAmount | ExchangeRateToAccountingUnitCurrency |
+| AccountingUnitCurrencyAmount | DateOfExchangeRateToAccountingUnitCurrency |
 | TransactionCurrencyAmount | TransactionCurrency |
-| TransactionCurrencyAmount | AmountOfTransactionUnitCurrency |
+| TransactionCurrencyAmount | AmountInTransactionUnitCurrency |
 | AccountingAreaCurrency | AccountingAreaCurrency |
-| AccountingAreaCurrency | AmountOfAccountingAreaCurrency |
-| AccountingAreaCurrencyAmount | ExchangeRateType |
-| AccountingAreaCurrencyAmount | ExchangeRate |
-| AccountingAreaCurrencyAmount | ExchangeDate |
+| AccountingAreaCurrency | AmountInAccountingAreaCurrency |
+| AccountingAreaCurrencyAmount | ExchangeRateTypeToAccountingAreaCurrency |
+| AccountingAreaCurrencyAmount | ExchangeRateToAccountingAreaCurrency |
+| AccountingAreaCurrencyAmount | DateOfExchangeRateToAccountingAreaCurrency |
 | OffsettingItem | OffsettingGeneralLedgerAccount |
 | OffsettingItem | OffsettingVendor |
 | OffsettingItem | OffsettingCustomer |
 | OffsettingItem | OffsettingFixedAsset |
 | OffsettingItem | OffsettingMaterial |
 | OffsettingItem | OffsettingBank |
+| OffsettingItem | OffsettingPaymentService |
 | OffsettingItem | OffsettingProfitCenter |
 | OffsettingItem | OffsettingCostCenter |
 | OffsettingItem | OffsettingFunctionalArea |
