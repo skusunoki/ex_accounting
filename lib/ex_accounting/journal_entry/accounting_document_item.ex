@@ -1,4 +1,4 @@
-defmodule ExAccounting.AccountingDocumentItem do
+defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,93 +6,93 @@ defmodule ExAccounting.AccountingDocumentItem do
   AccountingDocumentItem is atomic data object in the accounting system.
   """
 
-  #  @type t :: %__MODULE__{
-  #          fiscal_year: integer,
-  #          accounting_area: String.t,
-  #          accounting_document_number: integer,
-  #          accounting_unit: String.t,
-  #          accounting_document_item_number: integer,
-  #          debit_credit: String.t,
-  #          document_type: String.t,
-  #          posting_date: Ecto.Date.t,
-  #          accounting_period: integer,
-  #          document_date: Ecto.Date.t,
-  #          entry_date: Ecto.Date.t,
-  #          entered_at: time,
-  #          entered_by: String.t,
-  #          posted_by: String.t,
-  #          reverse_document_indicator: String.t,
-  #          reverse_document_accounting_unit: String.t,
-  #          reverse_document_fiscal_year: integer,
-  #          reverse_document_accounting_document: integer,
-  #          reverse_document_accounting_document_item: integer,
-  #          reverse_document_accounting_period: integer,
-  #          clearing_document_indicator: String.t,
-  #          clearing_document_accounting_unit: String.t,
-  #          clearing_document_fiscal_year: integer,
-  #          clearing_document_accounting_document: integer,
-  #          clearing_document_accounting_document_item: integer,
-  #          cleairng_document_accounting_period: integer,
-  #          reference_area: String.t,
-  #          reference_key: String.t,
-  #          general_ledger_account_transaction_type: String.t,
-  #          general_ledger_account: String.t,
-  #          vendor_transaction_type: String.t,
-  #          vendor: String.t,
-  #          customer_transaction_type: String.t,
-  #          customer: String.t,
-  #          fixed_asset_transaction_type: String.t,
-  #          fixed_asset: String.t,
-  #          payment_service_trainsaction_type: String.t,
-  #          payment_service: String.t,
-  #          profit_center_transaction_type: String.t,
-  #          profit_center: String.t,
-  #          functional_area_transaction_type: String.t,
-  #          functional_area: String.t,
-  #          cost_center_transaction_type: String.t,
-  #          cost_center: String.t,
-  #          order_transaction_type: String.t,
-  #          order: String.t,
-  #          wbs_element_transaction_type: String.t,
-  #          wbs_element: String.t,
-  #          sales_order_transaction_type: String.t,
-  #          sales_order: String.t,
-  #          sales_order_item_transaction_type: String.t,
-  #          sales_order_item: String.t,
-  #          partner_accounting_unit: String.t,
-  #          partner_profit_center: String.t,
-  #          partner_cost_center: String.t,
-  #          partner_functional_area: String.t,
-  #          accounting_unit_currency: String.t,
-  #          amount_in_accounting_unit_currency: integer,
-  #          exchange_rate_type_to_accounting_unit_currency: String.t,
-  #          exchange_rate_to_accounting_unit_currency: integer,
-  #          date_of_exchange_rate_to_accounting_unit_currency: Ecto.Date.t,
-  #          transaction_currency: String.t,
-  #          amount_in_transaction_currency: integer,
-  #          accounting_area_currency: String.t,
-  #          amount_in_accounting_area_currency: integer,
-  #          exchange_rate_type_to_accounting_area_currency: String.t,
-  #          exchange_rate_to_accounting_area_currency: integer,
-  #          date_of_exchagne_rate_to_accounting_area_currency: Ecto.Date.t,
-  #          offsetting_general_ledger_account: String.t,
-  #          offsetting_vendor: String.t,
-  #          offsetting_customer: String.t,
-  #          offsetting_fixed_asset: String.t,
-  #          offsetting_material: String.t,
-  #          offsetting_bank: String.t,
-  #          offsetting_payment_service: String.t,
-  #          offsetting_cost_center: String.t,
-  #          offsetting_functional_area: String.t,
-  #          offsetting_wbs_element: String.t,
-  #          vat_code: String.t,
-  #          vat_amount_of_accounting_unit_currency: integer,
-  #          vat_amount_of_transaction_currency: integer,
-  #          vat_amount_of_accounting_area_currency: integer,
-  #          vat_base_amount_of_accounting_unit_currency: integer,
-  #          vat_base_amount_of_transaction_currency: integer,
-  #          vat_base_amount_of_accounting_area_currency: integer
-  #        }
+  @type t :: %__MODULE__{
+          fiscal_year: integer,
+          accounting_area: String.t(),
+          accounting_document_number: integer,
+          accounting_unit: String.t(),
+          accounting_document_item_number: integer,
+          debit_credit: String.t(),
+          document_type: String.t(),
+          posting_date: Date.t(),
+          accounting_period: integer,
+          document_date: Date.t(),
+          entry_date: Date.t(),
+          entered_at: Time.t(),
+          entered_by: String.t(),
+          posted_by: String.t(),
+          reverse_document_indicator: String.t(),
+          reverse_document_accounting_unit: String.t(),
+          reverse_document_fiscal_year: integer,
+          reverse_document_accounting_document: integer,
+          reverse_document_accounting_document_item: integer,
+          reverse_document_accounting_period: integer,
+          clearing_document_indicator: String.t(),
+          clearing_document_accounting_unit: String.t(),
+          clearing_document_fiscal_year: integer,
+          clearing_document_accounting_document: integer,
+          clearing_document_accounting_document_item: integer,
+          cleairng_document_accounting_period: integer,
+          reference_area: String.t(),
+          reference_key: String.t(),
+          general_ledger_account_transaction_type: String.t(),
+          general_ledger_account: String.t(),
+          vendor_transaction_type: String.t(),
+          vendor: String.t(),
+          customer_transaction_type: String.t(),
+          customer: String.t(),
+          fixed_asset_transaction_type: String.t(),
+          fixed_asset: String.t(),
+          payment_service_trainsaction_type: String.t(),
+          payment_service: String.t(),
+          profit_center_transaction_type: String.t(),
+          profit_center: String.t(),
+          functional_area_transaction_type: String.t(),
+          functional_area: String.t(),
+          cost_center_transaction_type: String.t(),
+          cost_center: String.t(),
+          order_transaction_type: String.t(),
+          order: String.t(),
+          wbs_element_transaction_type: String.t(),
+          wbs_element: String.t(),
+          sales_order_transaction_type: String.t(),
+          sales_order: String.t(),
+          sales_order_item_transaction_type: String.t(),
+          sales_order_item: String.t(),
+          partner_accounting_unit: String.t(),
+          partner_profit_center: String.t(),
+          partner_cost_center: String.t(),
+          partner_functional_area: String.t(),
+          accounting_unit_currency: String.t(),
+          amount_in_accounting_unit_currency: integer,
+          exchange_rate_type_to_accounting_unit_currency: String.t(),
+          exchange_rate_to_accounting_unit_currency: integer,
+          date_of_exchange_rate_to_accounting_unit_currency: Date.t(),
+          transaction_currency: String.t(),
+          amount_in_transaction_currency: integer,
+          accounting_area_currency: String.t(),
+          amount_in_accounting_area_currency: integer,
+          exchange_rate_type_to_accounting_area_currency: String.t(),
+          exchange_rate_to_accounting_area_currency: integer,
+          date_of_exchagne_rate_to_accounting_area_currency: Date.t(),
+          offsetting_general_ledger_account: String.t(),
+          offsetting_vendor: String.t(),
+          offsetting_customer: String.t(),
+          offsetting_fixed_asset: String.t(),
+          offsetting_material: String.t(),
+          offsetting_bank: String.t(),
+          offsetting_payment_service: String.t(),
+          offsetting_cost_center: String.t(),
+          offsetting_functional_area: String.t(),
+          offsetting_wbs_element: String.t(),
+          vat_code: String.t(),
+          vat_amount_of_accounting_unit_currency: integer,
+          vat_amount_of_transaction_currency: integer,
+          vat_amount_of_accounting_area_currency: integer,
+          vat_base_amount_of_accounting_unit_currency: integer,
+          vat_base_amount_of_transaction_currency: integer,
+          vat_base_amount_of_accounting_area_currency: integer
+        }
 
   schema "accounting_document_items" do
     field(:fiscal_year, :integer)
@@ -280,7 +280,7 @@ defmodule ExAccounting.AccountingDocumentItem do
   end
 end
 
-defmodule ExAccounting.AccountingDocumentHeader do
+defmodule ExAccounting.JournalEntry.AccountingDocumentHeader do
   @moduledoc """
   TODO
   """
@@ -358,7 +358,7 @@ defmodule ExAccounting.AccountingDocumentHeader do
   end
 end
 
-defmodule ExAccounting.ReverseDocument do
+defmodule ExAccounting.JournalEntry.ReverseDocument do
   defstruct [
     :reverse_document_indicator,
     :reversed_document_accounting_unit,
@@ -368,9 +368,32 @@ defmodule ExAccounting.ReverseDocument do
   ]
 end
 
-defmodule ExAccounting.ClearingDocument do
+defmodule ExAccounting.JournalEntry.ClearingDocument do
   defstruct [
     :clearing_document_indicator,
     :clearing_document_accounting
   ]
+end
+
+defmodule ExAccounting.JournalEntry.AccountingDocument do
+  @moduledoc """
+  TODO
+  """
+  @type t :: %__MODULE__{
+          accounting_document_header: ExAccounting.AccountingDocumentHeader.t(),
+          accounting_document_items: [ExAccounting.AccountingDocumentItem.t()]
+        }
+  defstruct accounting_document_header: nil, accounting_document_items: nil
+
+  @spec create(
+          ExAccounting.AccountingDocumentHeader.t(),
+          [ExAccounting.AccountingDocumentItem.t()]
+        ) ::
+          t()
+  def create(accounting_document_header, accounting_document_items) do
+    %__MODULE__{
+      accounting_document_header: accounting_document_header,
+      accounting_document_items: accounting_document_items
+    }
+  end
 end

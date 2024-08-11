@@ -1,4 +1,4 @@
-defmodule ExAccounting.User do
+defmodule ExAccounting.UserManagement.User do
   use Ecto.Schema
   import Ecto.Changeset
 

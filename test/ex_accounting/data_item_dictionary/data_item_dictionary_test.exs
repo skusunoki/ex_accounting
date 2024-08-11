@@ -15,15 +15,9 @@ defmodule ExAccounting.DataItemDictionaryTest do
     EntryDate,
     EnteredAt,
     EnteredBy,
-    PostedBy,
-    AccountingDocumentHeader
+    PostedBy
   }
 
-  alias ExAccounting.SystemDictionary.{
-    UserName
-  }
-
-  doctest ExAccounting
   doctest FiscalYear
   doctest AccountingArea
   doctest AccountingDocumentNumber
@@ -36,8 +30,6 @@ defmodule ExAccounting.DataItemDictionaryTest do
   doctest DocumentDate
   doctest EntryDate
   doctest EnteredAt
-  doctest UserName
   doctest EnteredBy
   doctest PostedBy
-  # doctest AccountingDocumentHeader
 end
