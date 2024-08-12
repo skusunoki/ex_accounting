@@ -1,4 +1,3 @@
-
 defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumber do
   @moduledoc """
   AccountingDocumentNumber is identification key for accounting document.

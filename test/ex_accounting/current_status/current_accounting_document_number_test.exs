@@ -1,8 +1,9 @@
-defmodule ExAccounting.CurrentStatusTest do
+defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   use ExUnit.Case
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
+  alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
-  test "increment current" do
+  test "Incremented current number 100 should be 101" do
     assert CurrentAccountingDocumentNumber.increment(%{
              number_range_code: "01",
              current_document_number: 100
@@ -34,13 +35,13 @@ defmodule ExAccounting.CurrentStatusTest do
       CurrentAccountingDocumentNumber.issue(
         "01",
         fn _ ->
-          %ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber{
+          %CurrentAccountingDocumentNumber{
             number_range_code: "01",
             current_document_number: 1_000_000_001
           }
         end,
         fn _ ->
-          %ExAccounting.Configuration.AccountingDocumentNumberRange{
+          %AccountingDocumentNumberRange{
             number_range_code: "01",
             accounting_document_number_from: 1_000_000_000,
             accounting_document_number_to: 1_999_999_999
@@ -57,13 +58,13 @@ defmodule ExAccounting.CurrentStatusTest do
       CurrentAccountingDocumentNumber.issue(
         "02",
         fn _ ->
-          %ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber{
+          %CurrentAccountingDocumentNumber{
             number_range_code: "02",
             current_document_number: 2_000_000_000
           }
         end,
         fn _ ->
-          %ExAccounting.Configuration.AccountingDocumentNumberRange{
+          %AccountingDocumentNumberRange{
             number_range_code: "02",
             accounting_document_number_from: 2_000_000_000,
             accounting_document_number_to: 2_999_999_999
@@ -81,7 +82,7 @@ defmodule ExAccounting.CurrentStatusTest do
         "01",
         fn _ -> nil end,
         fn _ ->
-          %ExAccounting.Configuration.AccountingDocumentNumberRange{
+          %AccountingDocumentNumberRange{
             number_range_code: "01",
             accounting_document_number_from: 1_000_000_000,
             accounting_document_number_to: 1_999_999_999

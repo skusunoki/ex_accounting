@@ -15,6 +15,9 @@ defmodule ExAccounting.DataItemDictionary.DocumentType do
   """
   @spec create(charlist) :: t()
   def create(document_type) when is_list(document_type) and length(document_type) == 2 do
-    %__MODULE__{document_type: document_type}
+    case ExAccounting.Utility.validate(document_type) do
+      {:ok, validated} -> %__MODULE__{document_type: validated}
+      {:error, input} -> {:error, to_string(input) <> " is not valid"}
+    end
   end
 end

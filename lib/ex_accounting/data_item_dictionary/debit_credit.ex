@@ -3,7 +3,7 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
   DebitCredit indicates accounting document item is placed on whether Debitor or Creditor.
   """
 
-  @type t :: %__MODULE__{debit_credit: atom}
+  @type t :: %__MODULE__{debit_credit: :debit} | %__MODULE__{debit_credit: :credit}
   defstruct debit_credit: nil
 
   @doc """

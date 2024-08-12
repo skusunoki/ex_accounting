@@ -1,4 +1,3 @@
-
 defmodule ExAccounting.DataItemDictionary.AccountingUnit do
   @moduledoc """
   AccountingUnit is unit of organization to external reporting.
@@ -17,8 +16,18 @@ defmodule ExAccounting.DataItemDictionary.AccountingUnit do
 
   """
 
+  @spec create(String.t()) :: t()
+  def create(accounting_unit) when is_binary(accounting_unit) do
+    accounting_unit
+    |> to_charlist()
+    |> create()
+  end
+
   @spec create(charlist) :: t()
   def create(accounting_unit) when length(accounting_unit) == 4 do
-    %__MODULE__{accounting_unit: accounting_unit}
+    case ExAccounting.Utility.validate(accounting_unit) do
+      {:ok, validated} -> %__MODULE__{accounting_unit: validated}
+      {:error, input} -> {:error, to_string(input) <> " is not valid"}
+    end
   end
 end
