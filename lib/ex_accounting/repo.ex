@@ -3,6 +3,7 @@ defmodule ExAccounting.Repo do
     otp_app: :ex_accounting,
     adapter: Ecto.Adapters.Postgres
 
+  @spec upsert(any) :: {:error, any} | {:ok, any}
   def upsert({:insert, changeset}) do
     insert(changeset)
   end

@@ -3,8 +3,11 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   import Ecto.Changeset
   import Ecto.Query
 
-  @type number_range_code :: ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.t()
-  @type number_range :: ExAccounting.Configuration.AccountingDocumentNumberRange.t()
+  alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+  alias ExAccounting.Configuration.AccountingDocumentNumberRange
+
+  @type number_range_code :: AccountingDocumentNumberRangeCode.t()
+  @type number_range :: AccountingDocumentNumberRange.t()
   @type t :: %__MODULE__{
           __meta__: Ecto.Schema.Metadata.t(),
           id: integer() | nil,
@@ -13,13 +16,13 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
         }
 
   @type current_document_number :: %{
-          number_range_code:
-            ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.t(),
+          number_range_code: AccountingDocumentNumberRangeCode.t(),
           current_document_number: integer
         }
-
+  @type read_config :: AccountingDocumentNumberRange.read()
+  @type read :: (number_range_code -> t)
   schema "current_accounting_document_numbers" do
-    field(:number_range_code, :string)
+    field(:number_range_code, AccountingDocumentNumberRangeCode)
     field(:current_document_number, :integer)
   end
 
@@ -41,11 +44,11 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     {:update, changeset(before_updated, after_updated)}
   end
 
-  @spec create(
+  @spec initiate(
           number_range_code,
-          (number_range_code -> t)
+          read_config
         ) :: current_document_number
-  def create(number_range_code, read_number_range) do
+  def initiate(number_range_code, read_number_range) do
     %{
       number_range_code: number_range_code,
       current_document_number:
@@ -62,31 +65,36 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   end
 
   @spec read(number_range_code) :: t
-  def read(number_range_code) do
-    from(p in __MODULE__, where: p.number_range_code == ^number_range_code)
+  def read(
+        %AccountingDocumentNumberRangeCode{
+          accounting_document_number_range_code: code
+        } = _number_range_code
+      ) do
+    from(p in __MODULE__, where: p.number_range_code == ^code)
     |> ExAccounting.Repo.one()
   end
 
   @spec issue(
           number_range_code,
-          (number_range_code -> t),
-          (number_range_code ->
-             number_range)
+          read(),
+          read_config()
         ) :: {:insert, t, any} | {:update, t, any}
-  def issue(number_range_code, read_current, read_number_range) do
-    case read_current.(number_range_code) do
+  def issue(
+        %AccountingDocumentNumberRangeCode{
+          accounting_document_number_range_code: _code
+        } = number_range_code,
+        read,
+        reader_of_config
+      ) do
+    with current = read.(number_range_code),
+         %__MODULE__{} <- current do
+      {:update, current, increment(Map.from_struct(current))}
+    else
       nil ->
-        {:insert, read_current.(number_range_code), create(number_range_code, read_number_range)}
+        {:insert, nil, initiate(number_range_code, reader_of_config)}
 
-      %__MODULE__{
-        number_range_code: ^number_range_code,
-        current_document_number: current_document_number
-      } ->
-        {:update, read_current.(number_range_code),
-         increment(%{
-           number_range_code: number_range_code,
-           current_document_number: current_document_number
-         })}
+      _ ->
+        :error
     end
   end
 end

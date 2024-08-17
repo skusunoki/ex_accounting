@@ -11,6 +11,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
           accounting_document_number_to: integer() | nil
         }
   @type number_range_code :: ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.t()
+  @type read :: (number_range_code -> t)
 
   schema "accounting_document_number_ranges" do
     field(:number_range_code, :string)

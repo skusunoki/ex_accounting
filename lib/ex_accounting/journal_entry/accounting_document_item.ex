@@ -7,11 +7,13 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
   """
 
   @type t :: %__MODULE__{
-          fiscal_year: integer,
-          accounting_area: String.t(),
-          accounting_document_number: integer,
+          fiscal_year: ExAccounting.DataItemDictionary.FiscalYear,
+          accounting_area: ExAccounting.DataItemDictionary.AccountingArea,
+          accounting_document_number:
+            ExAccounting.DataItemDictionary.AccountingDocumentItemNumber,
           accounting_unit: String.t(),
-          accounting_document_item_number: integer,
+          accounting_document_item_number:
+            ExAccounting.DataItemDictionary.AccountingDocumentItemNumber,
           debit_credit: String.t(),
           document_type: String.t(),
           posting_date: Date.t(),
@@ -96,7 +98,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
 
   schema "accounting_document_items" do
     field(:fiscal_year, :integer)
-    field(:accounting_area, :string)
+    field(:accounting_area, ExAccounting.DataItemDictionary.AccountingArea)
     field(:accounting_document_number, :integer)
     field(:accounting_unit, :string)
     field(:accounting_document_item_number, :integer)

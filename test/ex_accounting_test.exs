@@ -3,9 +3,30 @@ defmodule ExAccountingTest do
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
 
   test "Issue new document number for the number range 01" do
-    before = CurrentAccountingDocumentNumber.read("01")
-    {:ok, result} = ExAccounting.issue_accounting_document_number("01")
+    before =
+      CurrentAccountingDocumentNumber.read(
+        ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.create("01")
+      )
+
+    {:ok, result} =
+      ExAccounting.issue_accounting_document_number(
+        "01",
+        &CurrentAccountingDocumentNumber.read(&1),
+        &AccountingDocumentNumberRange.read(&1)
+      )
+
     assert result.current_document_number == before.current_document_number + 1
     assert result.number_range_code == before.number_range_code
+  end
+
+  test "Issue new document number for the number range x1" do
+    {:error, result} =
+      ExAccounting.issue_accounting_document_number(
+        "x1",
+        &CurrentAccountingDocumentNumber.read(&1),
+        &AccountingDocumentNumberRange.read(&1)
+      )
+
+    assert result == "x1"
   end
 end

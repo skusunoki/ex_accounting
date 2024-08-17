@@ -1,6 +1,8 @@
 defmodule ExAccounting.DataItemDictionaryTest do
   use ExUnit.Case
 
+  alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+
   alias ExAccounting.DataItemDictionary.{
     FiscalYear,
     AccountingArea,
@@ -15,7 +17,8 @@ defmodule ExAccounting.DataItemDictionaryTest do
     EntryDate,
     EnteredAt,
     EnteredBy,
-    PostedBy
+    PostedBy,
+    AccountingDocumentNumberRangeCode
   }
 
   doctest FiscalYear
@@ -32,4 +35,5 @@ defmodule ExAccounting.DataItemDictionaryTest do
   doctest EnteredAt
   doctest EnteredBy
   doctest PostedBy
+  doctest AccountingDocumentNumberRangeCode
 end
