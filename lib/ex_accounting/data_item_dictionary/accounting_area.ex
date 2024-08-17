@@ -34,8 +34,8 @@ defmodule ExAccounting.DataItemDictionary.AccountingArea do
   def cast(accounting_area) do
     with true <- is_list(accounting_area) or is_binary(accounting_area),
          true <- accounting_area != nil,
-         true <- len(accounting_area) == 4,
-         {:ok, validated} <- ExAccounting.Utility.validate(to_c(accounting_area)) do
+         true <- ExAccounting.Utility.len(accounting_area) == 4,
+         {:ok, validated} <- ExAccounting.Utility.validate(ExAccounting.Utility.to_c(accounting_area)) do
       {:ok, create(validated)}
     else
       false -> {:error, accounting_area}
@@ -58,19 +58,4 @@ defmodule ExAccounting.DataItemDictionary.AccountingArea do
 
   def dump(_), do: :error
 
-  def len(term) when is_list(term) do
-    length(term)
-  end
-
-  def len(term) when is_binary(term) do
-    String.length(term)
-  end
-
-  def to_c(term) when is_list(term) do
-    term
-  end
-
-  def to_c(term) when is_binary(term) do
-    to_charlist(term)
-  end
 end

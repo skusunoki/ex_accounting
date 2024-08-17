@@ -37,4 +37,20 @@ defmodule ExAccounting.Utility do
       end
     end
   end
+
+  def len(term) when is_list(term) do
+    length(term)
+  end
+
+  def len(term) when is_binary(term) do
+    String.length(term)
+  end
+
+  def to_c(term) when is_list(term) do
+    term
+  end
+
+  def to_c(term) when is_binary(term) do
+    to_charlist(term)
+  end
 end
