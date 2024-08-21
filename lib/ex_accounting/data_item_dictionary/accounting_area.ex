@@ -1,20 +1,53 @@
 defmodule ExAccounting.DataItemDictionary.AccountingArea do
-  use Ecto.Type
-  def type, do: :string
-
   @moduledoc """
   AccountingArea is an organization unit for aggregation (consolidation) of multiple entities.
   """
-  @type t :: %__MODULE__{accounting_area: charlist}
+  use Ecto.Type
   defstruct accounting_area: nil
+  @type t :: %__MODULE__{accounting_area: charlist}
+
+  def type, do: :string
+
+  def cast(%__MODULE__{} = accounting_area) do
+    with %__MODULE__{accounting_area: code} <- accounting_area,
+         {:ok, _} <- validate(code) do
+      {:ok, accounting_area}
+    else
+      {:error, _reason} -> {:error, accounting_area}
+      _ -> :error
+    end
+  end
+
+  def cast(accounting_area) do
+    with true <- is_list(accounting_area) or is_binary(accounting_area),
+         {:ok, _} <- validate(ExAccounting.Utility.to_c(accounting_area)) do
+      {:ok, create(accounting_area)}
+    else
+      _ -> {:error, accounting_area}
+    end
+  end
+
+  def load(data) when is_binary(data) do
+    with stdata = %{accounting_area: to_charlist(data)}, do: {:ok, struct!(__MODULE__, stdata)}
+  end
+
+  def dump(accounting_area) do
+    with %__MODULE__{accounting_area: code} <- accounting_area,
+         {:ok, _validated} <- validate(code),
+         dump = code |> to_string() do
+      {:ok, dump}
+    else
+      _ -> :error
+    end
+  end
 
   @doc """
-    [create] is function for generating valid AccountingArea.
+  Generate valid AccountingArea.
 
   ## Examples
-
-    iex> AccountingArea.create(~C[0001])
-    %AccountingArea{ accounting_area: ~C[0001] }
+      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> AccountingArea.create(~C[0001])
+      %AccountingArea{ accounting_area: ~C[0001]}
   """
   @spec create(charlist) :: t()
   def create(accounting_area)
@@ -29,33 +62,36 @@ defmodule ExAccounting.DataItemDictionary.AccountingArea do
     |> create()
   end
 
-  def cast(%__MODULE__{} = accounting_area), do: {:ok, accounting_area}
+  @doc """
+  Cast charlist or strings into the AccountingArea struct.
 
-  def cast(accounting_area) do
-    with true <- is_list(accounting_area) or is_binary(accounting_area),
-         true <- accounting_area != nil,
-         true <- ExAccounting.Utility.len(accounting_area) == 4,
-         {:ok, validated} <- ExAccounting.Utility.validate(ExAccounting.Utility.to_c(accounting_area)) do
-      {:ok, create(validated)}
+  ## Examples
+      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> AccountingArea.cast(~C[0001])
+      {:ok, %AccountingArea{ accounting_area: ~C[0001] }}
+
+      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> AccountingArea.cast("0001")
+      {:ok, %AccountingArea{ accounting_area: ~C[0001] }}
+
+      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> AccountingArea.cast(0001)
+      {:error, 0001 }
+
+      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> AccountingArea.cast(%ExAccounting.DataItemDictionary.AccountingArea{accounting_area: ~c[x1]})
+      {:error, %ExAccounting.DataItemDictionary.AccountingArea{accounting_area: ~c[x1]} }
+
+  """
+  def validate(code) do
+    with true <- code != nil,
+         true <- is_list(code),
+         true <- ExAccounting.Utility.len(code) == 4,
+         {:ok, _validated} <- ExAccounting.Utility.validate(code) do
+      {:ok, code}
     else
-      false -> {:error, accounting_area}
-      {:error, keyword} -> {:error, keyword}
+      false -> {:error, code}
+      {:error, reason} -> {:error, reason}
     end
   end
-
-  def load(data) when is_binary(data) do
-    stdata = %{accounting_area: to_charlist(data)}
-    {:ok, struct!(__MODULE__, stdata)}
-  end
-
-  def dump(%__MODULE__{accounting_area: data} = _accounting_area) when is_list(data) do
-    dump =
-      data
-      |> to_string()
-
-    {:ok, dump}
-  end
-
-  def dump(_), do: :error
-
 end

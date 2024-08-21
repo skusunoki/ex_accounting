@@ -11,14 +11,14 @@ defmodule ExAccounting.SystemDictionary.UserName do
 
   ## Examples
 
-    iex> UserName.create(~C[skusunoki])
-    %UserName{user_name: ~c[skusunoki]}
+      iex> UserName.create(~C[skusunoki])
+      %UserName{user_name: ~c[skusunoki]}
 
-    iex> UserName.create("skusunoki")
-    %UserName{user_name: ~c[skusunoki]}
+      iex> UserName.create("skusunoki")
+      %UserName{user_name: ~c[skusunoki]}
 
-    iex> UserName.create("ng_case,")
-    {:error, "invalid_user_name"}
+      iex> UserName.create("ng_case,")
+      {:error, "invalid_user_name"}
   """
   @spec create(charlist) :: t() | {:error, String.t()}
   def create(user_name) when is_list(user_name) and length(user_name) <= 16 do

@@ -13,8 +13,8 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentItemNumber do
 
   ## Examples
 
-    iex> AccountingDocumentItemNumber.create(101)
-    %AccountingDocumentItemNumber{accounting_document_item_number: 101}
+      iex> AccountingDocumentItemNumber.create(101)
+      %AccountingDocumentItemNumber{accounting_document_item_number: 101}
   """
   @spec create(pos_integer) :: t()
   def create(accounting_document_item_number)

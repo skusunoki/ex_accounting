@@ -4,11 +4,11 @@ defmodule ExAccounting.Utility do
 
   ## Examples
 
-    iex> ExAccounting.Utility.validate(~c[A1])
-    {:ok, ~c[A1]}
+      iex> ExAccounting.Utility.validate(~c[A1])
+      {:ok, ~c[A1]}
 
-    iex> ExAccounting.Utility.validate(~c[x0])
-    {:error, ~c[x0]}
+      iex> ExAccounting.Utility.validate(~c[x0])
+      {:error, ~c[x0]}
 
   """
   @spec validate(charlist) :: {:ok, charlist} | {:error, charlist}

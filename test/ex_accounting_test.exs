@@ -1,6 +1,7 @@
 defmodule ExAccountingTest do
   use ExUnit.Case
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
+  alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
   test "Issue new document number for the number range 01" do
     before =

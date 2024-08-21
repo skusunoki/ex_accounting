@@ -1,11 +1,18 @@
 defmodule ExAccounting do
   @moduledoc """
-  Documentation for `ExAccounting`.
+  ExAccounting is a double-entry accounting application.
+
+  Accounting data is recorded in the form of balanced journal entries to ensure the accuracy of ledgers.
+
   """
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
   alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
+  @doc """
+  An accounting document number is issued within the specified number range.
+
+  """
   @spec issue_accounting_document_number(
           String.t(),
           CurrentAccountingDocumentNumber.read(),

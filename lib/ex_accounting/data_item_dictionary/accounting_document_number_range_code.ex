@@ -13,11 +13,11 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
 
   ## Examples
 
-    iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.create("02")
-    %ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}
+      iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.create("02")
+      %ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}
 
-    iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.create("x1")
-    {:error, "x1 is not valid"}
+      iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.create("x1")
+      {:error, "x1 is not valid"}
   """
   @spec create(String.t()) :: t()
   def create(accounting_document_number_range_code)
@@ -70,13 +70,13 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
 
   ## Examples
 
-    iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
-    iex> dump(create("02"))
-    {:ok, "02"}
+      iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+      iex> dump(create("02"))
+      {:ok, "02"}
 
-    iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
-    iex> dump(~c"02")
-    :error
+      iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+      iex> dump(~c"02")
+      :error
   """
   def dump(%__MODULE__{accounting_document_number_range_code: code} = _data_item)
       when is_binary(code) do
