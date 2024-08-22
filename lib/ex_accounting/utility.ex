@@ -21,11 +21,23 @@ defmodule ExAccounting.Utility do
   end
 
   @doc """
+  Check if the input charactor is alphanumeric.
+
+  1st argument is charactor to be validated. 2nd argument is the successful result value.
 
   ## Examples
 
-    iex> for x <- ~c[A1x] do ExAccounting.Utility.is_valid_charactor(x, :ok) end
-    [:ok, :ok, :error]
+      iex> for x <- ~c[A1x] do ExAccounting.Utility.is_valid_charactor(x, :ok) end
+      [:ok, :ok, :error]
+
+      iex> ~c[A1x] |> Enum.reduce(:ok, &ExAccounting.Utility.is_valid_charactor(&1, &2) )
+      :error
+
+      iex> ~c[xA1] |> Enum.reduce(:ok, &ExAccounting.Utility.is_valid_charactor(&1, &2) )
+      :error
+
+      iex> ~c[XA1] |> Enum.reduce(:ok, &ExAccounting.Utility.is_valid_charactor(&1, &2) )
+      :ok
 
   """
   @spec is_valid_charactor(char, :ok | :error) :: :ok | :error
@@ -38,6 +50,19 @@ defmodule ExAccounting.Utility do
     end
   end
 
+  @doc """
+  Measure length of list or strings
+
+  ## Examples
+
+      iex> ExAccounting.Utility.len([1,2,3])
+      3
+
+      iex> ExAccounting.Utility.len("abc")
+      3
+
+  """
+  @spec len(list | String.t()) :: integer()
   def len(term) when is_list(term) do
     length(term)
   end
@@ -46,6 +71,18 @@ defmodule ExAccounting.Utility do
     String.length(term)
   end
 
+  @doc """
+  Cast to charlist.
+
+  ## Examples
+
+      iex> ExAccounting.Utility.to_c("abc")
+      ~C[abc]
+
+      iex> ExAccounting.Utility.to_c(~C[abc])
+      ~C[abc]
+  """
+  @spec to_c(list | String.t()) :: charlist()
   def to_c(term) when is_list(term) do
     term
   end

@@ -17,7 +17,7 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
   def type, do: :integer
 
   @doc """
-    [create] is function for generating valid FiscalYear.
+    Generate valid _Fiscal Year_.
 
   ## Examples
 
@@ -30,6 +30,14 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
     %__MODULE__{fiscal_year: fiscal_year}
   end
 
+  @doc """
+  Convert to external form to valid internal form of _Fiscal Year_.
+
+  ## Examples
+
+      iex> FiscalYear.cast(2024)
+      {:ok, %FiscalYear{ fiscal_year: 2024 }}
+  """
   def cast(term) do
     with true <- is_integer(term),
          true <- term > 0,
@@ -40,8 +48,18 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
     end
   end
 
+  @doc """
+  ## Examples
+
+      iex> FiscalYear.dump(%FiscalYear{fiscal_year: 2024})
+      {:ok, 2024}
+
+      iex> FiscalYear.dump(2024)
+      :error
+
+  """
   def dump(%__MODULE__{} = term) do
-    term.fiscal_year
+    {:ok, term.fiscal_year}
   end
 
   def dump(_) do

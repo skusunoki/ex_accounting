@@ -3,7 +3,11 @@ defmodule ExAccounting.Repo do
     otp_app: :ex_accounting,
     adapter: Ecto.Adapters.Postgres
 
-  @spec upsert(any) :: {:error, any} | {:ok, any}
+  @doc """
+  Update or insert based on the first element of the tuple of argument.
+  """
+  @spec upsert({:update, any()}) :: {:error, any} | {:ok, any}
+  @spec upsert({:insert, any()}) :: {:error, any} | {:ok, any}
   def upsert({:insert, changeset}) do
     insert(changeset)
   end
