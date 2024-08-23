@@ -6,8 +6,11 @@ defmodule ExAccounting.Repo do
   @doc """
   Update or insert based on the first element of the tuple of argument.
   """
-  @spec upsert({:update, any()}) :: {:error, any} | {:ok, any}
-  @spec upsert({:insert, any()}) :: {:error, any} | {:ok, any}
+  @spec upsert(
+          {:update, changeset :: Ecto.Changeset.t()}
+          | {:insert, changeset :: Ecto.Changeset.t()}
+        ) ::
+          {:error, Ecto.Changeset.t()} | {:ok, Ecto.Changeset.t()}
   def upsert({:insert, changeset}) do
     insert(changeset)
   end

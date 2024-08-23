@@ -51,7 +51,7 @@ defmodule ExAccounting.Utility do
   end
 
   @doc """
-  Measure length of list or strings
+  Measures length of list or strings
 
   ## Examples
 
@@ -72,7 +72,7 @@ defmodule ExAccounting.Utility do
   end
 
   @doc """
-  Cast to charlist.
+  Cast to _charlist_.
 
   ## Examples
 
@@ -82,7 +82,7 @@ defmodule ExAccounting.Utility do
       iex> ExAccounting.Utility.to_c(~C[abc])
       ~C[abc]
   """
-  @spec to_c(list | String.t()) :: charlist()
+  @spec to_c(list | String.t()) :: charlist
   def to_c(term) when is_list(term) do
     term
   end
