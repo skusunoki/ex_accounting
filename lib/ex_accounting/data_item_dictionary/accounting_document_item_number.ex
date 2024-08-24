@@ -3,14 +3,15 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentItemNumber do
   AccountingDocumentItemNumber is identifier of accounting document item
   """
   use Ecto.Type
-  def type, do: :integer
 
   @typedoc "_Accounting Document Item Number_"
   @type t :: %__MODULE__{accounting_document_item_number: pos_integer}
   defstruct accounting_document_item_number: nil
 
+  def type, do: :integer
+
   @doc """
-    [create] is function for generating valid AccountingDocumentNumber.
+    Generates the valid _Accounting Document Number_ from the given positive integer.
 
   ## Examples
 

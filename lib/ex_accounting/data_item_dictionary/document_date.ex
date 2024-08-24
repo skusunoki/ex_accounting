@@ -8,11 +8,12 @@ defmodule ExAccounting.DataItemDictionary.DocumentDate do
   defstruct document_date: nil
 
   @doc """
-    [create] is function for generating valid DocumentDate.
+    Generates the valid _Document Date_ from the given date in Elixir Date type.
 
   ## Examples
-    iex> DocumentDate.create(~D[2024-08-03])
-    %DocumentDate{document_date: ~D[2024-08-03]}
+
+      iex> DocumentDate.create(~D[2024-08-03])
+      %DocumentDate{document_date: ~D[2024-08-03]}
   """
   @spec create(Date.t()) :: t()
   def create(%Date{} = document_date) do

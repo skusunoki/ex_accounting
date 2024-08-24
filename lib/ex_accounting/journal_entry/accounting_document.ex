@@ -1,7 +1,9 @@
 defmodule ExAccounting.JournalEntry.AccountingDocument do
   @moduledoc """
-  TODO
+  _Accounting Document_ is a representation of changes to values of general ledger and subledger accounts resulting from a business transaction and relating to a entity and a set of books.
   """
+
+  @typedoc "_Accounting Document"
   @type t :: %__MODULE__{
           accounting_document_header: ExAccounting.JournalEntry.AccountingDocumentHeader.t(),
           accounting_document_items: [ExAccounting.JournalEntry.AccountingDocumentItem.t()]

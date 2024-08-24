@@ -1,6 +1,6 @@
 defmodule ExAccounting.DataItemDictionary.AccountingArea do
   @moduledoc """
-  AccountingArea is an organization unit for aggregation (consolidation) of multiple entities.
+  _Accounting Area_ is an organization unit for aggregation (consolidation) of multiple entities.
   """
   use Ecto.Type
   defstruct accounting_area: nil

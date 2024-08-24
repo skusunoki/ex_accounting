@@ -3,7 +3,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
   import Ecto.Changeset
 
   @moduledoc """
-  AccountingDocumentItem is atomic data object in the accounting system.
+  _Accounting Document Item_ is atomic data object in the accounting system.
   """
 
   @type t :: %__MODULE__{

@@ -4,14 +4,15 @@ defmodule ExAccounting.DataItemDictionary.AccountingPeriod do
   defstruct accounting_period: nil
 
   @doc """
-    [create] is function for generating valid AccountingPeriod.
+    Generates the valid _Accounting Period_ from the given integer value or charlist.
 
   ## Examples
-    iex> AccountingPeriod.create(~C[12])
-    %AccountingPeriod{accounting_period: 12}
 
-    iex> AccountingPeriod.create(12)
-    %AccountingPeriod{accounting_period: 12}
+      iex> AccountingPeriod.create(12)
+      %AccountingPeriod{accounting_period: 12}
+
+      iex> AccountingPeriod.create(~C[12])
+      %AccountingPeriod{accounting_period: 12}
 
   """
   @spec create(pos_integer) :: t()

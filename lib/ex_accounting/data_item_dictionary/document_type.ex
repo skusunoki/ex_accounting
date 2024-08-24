@@ -8,11 +8,13 @@ defmodule ExAccounting.DataItemDictionary.DocumentType do
   defstruct document_type: nil
 
   @doc """
-    [create] is function for generating valid document type.
+    Generates the valid _Document Type_ from the given charlist.
+
+    The argument must be 2 letters. Strings is not allowed.
 
   ## Examples
-    iex> DocumentType.create( ~C[DR] )
-    %DocumentType{ document_type: ~C[DR]}
+      iex> DocumentType.create( ~C[DR] )
+      %DocumentType{ document_type: ~C[DR]}
   """
   @spec create(charlist) :: t()
   def create(document_type) when is_list(document_type) and length(document_type) == 2 do

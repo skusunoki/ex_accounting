@@ -8,12 +8,12 @@ defmodule ExAccounting.DataItemDictionary.EntryDate do
   defstruct entry_date: nil
 
   @doc """
-    [create] is function for generating valid EntryDate.
+    Generates the valid _Entry Date_ from the given date in Elixir Date type.
 
   ## Examples
 
-    iex> EntryDate.create(~D[2024-08-03])
-    %EntryDate{entry_date: ~D[2024-08-03]}
+      iex> EntryDate.create(~D[2024-08-03])
+      %EntryDate{entry_date: ~D[2024-08-03]}
   """
 
   @spec create(Date.t()) :: t()

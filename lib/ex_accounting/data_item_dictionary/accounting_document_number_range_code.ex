@@ -12,7 +12,7 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
   def type, do: :string
 
   @doc """
-  Function [create] returns valid value of Accounting Document Number Range Code for string or charactor list argument.
+  Generates the valid value of _Accounting Document Number Range Code_ from the given argument in string or charlist type.
 
   ## Examples
 

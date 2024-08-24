@@ -74,11 +74,11 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
     Generates valid **DebitCredit**
 
   ## Examples
-    iex> DebitCredit.create(:debit)
-    %DebitCredit{debit_credit: :debit}
+      iex> DebitCredit.create(:debit)
+      %DebitCredit{debit_credit: :debit}
 
-    iex> DebitCredit.create(:credit)
-    %DebitCredit{debit_credit: :credit}
+      iex> DebitCredit.create(:credit)
+      %DebitCredit{debit_credit: :credit}
 
   """
   @spec create(atom) :: t()

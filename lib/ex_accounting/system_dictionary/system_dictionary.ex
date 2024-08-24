@@ -8,7 +8,10 @@ defmodule ExAccounting.SystemDictionary.UserName do
   defstruct user_name: nil
 
   @doc """
-    [create] is function for generating valid UserName.
+    Generates the valid _User Name_ from the given charlist or strings.
+
+    The length of _User Name_ must be less than or equals to 16.
+    The letters of alphanumeric, underscore(\_), or dot(.) are allowed.
 
   ## Examples
 

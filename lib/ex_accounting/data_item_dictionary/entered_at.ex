@@ -8,12 +8,12 @@ defmodule ExAccounting.DataItemDictionary.EnteredAt do
   defstruct entered_at: nil
 
   @doc """
-    [create] is function for generating valid EnteredAt.
+    Generates the valid _Entered At_ from the given time in Elixir Time type.
 
   ## Examples
 
-    iex> EnteredAt.create(~T[12:34:56.00])
-    %EnteredAt{entered_at: ~T[12:34:56.00]}
+      iex> EnteredAt.create(~T[12:34:56.00])
+      %EnteredAt{entered_at: ~T[12:34:56.00]}
   """
   @spec create(Time.t()) :: t()
   def create(%Time{} = entered_at) do

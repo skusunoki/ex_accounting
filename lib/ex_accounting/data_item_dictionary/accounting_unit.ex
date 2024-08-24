@@ -8,12 +8,12 @@ defmodule ExAccounting.DataItemDictionary.AccountingUnit do
   defstruct accounting_unit: nil
 
   @doc """
-    [create] is function for generating valid AccountingUnit
+    Generates the valid _Accounting Unit_ from the given charlist or strings.
 
   ## Examples
 
-    iex> AccountingUnit.create(~C[1000])
-    %AccountingUnit{ accounting_unit: ~C[1000]}
+      iex> AccountingUnit.create(~C[1000])
+      %AccountingUnit{ accounting_unit: ~C[1000]}
 
   """
 
