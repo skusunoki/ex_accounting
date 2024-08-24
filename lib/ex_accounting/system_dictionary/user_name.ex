@@ -69,8 +69,14 @@ defmodule ExAccounting.SystemDictionary.UserName do
       {:ok, %ExAccounting.SystemDictionary.UserName{user_name: ~c[johndoe]}}
   """
   def load(data) do
-    {:ok, create(data)}
+    with user_name = to_charlist(data),
+         {:ok, _} <- validate_user_name(user_name) do
+      {:ok, create(data)}
+    else
+      _ -> :error
+    end
   end
+
 
   @doc """
     Generates the valid _User Name_ from the given charlist or strings.

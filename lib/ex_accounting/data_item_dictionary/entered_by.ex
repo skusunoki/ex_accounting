@@ -6,6 +6,9 @@ defmodule ExAccounting.DataItemDictionary.EnteredBy do
 
   @typedoc "_Entered By_"
   @type t :: %__MODULE__{entered_by: ExAccounting.SystemDictionary.UserName.t()}
+
+  @typedoc "_User Name_"
+  @type user_name :: ExAccounting.SystemDictionary.UserName.t()
   defstruct entered_by: nil
 
   @doc """
@@ -24,6 +27,7 @@ defmodule ExAccounting.DataItemDictionary.EnteredBy do
       ...> |> ExAccounting.DataItemDictionary.EnteredBy.cast()
       {:ok, %ExAccounting.DataItemDictionary.EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
   """
+  @spec cast(t | user_name ) :: {:ok, t()} | :error
   def cast(%ExAccounting.DataItemDictionary.EnteredBy{} = term) do
     with %ExAccounting.DataItemDictionary.EnteredBy{entered_by: user_name} <- term,
          %ExAccounting.SystemDictionary.UserName{user_name: to_be_validated} <- user_name,

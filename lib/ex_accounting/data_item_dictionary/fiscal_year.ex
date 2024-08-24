@@ -9,6 +9,7 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
   defstruct fiscal_year: nil
 
   @doc """
+  Defines the type of the _Fiscal Year_ in database as integer.
 
   ## Examples
 
@@ -16,6 +17,7 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
       :integer
 
   """
+  @spec type() :: :integer
   def type, do: :integer
 
   @doc """
@@ -33,13 +35,14 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
   end
 
   @doc """
-  Convert to external form to valid internal form of _Fiscal Year_.
+  Casts the given positive integer to the _Fiscal Year_.
 
   ## Examples
 
       iex> FiscalYear.cast(2024)
       {:ok, %FiscalYear{ fiscal_year: 2024 }}
   """
+  @spec cast(pos_integer) :: {:ok, t()} | {:error, pos_integer}
   def cast(term) do
     with true <- is_integer(term),
          true <- term > 0,
@@ -51,6 +54,8 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
   end
 
   @doc """
+  Dumps the _Fiscal Year_ to the integer.
+
   ## Examples
 
       iex> FiscalYear.dump(%FiscalYear{fiscal_year: 2024})
@@ -60,6 +65,7 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
       :error
 
   """
+  @spec dump(t) :: {:ok, pos_integer} | :error
   def dump(%__MODULE__{} = term) do
     {:ok, term.fiscal_year}
   end
@@ -68,6 +74,15 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
     :error
   end
 
+  @doc """
+  Loads the _Fiscal Year_ from the database form.
+
+  ## Examples
+
+      iex> FiscalYear.load(2024)
+      {:ok, %FiscalYear{fiscal_year: 2024}}
+  """
+  @spec load(pos_integer) :: {:ok, t()} | :error
   def load(term) do
     {:ok, create(term)}
   end

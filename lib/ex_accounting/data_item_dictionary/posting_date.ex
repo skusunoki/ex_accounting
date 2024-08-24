@@ -20,6 +20,7 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
       iex> ExAccounting.DataItemDictionary.PostingDate.cast(~D[2024-08-01])
       {:ok, %ExAccounting.DataItemDictionary.PostingDate{posting_date: ~D[2024-08-01]}}
   """
+  @spec cast(Date.t()) :: {:ok, t()} | :error
   def cast(date) do
     with %Date{} <- date do
       {:ok, %__MODULE__{posting_date: date}}
@@ -45,6 +46,15 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
     end
   end
 
+  @doc """
+  Loads the _Posting Date_ from the database form data.
+
+  ## Examples
+
+      iex> ExAccounting.DataItemDictionary.PostingDate.load(~D[2024-08-01])
+      {:ok, %ExAccounting.DataItemDictionary.PostingDate{posting_date: ~D[2024-08-01]}}
+  """
+  @spec load(Date.t()) :: {:ok, t()} | {:error, Date.t()}
   def load(date) do
     with %Date{} <- date do
       {:ok, %__MODULE__{posting_date: date}}
