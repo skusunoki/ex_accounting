@@ -3,6 +3,7 @@ defmodule ExAccounting.DataItemDictionary.DocumentDate do
   DocumentDate is the date of document.
   """
 
+  @typedoc "_Document Date_"
   @type t :: %__MODULE__{document_date: Date.t()}
   defstruct document_date: nil
 

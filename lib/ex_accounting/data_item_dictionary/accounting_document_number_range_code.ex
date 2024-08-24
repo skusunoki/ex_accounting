@@ -4,7 +4,10 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
   Code should be 2 digits. Letters of code should be uppercase alphanumeric: A-Z or 0 - 9.
   """
   use Ecto.Type
+
+  @typedoc "_Accounting Document Number Range Code_"
   @type t :: %__MODULE__{accounting_document_number_range_code: String.t()}
+
   defstruct accounting_document_number_range_code: nil
   def type, do: :string
 

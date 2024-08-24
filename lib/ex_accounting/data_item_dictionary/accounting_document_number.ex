@@ -4,6 +4,7 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumber do
   """
   use Ecto.Type
 
+  @typedoc "_Accounting Document Number_"
   @type t :: %__MODULE__{accounting_document_number: pos_integer}
   defstruct accounting_document_number: nil
 

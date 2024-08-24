@@ -1,14 +1,25 @@
 defmodule ExAccounting.DataItemDictionary.PostingDate do
   @moduledoc """
-  PostingDate is the date of accounting document posted. Posting date should be consistent with accounting period.
+  _Posting Date_ is the date of accounting document posted.
+
+  _Posting date_ must be consistent with accounting period within an accounting document.
   """
   use Ecto.Type
 
+  @typedoc "__Posting Date__"
   @type t :: %__MODULE__{posting_date: Date.t()}
   defstruct posting_date: nil
 
   def type, do: :date
 
+  @doc """
+  Casts given date in Elixir Date type to date in the valid internal form.
+
+  ## Examples
+
+      iex> ExAccounting.DataItemDictionary.PostingDate.cast(~D[2024-08-01])
+      {:ok, %ExAccounting.DataItemDictionary.PostingDate{posting_date: ~D[2024-08-01]}}
+  """
   def cast(date) do
     with %Date{} <- date do
       {:ok, %__MODULE__{posting_date: date}}
@@ -17,6 +28,15 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
     end
   end
 
+  @doc """
+  Dumps the given date in the valid internal type into the date type.
+
+  ## Examples
+
+      iex> ExAccounting.DataItemDictionary.PostingDate.dump(%ExAccounting.DataItemDictionary.PostingDate{posting_date: ~D[2024-08-01]})
+      {:ok, ~D[2024-08-01]}
+  """
+  @spec dump(t) :: {:ok, Date.t()} | :error
   def dump(posting_date) do
     with %__MODULE__{posting_date: date} <- posting_date do
       {:ok, date}
@@ -34,11 +54,11 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
   end
 
   @doc """
-    [create] is function for generating valid PostingDate.
+    Generates valid _Posting Date_.
 
   ## Examples
-    iex> PostingDate.create(~D[2024-08-03])
-    %PostingDate{posting_date: ~D[2024-08-03]}
+      iex> PostingDate.create(~D[2024-08-03])
+      %PostingDate{posting_date: ~D[2024-08-03]}
   """
   @spec create(Date.t()) :: t()
   def create(%Date{} = posting_date) do

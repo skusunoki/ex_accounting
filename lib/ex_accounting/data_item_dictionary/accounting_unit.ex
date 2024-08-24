@@ -3,6 +3,7 @@ defmodule ExAccounting.DataItemDictionary.AccountingUnit do
   AccountingUnit is unit of organization to external reporting.
   """
 
+  @typedoc "_Accounting Unit_"
   @type t :: %__MODULE__{accounting_unit: charlist}
   defstruct accounting_unit: nil
 

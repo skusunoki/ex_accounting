@@ -3,6 +3,8 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
   FiscalYear is time period for accounting cycle.
   """
   use Ecto.Type
+
+  @typedoc "_Fiscal Year_"
   @type t :: %__MODULE__{fiscal_year: pos_integer}
   defstruct fiscal_year: nil
 

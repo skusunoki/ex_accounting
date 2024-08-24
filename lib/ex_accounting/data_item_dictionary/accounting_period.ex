@@ -1,4 +1,5 @@
 defmodule ExAccounting.DataItemDictionary.AccountingPeriod do
+  @typedoc "_Accounting Period_"
   @type t :: %__MODULE__{accounting_period: pos_integer}
   defstruct accounting_period: nil
 

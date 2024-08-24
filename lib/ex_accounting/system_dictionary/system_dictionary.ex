@@ -3,6 +3,7 @@ defmodule ExAccounting.SystemDictionary.UserName do
   TODO
   """
 
+  @typedoc "_User Name_"
   @type t :: %__MODULE__{user_name: charlist}
   defstruct user_name: nil
 
@@ -35,7 +36,7 @@ defmodule ExAccounting.SystemDictionary.UserName do
   end
 
   @spec validate_user_name(charlist) :: {atom, charlist}
-  defp validate_user_name(user_name) do
+  def validate_user_name(user_name) do
     valid_charactors = ~c[abcdefghijklmnopqrstuvwxyz0123456789_.]
 
     {

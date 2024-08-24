@@ -3,6 +3,7 @@ defmodule ExAccounting.DataItemDictionary.EntryDate do
   EntryDate is the date of document created.
   """
 
+  @typedoc "_Entry Date_"
   @type t :: %__MODULE__{entry_date: Date.t()}
   defstruct entry_date: nil
 

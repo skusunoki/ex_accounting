@@ -1,7 +1,9 @@
 defmodule ExAccounting.DataItemDictionary.PostedBy do
   @moduledoc """
-  TODO
+    _Entered By_ is who posts the accounting document.
   """
+
+  @typedoc "_Posted By_"
   @type t :: %__MODULE__{posted_by: ExAccounting.SystemDictionary.UserName.t()}
   defstruct posted_by: nil
 

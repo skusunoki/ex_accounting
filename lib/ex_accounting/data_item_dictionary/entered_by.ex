@@ -1,21 +1,74 @@
 defmodule ExAccounting.DataItemDictionary.EnteredBy do
   @moduledoc """
-  TODO
+  _Entered By_ is who inputs the accounting document.
   """
+  use Ecto.Type
 
+  @typedoc "_Entered By_"
   @type t :: %__MODULE__{entered_by: ExAccounting.SystemDictionary.UserName.t()}
   defstruct entered_by: nil
 
   @doc """
-    [create] is function for generating valid EnteredBy.
+  Define database field type of _Entered By_
+  """
+  def type, do: :string
+
+  @doc """
+    Casts the given user name to the internal form of _Entered By_.
+
+  ## Examples
+
+      iex> "JohnDoe"
+      ...> |> ExAccounting.SystemDictionary.UserName.create()
+      ...> |> ExAccounting.DataItemDictionary.EnteredBy.create()
+      ...> |> ExAccounting.DataItemDictionary.EnteredBy.cast()
+      {:ok, %ExAccounting.DataItemDictionary.EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
+  """
+  def cast(%ExAccounting.DataItemDictionary.EnteredBy{} = term) do
+    with %ExAccounting.DataItemDictionary.EnteredBy{entered_by: user_name} <- term,
+         %ExAccounting.SystemDictionary.UserName{user_name: to_be_validated} <- user_name,
+         {:ok, _validated} <-
+           ExAccounting.SystemDictionary.UserName.validate_user_name(to_be_validated) do
+      {:ok, term}
+    else
+      _ -> :error
+    end
+  end
+
+  def cast(%ExAccounting.SystemDictionary.UserName{} = term) do
+    with %ExAccounting.SystemDictionary.UserName{user_name: to_be_validated} <- term,
+         {:ok, _validated} <-
+           ExAccounting.SystemDictionary.UserName.validate_user_name(to_be_validated) do
+      {:ok, create(term)}
+    end
+  end
+
+  @doc """
+    Generates valid EnteredBy.
 
   ## Exampels
 
-    iex> EnteredBy.create( ExAccounting.SystemDictionary.UserName.create(~C[JohnDoe]))
-    %EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{ user_name: ~C[johndoe]}}
+      iex> EnteredBy.create( ExAccounting.SystemDictionary.UserName.create(~C[JohnDoe]))
+      %EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{ user_name: ~C[johndoe]}}
   """
   @spec create(ExAccounting.SystemDictionary.UserName.t()) :: t()
   def create(%ExAccounting.SystemDictionary.UserName{} = entered_by) do
     %__MODULE__{entered_by: entered_by}
+  end
+
+  def dump(%__MODULE__{} = term) do
+    with %__MODULE__{entered_by: user_name} <- term,
+         %ExAccounting.SystemDictionary.UserName{user_name: code} <- user_name do
+      {:ok, to_string(code)}
+    end
+  end
+
+  def load(term) do
+    with entered_by =
+           term
+           |> ExAccounting.SystemDictionary.UserName.create()
+           |> ExAccounting.DataItemDictionary.EnteredBy.create() do
+      {:ok, entered_by}
+    end
   end
 end

@@ -4,6 +4,7 @@ defmodule ExAccounting.DataItemDictionary.AccountingArea do
   """
   use Ecto.Type
   defstruct accounting_area: nil
+  @typedoc "_Accounting Area_"
   @type t :: %__MODULE__{accounting_area: charlist}
 
   def type, do: :string

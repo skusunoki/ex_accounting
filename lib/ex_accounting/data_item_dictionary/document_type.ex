@@ -3,6 +3,7 @@ defmodule ExAccounting.DataItemDictionary.DocumentType do
   DocumentType categorize accounting document from the point of view of accounting business process.
   """
 
+  @typedoc "_Document Type_"
   @type t :: %__MODULE__{document_type: charlist}
   defstruct document_type: nil
 

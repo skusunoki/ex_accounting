@@ -3,6 +3,7 @@ defmodule ExAccounting.DataItemDictionary.EnteredAt do
   EnteredAt is the time of the document created.
   """
 
+  @typedoc "_Entered At_"
   @type t :: %__MODULE__{entered_at: Time.t()}
   defstruct entered_at: nil
 

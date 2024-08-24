@@ -5,11 +5,33 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
 
   use Ecto.Type
 
+  @typedoc "_Debit Credit Indicator_"
   @type t :: %__MODULE__{debit_credit: :debit} | %__MODULE__{debit_credit: :credit}
   defstruct debit_credit: nil
 
   def type, do: :string
 
+  @doc """
+  Cast the given atom or string to the valid internal form of _Debit Credit_.
+
+  ## Examples
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.cast(:debit)
+      {:ok, %ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :debit}}
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.cast(:credit)
+      {:ok, %ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :credit}}
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.cast("D")
+      {:ok, %ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :debit}}
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.cast("C")
+      {:ok, %ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :credit}}
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.cast("X")
+      :error
+
+  """
   def cast(%__MODULE__{} = term) do
     with %__MODULE__{debit_credit: code} <- term,
          true <- code in [:debit, :credit] do
@@ -23,6 +45,7 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
   def cast(:credit), do: {:ok, %__MODULE__{debit_credit: :credit}}
   def cast("D"), do: {:ok, %__MODULE__{debit_credit: :debit}}
   def cast("C"), do: {:ok, %__MODULE__{debit_credit: :credit}}
+  def cast(_), do: :error
 
   def dump(%__MODULE__{} = debit_credit) do
     with %__MODULE__{debit_credit: code} <- debit_credit,
