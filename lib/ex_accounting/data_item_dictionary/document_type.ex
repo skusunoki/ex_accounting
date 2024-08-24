@@ -1,6 +1,6 @@
 defmodule ExAccounting.DataItemDictionary.DocumentType do
   @moduledoc """
-  DocumentType categorize accounting document from the point of view of accounting business process.
+  _Document Type_ categorizes accounting document from the point of view of accounting business process.
   """
 
   @typedoc "_Document Type_"

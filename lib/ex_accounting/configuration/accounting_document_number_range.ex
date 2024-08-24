@@ -3,6 +3,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   import Ecto.Changeset
   import Ecto.Query
 
+  @typedoc "_Accounting Document Number Range_"
   @type t :: %__MODULE__{
           __meta__: Ecto.Schema.Metadata.t(),
           id: integer() | nil,
@@ -10,7 +11,11 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
           accounting_document_number_from: integer() | nil,
           accounting_document_number_to: integer() | nil
         }
+
+  @typedoc "_Accounting Document Number Range Code_"
   @type number_range_code :: ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.t()
+
+  @typedoc "Function to read number range: _Accounting Document Number Range Code_ -> _Accounting Document Number Range_"
   @type read :: (number_range_code -> t)
 
   schema "accounting_document_number_ranges" do

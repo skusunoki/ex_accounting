@@ -1,6 +1,10 @@
 defmodule ExAccounting.Configuration do
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
+  @doc """
+  Creates the accounting document number range from the given number range code, the first number of accounting document, and the last number of accounting document.
+  """
+  #TODO @spec create_accounting_document_number_range( number_range_code :: )
   def create_accounting_document_number_range(
         number_range_code,
         accounting_document_number_from,
@@ -15,6 +19,9 @@ defmodule ExAccounting.Configuration do
     |> ExAccounting.Repo.insert()
   end
 
+  @doc """
+  Changes the accounting document number range from the given number range code, the first number of accounting document, and the last number of accounting document.
+  """
   def change_accounting_document_number_range(
         number_range_code,
         accounting_document_number_from,
