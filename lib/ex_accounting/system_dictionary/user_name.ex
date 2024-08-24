@@ -1,8 +1,8 @@
 defmodule ExAccounting.SystemDictionary.UserName do
   @moduledoc """
-  _User Name_ represents responsibility of the business processes.
+  _User Name_ represents individual responsibility of the business processes.
 
-  Any _User_s has its own name. It must be different.
+  Any _User_ has its own name. It must be different from other _Users_.
   """
 
   use Ecto.Type
@@ -11,8 +11,27 @@ defmodule ExAccounting.SystemDictionary.UserName do
   @type t :: %__MODULE__{user_name: charlist}
   defstruct user_name: nil
 
+  @doc """
+  Defines the database field type of _User Name_ as `:string`.
+  """
   def type, do: :string
 
+  @doc """
+  Casts the given external data to the internal form of _User Name_.
+
+  The length of _User Name_ must be less than or equals to 16.
+  The letters of alphanumeric, underscore(\_), or dot(.) are allowed.
+
+  ## Examples
+
+      iex> ExAccounting.SystemDictionary.UserName.cast("johndoe")
+      {:ok, %ExAccounting.SystemDictionary.UserName{user_name: ~c[johndoe]}}
+
+      iex> ExAccounting.SystemDictionary.UserName.cast("ng_case,")
+      :error
+  """
+  @spec cast(t) :: {:ok, t}
+  @spec cast(String.t() | charlist) :: {:ok, t} | :error
   def cast(%__MODULE__{} = term) do
     {:ok, term}
   end
@@ -30,6 +49,10 @@ defmodule ExAccounting.SystemDictionary.UserName do
 
   end
 
+  @doc """
+  Dumps _User Name_ into the database form.
+  """
+  @spec dump(t) :: binary() | :error
   def dump(term) do
     with %__MODULE__{user_name: code} <- term do
       code
@@ -40,7 +63,7 @@ defmodule ExAccounting.SystemDictionary.UserName do
   end
 
   @doc """
-  Loads data to _User Name_ in the valid internal form.
+  Loads db data to _User Name_ in the valid internal form.
 
   ## Examples
 
@@ -84,17 +107,18 @@ defmodule ExAccounting.SystemDictionary.UserName do
 
   @doc """
   Validates the given user name in charlist.
-  Checks if the argument has only alphanumeric letters, underscore(\_), or dot(.).
+  Checks if the argument has only lower case alphabets, numerics, underscore(\_), or dot(.).
+
 
   ## Examples
 
-      iex> ExAccounting.SystemDictionary.UserName.validate_user_name(~C[JohnDoe])
-      {:error, ~C[JohnDoe]}
-
       iex> ExAccounting.SystemDictionary.UserName.validate_user_name(~C[johndoe])
       {:ok, ~C[johndoe]}
+
+      iex> ExAccounting.SystemDictionary.UserName.validate_user_name(~C[JohnDoe])
+      {:error, ~C[JohnDoe]}
   """
-  @spec validate_user_name(charlist) :: {atom, charlist}
+  @spec validate_user_name(charlist) :: {:ok, charlist} | {:error, charlist}
   def validate_user_name(user_name) do
     valid_charactors = ~c[abcdefghijklmnopqrstuvwxyz0123456789_.]
 

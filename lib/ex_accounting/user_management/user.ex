@@ -6,6 +6,9 @@ defmodule ExAccounting.UserManagement.User do
     field(:user_name, :string)
   end
 
+  @doc """
+  Makes the changeset for the user.
+  """
   def changeset(user, params \\ %{}) do
     user
     |> cast(params, [:user_name])
