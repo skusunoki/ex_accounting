@@ -13,7 +13,7 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
   def type, do: :date
 
   @doc """
-  Casts given date in Elixir Date type to date in the valid internal form.
+  Casts the given date in Elixir Date type to the date in the valid internal form.
 
   ## Examples
 
@@ -29,7 +29,7 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
   end
 
   @doc """
-  Dumps the given date in the valid internal type into the date type.
+  Dumps the given date in the valid internal type into the Elixir Date type.
 
   ## Examples
 
@@ -54,7 +54,7 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
   end
 
   @doc """
-    Generates valid _Posting Date_.
+    Generates valid _Posting Date_ from the given date in Elixir Date type.
 
   ## Examples
       iex> PostingDate.create(~D[2024-08-03])

@@ -4,7 +4,7 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
   """
   use Ecto.Type
 
-  @typedoc "_Fiscal Year_"
+  @typedoc "_Fiscal Year_ : time period for accounting cycle"
   @type t :: %__MODULE__{fiscal_year: pos_integer}
   defstruct fiscal_year: nil
 
