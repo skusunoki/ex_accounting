@@ -4,7 +4,7 @@ defmodule ExAccounting.Configuration do
   @doc """
   Creates the accounting document number range from the given number range code, the first number of accounting document, and the last number of accounting document.
   """
-  #TODO @spec create_accounting_document_number_range( number_range_code :: )
+  # TODO @spec create_accounting_document_number_range( number_range_code :: )
   def create_accounting_document_number_range(
         number_range_code,
         accounting_document_number_from,

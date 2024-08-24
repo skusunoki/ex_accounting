@@ -38,15 +38,13 @@ defmodule ExAccounting.SystemDictionary.UserName do
 
   def cast(term) do
     with true <- is_list(term) or is_binary(term),
-    true <- ExAccounting.Utility.len(term) <= 16,
-    code = ExAccounting.Utility.to_c(term) |> convert_to_lowercase(),
-    {:ok, _validated} <- validate_user_name(code)
-     do
+         true <- ExAccounting.Utility.len(term) <= 16,
+         code = ExAccounting.Utility.to_c(term) |> convert_to_lowercase(),
+         {:ok, _validated} <- validate_user_name(code) do
       {:ok, create(code)}
     else
       _ -> :error
     end
-
   end
 
   @doc """

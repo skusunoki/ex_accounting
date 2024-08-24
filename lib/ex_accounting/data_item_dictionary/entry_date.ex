@@ -33,18 +33,17 @@ defmodule ExAccounting.DataItemDictionary.EntryDate do
   @spec cast(Date.t()) :: {:ok, t} | :error
   @spec cast(t) :: {:ok, t}
   def cast(%Date{} = term) do
-      {:ok, %__MODULE__{entry_date: term}}
+    {:ok, %__MODULE__{entry_date: term}}
   end
 
   def cast(%__MODULE__{} = term) do
     with %__MODULE__{entry_date: date} <- term,
-    %Date{} <- date do
+         %Date{} <- date do
       {:ok, term}
     else
       _ -> :error
     end
   end
-
 
   @doc """
   Dumps _Entry Date_ into the database form.
@@ -70,7 +69,7 @@ defmodule ExAccounting.DataItemDictionary.EntryDate do
   @spec load(Date.t()) :: t() | :error
   def load(entry_date) do
     with %Date{} <- entry_date do
-    {:ok, %__MODULE__{entry_date: entry_date}}
+      {:ok, %__MODULE__{entry_date: entry_date}}
     else
       _ -> :error
     end
