@@ -9,6 +9,15 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
   @type t :: %__MODULE__{debit_credit: :debit} | %__MODULE__{debit_credit: :credit}
   defstruct debit_credit: nil
 
+  @doc """
+  Defines the type of the _Debit Credit_ in database as string.
+
+  ## Exapmles
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.type()
+      :string
+  """
+  @spec type() :: :string
   def type, do: :string
 
   @doc """
@@ -47,6 +56,17 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
   def cast("C"), do: {:ok, %__MODULE__{debit_credit: :credit}}
   def cast(_), do: :error
 
+  @doc """
+  Dumps the _Debit Credit_ to the string.
+
+  ## Examples
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.dump(%ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :debit})
+      {:ok, "D"}
+      iex> ExAccounting.DataItemDictionary.DebitCredit.dump(%ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :credit})
+      {:ok, "C"}
+  """
+  @spec dump(t) :: {:ok, String.t()} | :error
   def dump(%__MODULE__{} = debit_credit) do
     with %__MODULE__{debit_credit: code} <- debit_credit,
          true <- code in [:debit, :credit] do
@@ -59,6 +79,21 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
     end
   end
 
+  @doc """
+  Loads the _Debit Credit_ from the given database form.
+
+  ## Examples
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.load("D")
+      {:ok, %ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :debit}}
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.load("C")
+      {:ok, %ExAccounting.DataItemDictionary.DebitCredit{debit_credit: :credit}}
+
+      iex> ExAccounting.DataItemDictionary.DebitCredit.load("X")
+      :error
+  """
+  @spec load(String.t()) :: {:ok, t} | :error
   def load(code) do
     with true <- code in ["D", "C"] do
       case code do
@@ -71,7 +106,8 @@ defmodule ExAccounting.DataItemDictionary.DebitCredit do
   end
 
   @doc """
-    Generates valid **DebitCredit**
+    Generates valid _Debit Credit_.
+    Debit Credit can be either :debit or :credit.
 
   ## Examples
       iex> DebitCredit.create(:debit)

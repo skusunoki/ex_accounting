@@ -8,6 +8,10 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentItemNumber do
   @type t :: %__MODULE__{accounting_document_item_number: pos_integer}
   defstruct accounting_document_item_number: nil
 
+  @doc """
+  Defines the type of the _Accounting Document Item Number_ in database as integer.
+  """
+  @spec type() :: :integer
   def type, do: :integer
 
   @doc """
@@ -25,6 +29,22 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentItemNumber do
     %__MODULE__{accounting_document_item_number: accounting_document_item_number}
   end
 
+  @doc """
+  Casts the given postive integer to the _Accounting Document Item Number_.
+
+  ## Exampples
+
+      iex> AccountingDocumentItemNumber.cast(101)
+      {:ok, %AccountingDocumentItemNumber{accounting_document_item_number: 101}}
+
+      iex> AccountingDocumentItemNumber.cast(0)
+      {:error, 0}
+
+      iex> AccountingDocumentItemNumber.cast(1_000_000)
+      {:error, 1_000_000}
+  """
+  @spec cast(pos_integer) :: {:ok, t()} | {:error, pos_integer}
+  @spec cast(t) :: {:ok, t} | :error
   def cast(%__MODULE__{accounting_document_item_number: number} = accounting_document_item_number) do
     with true <- is_number(number),
          true <- number > 0,
@@ -45,6 +65,15 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentItemNumber do
     end
   end
 
+  @doc """
+  Dumps the _Accounting Document Item Number_ to the positive integer.
+
+  ## Examples
+
+      iex> AccountingDocumentItemNumber.dump(%AccountingDocumentItemNumber{accounting_document_item_number: 101})
+      {:ok, 101}
+  """
+  @spec dump(t) :: {:ok, pos_integer} | :error
   def dump(
         %__MODULE__{accounting_document_item_number: number} = _accounting_document_item_number
       ) do
@@ -55,6 +84,10 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentItemNumber do
     :error
   end
 
+  @doc """
+  Loads the _Accounting Document Item Number_ from the given database form data.
+  """
+  @spec load(integer) :: {:ok, t} | :error
   def load(data) do
     int_data = %{accounting_document_item_number: data}
     {:ok, struct!(__MODULE__, int_data)}

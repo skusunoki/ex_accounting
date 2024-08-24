@@ -9,6 +9,16 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
   @type t :: %__MODULE__{accounting_document_number_range_code: String.t()}
 
   defstruct accounting_document_number_range_code: nil
+
+  @doc """
+  Defines the type of the _Accounting Document Number Range Code in database as string.
+
+  ## Examples
+
+      iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.type()
+      :string
+  """
+  @spec type() :: :string
   def type, do: :string
 
   @doc """

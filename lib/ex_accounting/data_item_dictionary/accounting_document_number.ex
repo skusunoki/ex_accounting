@@ -8,8 +8,27 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumber do
   @type t :: %__MODULE__{accounting_document_number: pos_integer}
   defstruct accounting_document_number: nil
 
+  @doc """
+  Defines the type of the _Accounting Document Number_ in database as integer.
+  """
+  @spec type() :: :integer
   def type, do: :integer
 
+  @doc """
+  Casts the given positive integer to the _Accounting Document Number_.
+
+  ## Examples
+
+        iex> AccountingDocumentNumber.cast(1010)
+        {:ok, %AccountingDocumentNumber{accounting_document_number: 1010}}
+
+        iex> AccountingDocumentNumber.cast(0)
+        {:error, 0}
+
+        iex> AccountingDocumentNumber.cast(1_000_000_000_000)
+        {:error, 1_000_000_000_000}
+  """
+  @spec cast(t | pos_integer) :: {:ok, t()} | {:error, pos_integer}
   def cast(%__MODULE__{} = accounting_document_number) do
     with %__MODULE__{accounting_document_number: number} <- accounting_document_number,
          true <- is_number(number),
@@ -30,6 +49,15 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumber do
     end
   end
 
+  @doc """
+  Dumps the _Accounting Document Number_ to the integer.
+
+  ## Examples
+
+      iex> AccountingDocumentNumber.dump(%AccountingDocumentNumber{accounting_document_number: 1010})
+      {:ok, 1010}
+  """
+  @spec dump(t) :: {:ok, pos_integer} | :error
   def dump(%__MODULE__{} = accounting_document_number) do
     with %__MODULE__{accounting_document_number: number} <- accounting_document_number do
       {:ok, number}
@@ -38,6 +66,15 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumber do
     end
   end
 
+  @doc """
+  Loads the _Accounting Document Number_ from the given database form.
+
+  ## Examples
+
+      iex> AccountingDocumentNumber.load(1010)
+      {:ok, %AccountingDocumentNumber{accounting_document_number: 1010}}
+  """
+  @spec load(integer) :: {:ok, t} | :error
   def load(number) when is_number(number) do
     with true <- number > 0,
          true <- number <= 999_999_999_999 do
