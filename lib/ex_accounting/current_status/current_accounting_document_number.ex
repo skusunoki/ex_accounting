@@ -1,4 +1,9 @@
 defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
+  @moduledoc """
+  _Current Accounting Document Number_ is the state management of the document number issued for accounting document.
+  Database table holds the last number issued for the accounting document; and the number is incremented by one for the next accounting document.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
@@ -6,8 +11,13 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
+  @typedoc "_Accounting Document Number Range Code_"
   @type number_range_code :: AccountingDocumentNumberRangeCode.t()
+
+  @typedoc "_Accounting Document Number Range_"
   @type number_range :: AccountingDocumentNumberRange.t()
+
+  @typedoc "_Current Accounting Document Number_"
   @type t :: %__MODULE__{
           __meta__: Ecto.Schema.Metadata.t(),
           id: integer() | nil,
@@ -15,12 +25,17 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
           current_document_number: integer | nil
         }
 
+  @typedoc "Incremented or Newly created current document number. External form of the current document number."
   @type current_document_number :: %{
           number_range_code: AccountingDocumentNumberRangeCode.t(),
           current_document_number: integer
         }
+  @typedoc "Function to read number range: _Accounting Document Number Range Code_ -> _Accounting Document Number Range_"
   @type read_config :: AccountingDocumentNumberRange.read()
+
+  @typedoc "Function to read the current document number from the database."
   @type read :: (number_range_code -> t)
+
   schema "current_accounting_document_numbers" do
     field(:number_range_code, AccountingDocumentNumberRangeCode)
     field(:current_document_number, :integer)
