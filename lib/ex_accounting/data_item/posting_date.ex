@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionary.PostingDate do
+defmodule ExAccounting.DataItem.PostingDate do
   @moduledoc """
   _Posting Date_ is the date of accounting document posted.
 
@@ -17,8 +17,8 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
 
   ## Examples
 
-      iex> ExAccounting.DataItemDictionary.PostingDate.cast(~D[2024-08-01])
-      {:ok, %ExAccounting.DataItemDictionary.PostingDate{posting_date: ~D[2024-08-01]}}
+      iex> ExAccounting.DataItem.PostingDate.cast(~D[2024-08-01])
+      {:ok, %ExAccounting.DataItem.PostingDate{posting_date: ~D[2024-08-01]}}
   """
   @spec cast(Date.t()) :: {:ok, t()} | :error
   def cast(date) do
@@ -34,7 +34,7 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
 
   ## Examples
 
-      iex> ExAccounting.DataItemDictionary.PostingDate.dump(%ExAccounting.DataItemDictionary.PostingDate{posting_date: ~D[2024-08-01]})
+      iex> ExAccounting.DataItem.PostingDate.dump(%ExAccounting.DataItem.PostingDate{posting_date: ~D[2024-08-01]})
       {:ok, ~D[2024-08-01]}
   """
   @spec dump(t) :: {:ok, Date.t()} | :error
@@ -51,8 +51,8 @@ defmodule ExAccounting.DataItemDictionary.PostingDate do
 
   ## Examples
 
-      iex> ExAccounting.DataItemDictionary.PostingDate.load(~D[2024-08-01])
-      {:ok, %ExAccounting.DataItemDictionary.PostingDate{posting_date: ~D[2024-08-01]}}
+      iex> ExAccounting.DataItem.PostingDate.load(~D[2024-08-01])
+      {:ok, %ExAccounting.DataItem.PostingDate{posting_date: ~D[2024-08-01]}}
   """
   @spec load(Date.t()) :: {:ok, t()} | {:error, Date.t()}
   def load(date) do

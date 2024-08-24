@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionary.EntryDate do
+defmodule ExAccounting.DataItem.EntryDate do
   @moduledoc """
   EntryDate is the date of document created.
   """
@@ -27,8 +27,8 @@ defmodule ExAccounting.DataItemDictionary.EntryDate do
       iex> EntryDate.cast(~D[2024-08-03])
       {:ok, %EntryDate{entry_date: ~D[2024-08-03]}}
 
-      iex> EntryDate.cast(%ExAccounting.DataItemDictionary.EntryDate{entry_date: ~D[2024-08-03]})
-      {:ok, %ExAccounting.DataItemDictionary.EntryDate{entry_date: ~D[2024-08-03]}}
+      iex> EntryDate.cast(%ExAccounting.DataItem.EntryDate{entry_date: ~D[2024-08-03]})
+      {:ok, %ExAccounting.DataItem.EntryDate{entry_date: ~D[2024-08-03]}}
   """
   @spec cast(Date.t()) :: {:ok, t} | :error
   @spec cast(t) :: {:ok, t}

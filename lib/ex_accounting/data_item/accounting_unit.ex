@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionary.AccountingUnit do
+defmodule ExAccounting.DataItem.AccountingUnit do
   @moduledoc """
   AccountingUnit is unit of organization to external reporting.
   """

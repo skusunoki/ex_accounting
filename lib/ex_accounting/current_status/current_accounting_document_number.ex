@@ -8,7 +8,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+  alias ExAccounting.DataItem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
   @typedoc "_Accounting Document Number Range Code_"
@@ -25,7 +25,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
           current_document_number: integer | nil
         }
 
-  @typedoc "Incremented or Newly created current document number. External form of the current document number."
+  @typedoc "Next document number which is incremented or newly created from the configuration of the accounting document number range."
   @type current_document_number :: %{
           number_range_code: AccountingDocumentNumberRangeCode.t(),
           current_document_number: integer
@@ -52,16 +52,23 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     |> unique_constraint(:number_range_code)
   end
 
+  @doc """
+  Makes the changeset for the current accounting document number.
+  The argument should be a tuple with the first element as the action to be taken to the database whether to insert or update.
+  """
   @spec make_changeset({:insert, t, current_document_number}) :: {:insert, Ecto.Changeset.t()}
+  @spec make_changeset({:update, t, current_document_number}) :: {:update, Ecto.Changeset.t()}
   def make_changeset({:insert, _, after_updated}) do
     {:insert, changeset(%__MODULE__{}, after_updated)}
   end
 
-  @spec make_changeset({:update, t, current_document_number}) :: {:update, Ecto.Changeset.t()}
   def make_changeset({:update, before_updated, after_updated}) do
     {:update, changeset(before_updated, after_updated)}
   end
 
+  @doc """
+  Initiates the current accounting document number from the configuration of the accounting document number range.
+  """
   @spec initiate(
           number_range_code,
           read_config
@@ -74,6 +81,9 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     }
   end
 
+  @doc """
+  Increments the current document number by one.
+  """
   @spec increment(current_document_number) :: current_document_number
   def increment(current) do
     %{
@@ -82,6 +92,9 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     }
   end
 
+  @doc """
+  Reads the current accounting document number from the database.
+  """
   @spec read(number_range_code) :: t
   def read(
         %AccountingDocumentNumberRangeCode{
@@ -92,6 +105,12 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     |> ExAccounting.Repo.one()
   end
 
+  @doc """
+  Issues the new document number for the given number range. If the number range is not found, it will initiate the number range.
+  The first argument is the number range code.
+  The second argument is the function to read the current document number from the database.
+  The third argument is the function to read the configuration of the accounting document number range.
+  """
   @spec issue(
           number_range_code,
           read(),

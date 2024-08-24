@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionary.FiscalYear do
+defmodule ExAccounting.DataItem.FiscalYear do
   @moduledoc """
   FiscalYear is time period for accounting cycle.
   """
@@ -13,7 +13,7 @@ defmodule ExAccounting.DataItemDictionary.FiscalYear do
 
   ## Examples
 
-      iex>ExAccounting.DataItemDictionary.FiscalYear.type
+      iex>ExAccounting.DataItem.FiscalYear.type
       :integer
 
   """

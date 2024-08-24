@@ -13,7 +13,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
         }
 
   @typedoc "_Accounting Document Number Range Code_"
-  @type number_range_code :: ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.t()
+  @type number_range_code :: ExAccounting.DataItem.AccountingDocumentNumberRangeCode.t()
 
   @typedoc "Function to read number range: _Accounting Document Number Range Code_ -> _Accounting Document Number Range_"
   @type read :: (number_range_code -> t)

@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionary.AccountingArea do
+defmodule ExAccounting.DataItem.AccountingArea do
   @moduledoc """
   _Accounting Area_ is an organization unit for aggregation (consolidation) of multiple entities.
   """
@@ -22,17 +22,17 @@ defmodule ExAccounting.DataItemDictionary.AccountingArea do
       iex> AccountingArea.cast(~C[0001])
       {:ok, %AccountingArea{accounting_area: ~C[0001] }}
 
-      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> alias ExAccounting.DataItem.AccountingArea
       iex> AccountingArea.cast("0001")
       {:ok, %AccountingArea{accounting_area: ~C[0001] }}
 
-      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> alias ExAccounting.DataItem.AccountingArea
       iex> AccountingArea.cast(0001)
       {:error, 0001}
 
-      iex> alias ExAccounting.DataItemDictionary.AccountingArea
-      iex> AccountingArea.cast(%ExAccounting.DataItemDictionary.AccountingArea{accounting_area: ~c[x1]})
-      {:error, %ExAccounting.DataItemDictionary.AccountingArea{accounting_area: ~c[x1]}}
+      iex> alias ExAccounting.DataItem.AccountingArea
+      iex> AccountingArea.cast(%ExAccounting.DataItem.AccountingArea{accounting_area: ~c[x1]})
+      {:error, %ExAccounting.DataItem.AccountingArea{accounting_area: ~c[x1]}}
 
   """
   @spec cast(t) :: {:ok, t} | :error
@@ -107,7 +107,7 @@ defmodule ExAccounting.DataItemDictionary.AccountingArea do
   Generates the valid _Accounting Area_ from the given charlist or strings.
 
   ## Examples
-      iex> alias ExAccounting.DataItemDictionary.AccountingArea
+      iex> alias ExAccounting.DataItem.AccountingArea
       iex> AccountingArea.create(~C[0001])
       %AccountingArea{accounting_area: ~C[0001]}
   """

@@ -1,9 +1,9 @@
-defmodule ExAccounting.DataItemDictionaryTest do
+defmodule ExAccounting.DataItemTest do
   use ExUnit.Case
 
-  alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+  alias ExAccounting.DataItem.AccountingDocumentNumberRangeCode
 
-  alias ExAccounting.DataItemDictionary.{
+  alias ExAccounting.DataItem.{
     FiscalYear,
     AccountingArea,
     AccountingDocumentNumber,

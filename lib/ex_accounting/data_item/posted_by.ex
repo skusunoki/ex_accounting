@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionary.PostedBy do
+defmodule ExAccounting.DataItem.PostedBy do
   @moduledoc """
     _Entered By_ is the _User Name_ who posts the accounting document.
   """
@@ -24,13 +24,13 @@ defmodule ExAccounting.DataItemDictionary.PostedBy do
 
       iex> "JohnDoe"
       ...> |> ExAccounting.SystemDictionary.UserName.create()
-      ...> |> ExAccounting.DataItemDictionary.PostedBy.create()
-      ...> |> ExAccounting.DataItemDictionary.PostedBy.cast()
-      {:ok, %ExAccounting.DataItemDictionary.PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
+      ...> |> ExAccounting.DataItem.PostedBy.create()
+      ...> |> ExAccounting.DataItem.PostedBy.cast()
+      {:ok, %ExAccounting.DataItem.PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
   """
   @spec cast(t | user_name) :: {:ok, t()} | :error
-  def cast(%ExAccounting.DataItemDictionary.PostedBy{} = term) do
-    with %ExAccounting.DataItemDictionary.PostedBy{posted_by: user_name} <- term,
+  def cast(%ExAccounting.DataItem.PostedBy{} = term) do
+    with %ExAccounting.DataItem.PostedBy{posted_by: user_name} <- term,
          %ExAccounting.SystemDictionary.UserName{user_name: to_be_validated} <- user_name,
          {:ok, _validated} <-
            ExAccounting.SystemDictionary.UserName.validate_user_name(to_be_validated) do

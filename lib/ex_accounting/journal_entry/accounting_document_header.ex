@@ -4,7 +4,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentHeader do
   """
   use Ecto.Schema
 
-  alias ExAccounting.DataItemDictionary.{
+  alias ExAccounting.DataItem.{
     DocumentType,
     PostingDate,
     AccountingPeriod,
@@ -58,14 +58,14 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentHeader do
 
   """
   @spec create(
-          ExAccounting.DataItemDictionary.DocumentType.t(),
-          ExAccounting.DataItemDictionary.PostingDate.t(),
-          ExAccounting.DataItemDictionary.AccountingPeriod.t(),
-          ExAccounting.DataItemDictionary.DocumentDate.t(),
-          ExAccounting.DataItemDictionary.EntryDate.t(),
-          ExAccounting.DataItemDictionary.EnteredAt.t(),
-          ExAccounting.DataItemDictionary.EnteredBy.t(),
-          ExAccounting.DataItemDictionary.PostedBy.t()
+          ExAccounting.DataItem.DocumentType.t(),
+          ExAccounting.DataItem.PostingDate.t(),
+          ExAccounting.DataItem.AccountingPeriod.t(),
+          ExAccounting.DataItem.DocumentDate.t(),
+          ExAccounting.DataItem.EntryDate.t(),
+          ExAccounting.DataItem.EnteredAt.t(),
+          ExAccounting.DataItem.EnteredBy.t(),
+          ExAccounting.DataItem.PostedBy.t()
         ) :: ExAccounting.JournalEntry.AccountingDocumentHeader.t()
   def create(
         document_type,

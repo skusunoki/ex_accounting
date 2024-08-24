@@ -18,7 +18,7 @@ defmodule ExAccounting.Configuration do
 
   """
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
-  alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+  alias ExAccounting.DataItem.AccountingDocumentNumberRangeCode
 
   @typedoc "_Accounting Document Number Range Code_"
   @type accounting_document_number_range_code :: AccountingDocumentNumberRangeCode.t()

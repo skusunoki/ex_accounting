@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
+defmodule ExAccounting.DataItem.AccountingDocumentNumberRangeCode do
   @moduledoc """
   Accounting Document Number Range Code controls document number issueed with in the defined ranges.
   Code should be 2 digits. Letters of code should be uppercase alphanumeric: A-Z or 0 - 9.
@@ -15,7 +15,7 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
 
   ## Examples
 
-      iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.type()
+      iex> ExAccounting.DataItem.AccountingDocumentNumberRangeCode.type()
       :string
   """
   @spec type() :: :string
@@ -26,10 +26,10 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
 
   ## Examples
 
-      iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.create("02")
-      %ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}
+      iex> ExAccounting.DataItem.AccountingDocumentNumberRangeCode.create("02")
+      %ExAccounting.DataItem.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}
 
-      iex> ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode.create("x1")
+      iex> ExAccounting.DataItem.AccountingDocumentNumberRangeCode.create("x1")
       {:error, "x1 is not valid"}
   """
   @spec create(String.t()) :: t()
@@ -53,13 +53,13 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
   @doc """
   ## Examples
 
-      iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+      iex> import ExAccounting.DataItem.AccountingDocumentNumberRangeCode
       iex> cast("02")
-      {:ok, %ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}}
+      {:ok, %ExAccounting.DataItem.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}}
 
-      iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+      iex> import ExAccounting.DataItem.AccountingDocumentNumberRangeCode
       iex> cast(~c"02")
-      {:ok, %ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}}
+      {:ok, %ExAccounting.DataItem.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}}
 
   """
   def cast(term) when is_list(term) and length(term) == 2 do
@@ -83,11 +83,11 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
 
   ## Examples
 
-      iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+      iex> import ExAccounting.DataItem.AccountingDocumentNumberRangeCode
       iex> dump(create("02"))
       {:ok, "02"}
 
-      iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+      iex> import ExAccounting.DataItem.AccountingDocumentNumberRangeCode
       iex> dump(~c"02")
       :error
   """
@@ -104,9 +104,9 @@ defmodule ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode do
 
   ## Examples
 
-      iex> import ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+      iex> import ExAccounting.DataItem.AccountingDocumentNumberRangeCode
       iex> load("02")
-      {:ok, %ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}}
+      {:ok, %ExAccounting.DataItem.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: "02"}}
 
   """
   def load(db_data_item) do
