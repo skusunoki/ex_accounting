@@ -19,7 +19,8 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
           EntryDate,
           EnteredAt,
           EnteredBy,
-          PostedBy
+          PostedBy,
+          ReverseDocumentIndicator
   }
 
 
@@ -40,7 +41,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
           entered_at: EnteredAt.t(),
           entered_by: EnteredBy.t(),
           posted_by: PostedBy.t(),
-          reverse_document_indicator: String.t(),
+          reverse_document_indicator: ReverseDocumentIndicator.t(),
           reverse_document_accounting_unit: String.t(),
           reverse_document_fiscal_year: integer,
           reverse_document_accounting_document: integer,
@@ -128,7 +129,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     field(:entered_at, EnteredAt)
     field(:entered_by, EnteredBy)
     field(:posted_by, PostedBy)
-    field(:reverse_document_indicator, :string)
+    field(:reverse_document_indicator,ReverseDocumentIndicator )
     field(:reverse_document_accounting_unit, :string)
     field(:reverse_document_fiscal_year, :integer)
     field(:reverse_document_accounting_document, :integer)

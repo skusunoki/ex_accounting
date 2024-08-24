@@ -1,6 +1,6 @@
 defmodule ExAccounting.DataItemDictionary.PostedBy do
   @moduledoc """
-    _Entered By_ is who posts the accounting document.
+    _Entered By_ is the _User Name_ who posts the accounting document.
   """
   use Ecto.Type
 
