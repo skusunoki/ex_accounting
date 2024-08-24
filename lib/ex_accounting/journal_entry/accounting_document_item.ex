@@ -6,33 +6,31 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
   use Ecto.Schema
   import Ecto.Changeset
   alias ExAccounting.DataItemDictionary.AccountingUnit
+
   alias ExAccounting.DataItemDictionary.{
-          FiscalYear,
-          AccountingArea,
-          AccountingDocumentNumber,
-          AccountingDocumentItemNumber,
-          DebitCredit,
-          DocumentType,
-          PostingDate,
-          AccountingPeriod,
-          DocumentDate,
-          EntryDate,
-          EnteredAt,
-          EnteredBy,
-          PostedBy,
-          ReverseDocumentIndicator
+    FiscalYear,
+    AccountingArea,
+    AccountingDocumentNumber,
+    AccountingDocumentItemNumber,
+    DebitCredit,
+    DocumentType,
+    PostingDate,
+    AccountingPeriod,
+    DocumentDate,
+    EntryDate,
+    EnteredAt,
+    EnteredBy,
+    PostedBy,
+    ReverseDocumentIndicator
   }
 
-
   @type t :: %__MODULE__{
-          fiscal_year: FiscalYear.t,
-          accounting_area: AccountingArea.t,
-          accounting_document_number:
-            AccountingDocumentNumber.t,
+          fiscal_year: FiscalYear.t(),
+          accounting_area: AccountingArea.t(),
+          accounting_document_number: AccountingDocumentNumber.t(),
           accounting_unit: String.t(),
-          accounting_document_item_number:
-            AccountingDocumentItemNumber.t,
-          debit_credit: DebitCredit.t,
+          accounting_document_item_number: AccountingDocumentItemNumber.t(),
+          debit_credit: DebitCredit.t(),
           document_type: DocumentType.t(),
           posting_date: PostingDate.t(),
           accounting_period: AccountingPeriod.t(),
@@ -129,7 +127,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     field(:entered_at, EnteredAt)
     field(:entered_by, EnteredBy)
     field(:posted_by, PostedBy)
-    field(:reverse_document_indicator,ReverseDocumentIndicator )
+    field(:reverse_document_indicator, ReverseDocumentIndicator)
     field(:reverse_document_accounting_unit, :string)
     field(:reverse_document_fiscal_year, :integer)
     field(:reverse_document_accounting_document, :integer)

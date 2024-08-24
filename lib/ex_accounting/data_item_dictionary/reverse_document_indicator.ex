@@ -58,7 +58,7 @@ defmodule ExAccounting.DataItemDictionary.ReverseDocumentIndicator do
       iex> ReverseDocumentIndicator.load(true)
       {:ok, %ReverseDocumentIndicator{reverse_document_indicator: true}}
   """
-  @spec load(String.t) :: {:ok, t()} | {:error, boolean}
+  @spec load(String.t()) :: {:ok, t()} | {:error, boolean}
   def load(reverse_document_indicator) when is_binary(reverse_document_indicator) do
     with true <- reverse_document_indicator in ["X", " "] do
       case reverse_document_indicator do
@@ -71,15 +71,15 @@ defmodule ExAccounting.DataItemDictionary.ReverseDocumentIndicator do
   end
 
   def load(_), do: :error
+
   @doc """
   Returns the default value of the _Reverse Document Indicator_.
 
   ## Examples
 
       iex> ReverseDocumentIndicator.default()
-      false
+      %ReverseDocumentIndicator{reverse_document_indicator: false}
   """
-  @spec default() :: boolean
-  def default, do: false
-
+  @spec default() :: t
+  def default, do: %__MODULE__{reverse_document_indicator: false}
 end

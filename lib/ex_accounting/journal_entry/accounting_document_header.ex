@@ -3,17 +3,17 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentHeader do
   _Accounting Document Header_ is the header of the accounting document.
   """
   use Ecto.Schema
-  alias ExAccounting.DataItemDictionary.{
-          DocumentType,
-          PostingDate,
-          AccountingPeriod,
-          DocumentDate,
-          EntryDate,
-          EnteredAt,
-          EnteredBy,
-          PostedBy
-  }
 
+  alias ExAccounting.DataItemDictionary.{
+    DocumentType,
+    PostingDate,
+    AccountingPeriod,
+    DocumentDate,
+    EntryDate,
+    EnteredAt,
+    EnteredBy,
+    PostedBy
+  }
 
   @typedoc "_Accounting Document Header_"
   @type t :: %__MODULE__{

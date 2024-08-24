@@ -77,7 +77,6 @@ defmodule ExAccounting.SystemDictionary.UserName do
     end
   end
 
-
   @doc """
     Generates the valid _User Name_ from the given charlist or strings.
 

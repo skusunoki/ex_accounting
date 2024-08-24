@@ -35,7 +35,7 @@ defmodule ExAccounting.DataItemDictionary.DocumentType do
 
   def cast(document_type) when is_list(document_type) do
     with {:ok, _} <- ExAccounting.Utility.validate(document_type),
-        true <- length(document_type) == 2 do
+         true <- length(document_type) == 2 do
       {:ok, create(document_type)}
     else
       _ -> :error
@@ -50,7 +50,7 @@ defmodule ExAccounting.DataItemDictionary.DocumentType do
       iex> DocumentType.dump(%DocumentType{document_type: ~C[DR]})
       {:ok, "DR"}
   """
-  @spec dump(t) :: {:ok, String.t} | :error
+  @spec dump(t) :: {:ok, String.t()} | :error
   def dump(%__MODULE__{document_type: document_type}), do: {:ok, to_string(document_type)}
   def dump(_), do: :error
 
@@ -62,7 +62,7 @@ defmodule ExAccounting.DataItemDictionary.DocumentType do
       iex> DocumentType.load("DR")
       {:ok, %DocumentType{document_type: ~C[DR]}}
   """
-  @spec load(String.t) :: {:ok, t()} | :error
+  @spec load(String.t()) :: {:ok, t()} | :error
   def load(document_type) when is_binary(document_type) do
     {:ok, struct!(__MODULE__, document_type: String.to_charlist(document_type))}
   end

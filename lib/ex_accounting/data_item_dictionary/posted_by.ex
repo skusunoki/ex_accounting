@@ -28,7 +28,7 @@ defmodule ExAccounting.DataItemDictionary.PostedBy do
       ...> |> ExAccounting.DataItemDictionary.PostedBy.cast()
       {:ok, %ExAccounting.DataItemDictionary.PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
   """
-  @spec cast(t | user_name ) :: {:ok, t()} | :error
+  @spec cast(t | user_name) :: {:ok, t()} | :error
   def cast(%ExAccounting.DataItemDictionary.PostedBy{} = term) do
     with %ExAccounting.DataItemDictionary.PostedBy{posted_by: user_name} <- term,
          %ExAccounting.SystemDictionary.UserName{user_name: to_be_validated} <- user_name,
@@ -58,7 +58,7 @@ defmodule ExAccounting.DataItemDictionary.PostedBy do
       iex> PostedBy.dump(%PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}})
       {:ok, "johndoe"}
   """
-  @spec dump(t) :: {:ok, String.t} | :error
+  @spec dump(t) :: {:ok, String.t()} | :error
   def dump(%__MODULE__{posted_by: posted_by}), do: {:ok, posted_by.user_name |> to_string()}
   def dump(_), do: :error
 
@@ -77,7 +77,6 @@ defmodule ExAccounting.DataItemDictionary.PostedBy do
       :error -> :error
     end
   end
-
 
   @doc """
     Generates the valid _Posted By_ from _User Name_.
