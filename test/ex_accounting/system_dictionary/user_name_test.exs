@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItemDictionaryTest do
+defmodule ExAccounting.SystemDictionaryTest do
   use ExUnit.Case
 
   alias ExAccounting.SystemDictionary.{
