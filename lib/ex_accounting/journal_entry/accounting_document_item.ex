@@ -1,28 +1,45 @@
 defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
-  use Ecto.Schema
-  import Ecto.Changeset
-
   @moduledoc """
   _Accounting Document Item_ is atomic data object in the accounting system.
   """
 
+  use Ecto.Schema
+  import Ecto.Changeset
+  alias ExAccounting.DataItemDictionary.AccountingUnit
+  alias ExAccounting.DataItemDictionary.{
+          FiscalYear,
+          AccountingArea,
+          AccountingDocumentNumber,
+          AccountingDocumentItemNumber,
+          DebitCredit,
+          DocumentType,
+          PostingDate,
+          AccountingPeriod,
+          DocumentDate,
+          EntryDate,
+          EnteredAt,
+          EnteredBy,
+          PostedBy
+  }
+
+
   @type t :: %__MODULE__{
-          fiscal_year: ExAccounting.DataItemDictionary.FiscalYear,
-          accounting_area: ExAccounting.DataItemDictionary.AccountingArea,
+          fiscal_year: FiscalYear.t,
+          accounting_area: AccountingArea.t,
           accounting_document_number:
-            ExAccounting.DataItemDictionary.AccountingDocumentItemNumber,
+            AccountingDocumentNumber.t,
           accounting_unit: String.t(),
           accounting_document_item_number:
-            ExAccounting.DataItemDictionary.AccountingDocumentItemNumber,
-          debit_credit: String.t(),
-          document_type: String.t(),
-          posting_date: Date.t(),
-          accounting_period: integer,
-          document_date: Date.t(),
-          entry_date: Date.t(),
-          entered_at: Time.t(),
-          entered_by: String.t(),
-          posted_by: String.t(),
+            AccountingDocumentItemNumber.t,
+          debit_credit: DebitCredit.t,
+          document_type: DocumentType.t(),
+          posting_date: PostingDate.t(),
+          accounting_period: AccountingPeriod.t(),
+          document_date: DocumentDate.t(),
+          entry_date: EntryDate.t(),
+          entered_at: EnteredAt.t(),
+          entered_by: EnteredBy.t(),
+          posted_by: PostedBy.t(),
           reverse_document_indicator: String.t(),
           reverse_document_accounting_unit: String.t(),
           reverse_document_fiscal_year: integer,
@@ -97,20 +114,20 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
         }
 
   schema "accounting_document_items" do
-    field(:fiscal_year, :integer)
-    field(:accounting_area, ExAccounting.DataItemDictionary.AccountingArea)
-    field(:accounting_document_number, :integer)
-    field(:accounting_unit, :string)
-    field(:accounting_document_item_number, :integer)
-    field(:debit_credit, :string)
-    field(:document_type, :string)
-    field(:posting_date, :date)
-    field(:accounting_period, :integer)
-    field(:document_date, :date)
-    field(:entry_date, :date)
-    field(:entered_at, :time)
-    field(:entered_by, :string)
-    field(:posted_by, :string)
+    field(:fiscal_year, FiscalYear)
+    field(:accounting_area, AccountingArea)
+    field(:accounting_document_number, AccountingDocumentNumber)
+    field(:accounting_unit, AccountingUnit)
+    field(:accounting_document_item_number, AccountingDocumentItemNumber)
+    field(:debit_credit, DebitCredit)
+    field(:document_type, DocumentType)
+    field(:posting_date, PostingDate)
+    field(:accounting_period, AccountingPeriod)
+    field(:document_date, PostingDate)
+    field(:entry_date, EntryDate)
+    field(:entered_at, EnteredAt)
+    field(:entered_by, EnteredBy)
+    field(:posted_by, PostedBy)
     field(:reverse_document_indicator, :string)
     field(:reverse_document_accounting_unit, :string)
     field(:reverse_document_fiscal_year, :integer)

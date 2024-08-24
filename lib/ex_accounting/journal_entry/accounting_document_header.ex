@@ -1,16 +1,30 @@
 defmodule ExAccounting.JournalEntry.AccountingDocumentHeader do
   @moduledoc """
-  TODO
+  _Accounting Document Header_ is the header of the accounting document.
   """
+  use Ecto.Schema
+  alias ExAccounting.DataItemDictionary.{
+          DocumentType,
+          PostingDate,
+          AccountingPeriod,
+          DocumentDate,
+          EntryDate,
+          EnteredAt,
+          EnteredBy,
+          PostedBy
+  }
+
+
+  @typedoc "_Accounting Document Header_"
   @type t :: %__MODULE__{
-          document_type: ExAccounting.DataItemDictionary.DocumentType.t(),
-          posting_date: ExAccounting.DataItemDictionary.PostingDate.t(),
-          accounting_period: ExAccounting.DataItemDictionary.AccountingPeriod.t(),
-          document_date: ExAccounting.DataItemDictionary.DocumentDate.t(),
-          entry_date: ExAccounting.DataItemDictionary.EntryDate.t(),
-          entered_at: ExAccounting.DataItemDictionary.EnteredAt.t(),
-          entered_by: ExAccounting.DataItemDictionary.EnteredBy.t(),
-          posted_by: ExAccounting.DataItemDictionary.PostedBy.t()
+          document_type: DocumentType.t(),
+          posting_date: PostingDate.t(),
+          accounting_period: AccountingPeriod.t(),
+          document_date: DocumentDate.t(),
+          entry_date: EntryDate.t(),
+          entered_at: EnteredAt.t(),
+          entered_by: EnteredBy.t(),
+          posted_by: PostedBy.t()
         }
   defstruct document_type: nil,
             posting_date: nil,

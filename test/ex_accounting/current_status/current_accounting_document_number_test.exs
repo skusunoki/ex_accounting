@@ -3,6 +3,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
   alias ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode
+  doctest CurrentAccountingDocumentNumber
 
   test "Incremented current number 100 should be 101" do
     assert CurrentAccountingDocumentNumber.increment(%{

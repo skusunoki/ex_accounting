@@ -26,6 +26,15 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     field(:current_document_number, :integer)
   end
 
+  @doc """
+  Makes the changeset for the current accounting document number.
+
+  ## Examples
+
+        iex> CurrentAccountingDocumentNumber.changeset(%CurrentAccountingDocumentNumber{number_range_code: "01", current_document_number: 1},
+        ...> %{number_range_code: "01", current_document_number: 2})
+        #Ecto.Changeset<action: nil, changes: %{number_range_code: %ExAccounting.DataItemDictionary.AccountingDocumentNumberRangeCode{accounting_document_number_range_code: \"01\"}, current_document_number: 2}, errors: [], data: #ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber<>, valid?: true>
+  """
   @spec changeset(t(), %{}) :: Ecto.Changeset.t()
   @spec changeset(t(), current_document_number) :: Ecto.Changeset.t()
   def changeset(current_accounting_document_number, params \\ %{}) do
@@ -33,6 +42,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     |> cast(params, [:number_range_code, :current_document_number])
     |> unique_constraint(:number_range_code)
   end
+
 
   @spec make_changeset({:insert, t, current_document_number}) :: {:insert, Ecto.Changeset.t()}
   def make_changeset({:insert, _, after_updated}) do
