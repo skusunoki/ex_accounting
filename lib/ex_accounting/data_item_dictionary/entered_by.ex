@@ -56,6 +56,10 @@ defmodule ExAccounting.DataItemDictionary.EnteredBy do
     %__MODULE__{entered_by: entered_by}
   end
 
+  @doc """
+  Dumps _Entered By into the database form.
+  """
+  @spec dump(t) :: binary() | :error
   def dump(%__MODULE__{} = term) do
     with %__MODULE__{entered_by: user_name} <- term,
          %ExAccounting.SystemDictionary.UserName{user_name: code} <- user_name do
@@ -63,6 +67,10 @@ defmodule ExAccounting.DataItemDictionary.EnteredBy do
     end
   end
 
+  @doc """
+  Loads db data to _Entered By_ in the valid internal form.
+  """
+  @spec load(String.t() | charlist) :: {:ok, t}
   def load(term) do
     with entered_by =
            term
