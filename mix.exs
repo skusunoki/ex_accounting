@@ -12,15 +12,16 @@ defmodule ElAccountingGl.MixProject do
       # Docs
       name: "ExAccounting",
       source_url: "https://github.com/skusunoki/ex_accounting",
-      docs: [main: "readme",
-             extras: ["README.md", "CHANGELOG.md" ],
-             groups_for_modules: [
-              journal_entry:  ~r"JournalEntry",
-              current_status: ~r"CurrentStatus",
-              elem: ~r"Elem",
-              configuration: ~r"Configuration",
-              system_dictionary: ~r"SystemDictionary",
-            ],
+      docs: [
+        main: "readme",
+        extras: ["README.md", "CHANGELOG.md"],
+        groups_for_modules: [
+          journal_entry: ~r"JournalEntry",
+          current_status: ~r"CurrentStatus",
+          elem: ~r"Elem",
+          configuration: ~r"Configuration",
+          system_dictionary: ~r"SystemDictionary"
+        ]
       ]
     ]
   end

@@ -6,7 +6,6 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   import Ecto.Changeset
   import Ecto.Query
 
-
   @typedoc "_Accounting Document Number Range_"
   @type t :: %__MODULE__{
           __meta__: Ecto.Schema.Metadata.t(),

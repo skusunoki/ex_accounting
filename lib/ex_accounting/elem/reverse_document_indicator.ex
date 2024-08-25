@@ -38,7 +38,7 @@ defmodule ExAccounting.Elem.ReverseDocumentIndicator do
   ## Examples
 
       iex> ReverseDocumentIndicator.dump(%ReverseDocumentIndicator{reverse_document_indicator: true})
-      {:ok, true}
+      {:ok, "X"}
   """
   @spec dump(t) :: {:ok, boolean} | :error
   def dump(%__MODULE__{reverse_document_indicator: reverse_document_indicator}) do
@@ -55,7 +55,7 @@ defmodule ExAccounting.Elem.ReverseDocumentIndicator do
 
   ## Examples
 
-      iex> ReverseDocumentIndicator.load(true)
+      iex> ReverseDocumentIndicator.load("X")
       {:ok, %ReverseDocumentIndicator{reverse_document_indicator: true}}
   """
   @spec load(String.t()) :: {:ok, t()} | {:error, boolean}
