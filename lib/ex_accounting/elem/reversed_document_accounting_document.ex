@@ -1,6 +1,6 @@
 defmodule ExAccounting.Elem.ReversedDocumentAccountingDocument do
   @moduledoc """
-  _Reversed Document Accounting Document_ is the accounting document that is reversed by the accounting document.
+  _Reversed Document Accounting Document_ is the _Accounting Document Number_ that is reversed by the accounting document.
   """
   use Ecto.Type
   alias ExAccounting.Elem.AccountingDocumentNumber
