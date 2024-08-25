@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItem.AccountingPeriod do
+defmodule ExAccounting.Elem.AccountingPeriod do
   @moduledoc """
   _Accounting Period_ is a period of time for which the financial statements are prepared.
   """

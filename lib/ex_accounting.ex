@@ -6,7 +6,7 @@ defmodule ExAccounting do
 
   """
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
-  alias ExAccounting.DataItem.AccountingDocumentNumberRangeCode
+  alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
   @doc """

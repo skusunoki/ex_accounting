@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItem.EnteredBy do
+defmodule ExAccounting.Elem.EnteredBy do
   @moduledoc """
   _Entered By_ is who inputs the accounting document.
   """
@@ -23,13 +23,13 @@ defmodule ExAccounting.DataItem.EnteredBy do
 
       iex> "JohnDoe"
       ...> |> ExAccounting.SystemDictionary.UserName.create()
-      ...> |> ExAccounting.DataItem.EnteredBy.create()
-      ...> |> ExAccounting.DataItem.EnteredBy.cast()
-      {:ok, %ExAccounting.DataItem.EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
+      ...> |> ExAccounting.Elem.EnteredBy.create()
+      ...> |> ExAccounting.Elem.EnteredBy.cast()
+      {:ok, %ExAccounting.Elem.EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
   """
   @spec cast(t | user_name) :: {:ok, t()} | :error
-  def cast(%ExAccounting.DataItem.EnteredBy{} = term) do
-    with %ExAccounting.DataItem.EnteredBy{entered_by: user_name} <- term,
+  def cast(%ExAccounting.Elem.EnteredBy{} = term) do
+    with %ExAccounting.Elem.EnteredBy{entered_by: user_name} <- term,
          %ExAccounting.SystemDictionary.UserName{user_name: to_be_validated} <- user_name,
          {:ok, _validated} <-
            ExAccounting.SystemDictionary.UserName.validate_user_name(to_be_validated) do
@@ -79,7 +79,7 @@ defmodule ExAccounting.DataItem.EnteredBy do
     with entered_by =
            term
            |> ExAccounting.SystemDictionary.UserName.create()
-           |> ExAccounting.DataItem.EnteredBy.create() do
+           |> ExAccounting.Elem.EnteredBy.create() do
       {:ok, entered_by}
     end
   end

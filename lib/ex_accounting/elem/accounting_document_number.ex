@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItem.AccountingDocumentNumber do
+defmodule ExAccounting.Elem.AccountingDocumentNumber do
   @moduledoc """
   _Accounting Document Number_ is sequential unique number to identify the accounting document.
   """

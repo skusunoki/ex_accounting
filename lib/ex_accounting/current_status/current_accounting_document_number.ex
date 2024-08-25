@@ -8,7 +8,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias ExAccounting.DataItem.AccountingDocumentNumberRangeCode
+  alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
   @typedoc "_Accounting Document Number Range Code_"

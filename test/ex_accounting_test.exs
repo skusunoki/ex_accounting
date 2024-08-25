@@ -6,7 +6,7 @@ defmodule ExAccountingTest do
   test "Issue new document number for the number range 01" do
     before =
       CurrentAccountingDocumentNumber.read(
-        ExAccounting.DataItem.AccountingDocumentNumberRangeCode.create("01")
+        ExAccounting.Elem.AccountingDocumentNumberRangeCode.create("01")
       )
 
     {:ok, result} =

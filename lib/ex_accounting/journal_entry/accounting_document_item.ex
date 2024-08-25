@@ -5,8 +5,8 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExAccounting.DataItem.AccountingUnit
-  alias ExAccounting.DataItem.{
+  alias ExAccounting.Elem.AccountingUnit
+  alias ExAccounting.Elem.{
           FiscalYear,
           AccountingArea,
           AccountingDocumentNumber,

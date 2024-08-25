@@ -2,7 +2,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   use ExUnit.Case
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
-  alias ExAccounting.DataItem.AccountingDocumentNumberRangeCode
+  alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   doctest CurrentAccountingDocumentNumber
 
   test "Incremented current number 100 should be 101" do

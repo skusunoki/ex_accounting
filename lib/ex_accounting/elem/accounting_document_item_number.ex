@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItem.AccountingDocumentItemNumber do
+defmodule ExAccounting.Elem.AccountingDocumentItemNumber do
   @moduledoc """
   AccountingDocumentItemNumber is identifier of accounting document item
   """

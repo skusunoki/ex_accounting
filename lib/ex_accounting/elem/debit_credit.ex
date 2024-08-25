@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItem.DebitCredit do
+defmodule ExAccounting.Elem.DebitCredit do
   @moduledoc """
   DebitCredit indicates accounting document item is placed on whether Debitor or Creditor.
   """
@@ -14,7 +14,7 @@ defmodule ExAccounting.DataItem.DebitCredit do
 
   ## Exapmles
 
-      iex> ExAccounting.DataItem.DebitCredit.type()
+      iex> ExAccounting.Elem.DebitCredit.type()
       :string
   """
   @spec type() :: :string
@@ -25,19 +25,19 @@ defmodule ExAccounting.DataItem.DebitCredit do
 
   ## Examples
 
-      iex> ExAccounting.DataItem.DebitCredit.cast(:debit)
-      {:ok, %ExAccounting.DataItem.DebitCredit{debit_credit: :debit}}
+      iex> ExAccounting.Elem.DebitCredit.cast(:debit)
+      {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :debit}}
 
-      iex> ExAccounting.DataItem.DebitCredit.cast(:credit)
-      {:ok, %ExAccounting.DataItem.DebitCredit{debit_credit: :credit}}
+      iex> ExAccounting.Elem.DebitCredit.cast(:credit)
+      {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :credit}}
 
-      iex> ExAccounting.DataItem.DebitCredit.cast("D")
-      {:ok, %ExAccounting.DataItem.DebitCredit{debit_credit: :debit}}
+      iex> ExAccounting.Elem.DebitCredit.cast("D")
+      {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :debit}}
 
-      iex> ExAccounting.DataItem.DebitCredit.cast("C")
-      {:ok, %ExAccounting.DataItem.DebitCredit{debit_credit: :credit}}
+      iex> ExAccounting.Elem.DebitCredit.cast("C")
+      {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :credit}}
 
-      iex> ExAccounting.DataItem.DebitCredit.cast("X")
+      iex> ExAccounting.Elem.DebitCredit.cast("X")
       :error
 
   """
@@ -61,9 +61,9 @@ defmodule ExAccounting.DataItem.DebitCredit do
 
   ## Examples
 
-      iex> ExAccounting.DataItem.DebitCredit.dump(%ExAccounting.DataItem.DebitCredit{debit_credit: :debit})
+      iex> ExAccounting.Elem.DebitCredit.dump(%ExAccounting.Elem.DebitCredit{debit_credit: :debit})
       {:ok, "D"}
-      iex> ExAccounting.DataItem.DebitCredit.dump(%ExAccounting.DataItem.DebitCredit{debit_credit: :credit})
+      iex> ExAccounting.Elem.DebitCredit.dump(%ExAccounting.Elem.DebitCredit{debit_credit: :credit})
       {:ok, "C"}
   """
   @spec dump(t) :: {:ok, String.t()} | :error
@@ -84,13 +84,13 @@ defmodule ExAccounting.DataItem.DebitCredit do
 
   ## Examples
 
-      iex> ExAccounting.DataItem.DebitCredit.load("D")
-      {:ok, %ExAccounting.DataItem.DebitCredit{debit_credit: :debit}}
+      iex> ExAccounting.Elem.DebitCredit.load("D")
+      {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :debit}}
 
-      iex> ExAccounting.DataItem.DebitCredit.load("C")
-      {:ok, %ExAccounting.DataItem.DebitCredit{debit_credit: :credit}}
+      iex> ExAccounting.Elem.DebitCredit.load("C")
+      {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :credit}}
 
-      iex> ExAccounting.DataItem.DebitCredit.load("X")
+      iex> ExAccounting.Elem.DebitCredit.load("X")
       :error
   """
   @spec load(String.t()) :: {:ok, t} | :error

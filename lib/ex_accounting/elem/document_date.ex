@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItem.DocumentDate do
+defmodule ExAccounting.Elem.DocumentDate do
   @moduledoc """
   DocumentDate is the date of document.
   """

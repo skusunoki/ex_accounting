@@ -1,4 +1,4 @@
-defmodule ExAccounting.DataItem.EnteredAt do
+defmodule ExAccounting.Elem.EnteredAt do
   @moduledoc """
   EnteredAt is the time of the document created.
   """
