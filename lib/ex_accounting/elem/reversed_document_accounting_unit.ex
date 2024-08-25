@@ -89,4 +89,19 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingUnit do
         :error
     end
   end
+
+  @doc """
+  Converts the _Reversed Document Accounting Unit_ to _Accounting Unit_.
+
+  ## Examples
+
+      iex> to_accounting_unit(%ReversedDocumentAccountingUnit{reversed_document_accounting_unit: %AccountingUnit{accounting_unit: ~C[1000]}})
+      {:ok, %AccountingUnit{accounting_unit: ~C[1000]}}
+  """
+  @spec to_accounting_unit(t) :: {:ok, AccountingUnit.t()} | :error
+  def to_accounting_unit(%__MODULE__{reversed_document_accounting_unit: accounting_unit}) do
+    {:ok, accounting_unit}
+  end
+
+  def to_accounting_unit(_), do: :error
 end

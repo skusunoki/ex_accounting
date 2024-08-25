@@ -29,17 +29,18 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingDocument do
   """
   @spec cast(t | accounting_document) :: {:ok, t()} | :error
   def cast(%__MODULE__{} = reversed_document_accounting_document) do
-    with %__MODULE__{reversed_document_accounting_document: reversed} <- reversed_document_accounting_document,
-        %AccountingDocumentNumber{accounting_document_number: _document_number} <- reversed
-    do
+    with %__MODULE__{reversed_document_accounting_document: reversed} <-
+           reversed_document_accounting_document,
+         %AccountingDocumentNumber{accounting_document_number: _document_number} <- reversed do
       {:ok, reversed_document_accounting_document}
     else
       _ -> :error
     end
   end
 
-  def cast(%AccountingDocumentNumber{} = accounting_document_number ) do
-    with %AccountingDocumentNumber{accounting_document_number: _document_number} <- accounting_document_number do
+  def cast(%AccountingDocumentNumber{} = accounting_document_number) do
+    with %AccountingDocumentNumber{accounting_document_number: _document_number} <-
+           accounting_document_number do
       {:ok, %__MODULE__{reversed_document_accounting_document: accounting_document_number}}
     else
       _ -> :error
@@ -57,7 +58,11 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingDocument do
       {:ok, 1010}
   """
   @spec dump(t) :: {:ok, integer} | :error
-  def dump(%__MODULE__{reversed_document_accounting_document: %AccountingDocumentNumber{accounting_document_number: document_number}}) do
+  def dump(%__MODULE__{
+        reversed_document_accounting_document: %AccountingDocumentNumber{
+          accounting_document_number: document_number
+        }
+      }) do
     {:ok, document_number}
   end
 
@@ -73,6 +78,26 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingDocument do
   """
   @spec load(integer) :: {:ok, t()} | :error
   def load(document_number) do
-    {:ok, %__MODULE__{reversed_document_accounting_document: %AccountingDocumentNumber{accounting_document_number: document_number}}}
+    {:ok,
+     %__MODULE__{
+       reversed_document_accounting_document: %AccountingDocumentNumber{
+         accounting_document_number: document_number
+       }
+     }}
+  end
+
+  @doc """
+  Convert _Reversed Document Accounting Document_ to _Accounting Document Number_.
+
+  ## Examples
+
+      iex> to_accounting_document_number(%ReversedDocumentAccountingDocument{reversed_document_accounting_document: %AccountingDocumentNumber{accounting_document_number: 1010}})
+      {:ok, %AccountingDocumentNumber{accounting_document_number: 1010}}
+  """
+  @spec to_accounting_document_number(t) :: {:ok, accounting_document()} | :error
+  def to_accounting_document_number(%__MODULE__{
+        reversed_document_accounting_document: accounting_document_number
+      }) do
+    {:ok, accounting_document_number}
   end
 end

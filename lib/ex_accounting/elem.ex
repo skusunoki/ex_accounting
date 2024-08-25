@@ -20,7 +20,8 @@ defmodule ExAccounting.Elem do
     PostingDate,
     ReverseDocumentIndicator,
     ReversedDocumentAccountingUnit,
-    ReversedDocumentFiscalYear
+    ReversedDocumentFiscalYear,
+    ReversedDocumentAccountingDocument
   }
 
   defdelegate to_accounting_area(term), to: AccountingArea, as: :cast
@@ -33,6 +34,9 @@ defmodule ExAccounting.Elem do
     to: AccountingDocumentNumberRangeCode,
     as: :cast
 
+  def to_accounting_document_number(%ReversedDocumentAccountingDocument{} = term),
+    do: ReversedDocumentAccountingDocument.to_accounting_document_number(term)
+
   defdelegate to_accounting_document_number(term), to: AccountingDocumentNumber, as: :cast
   defdelegate to_accounting_period(term), to: AccountingPeriod, as: :cast
   defdelegate to_accounting_unit(term), to: AccountingUnit, as: :cast
@@ -42,6 +46,10 @@ defmodule ExAccounting.Elem do
   defdelegate to_entered_at(term), to: EnteredAt, as: :cast
   defdelegate to_entered_by(term), to: EnteredBy, as: :cast
   defdelegate to_entry_date(term), to: EntryDate, as: :cast
+
+  def to_fiscal_year(%ReversedDocumentFiscalYear{} = term),
+    do: ReversedDocumentFiscalYear.to_fiscal_year(term)
+
   defdelegate to_fiscal_year(term), to: FiscalYear, as: :cast
   defdelegate to_posted_by(term), to: PostedBy, as: :cast
   defdelegate to_posting_date(term), to: PostingDate, as: :cast
@@ -53,6 +61,10 @@ defmodule ExAccounting.Elem do
 
   defdelegate to_reversed_document_fiscal_year(term),
     to: ReversedDocumentFiscalYear,
+    as: :cast
+
+  defdelegate to_reversed_document_accounting_document(term),
+    to: ReversedDocumentAccountingDocument,
     as: :cast
 
   def dump(%AccountingArea{} = term), do: AccountingArea.dump(term)
@@ -79,4 +91,7 @@ defmodule ExAccounting.Elem do
     do: ReversedDocumentAccountingUnit.dump(term)
 
   def dump(%ReversedDocumentFiscalYear{} = term), do: ReversedDocumentFiscalYear.dump(term)
+
+  def dump(%ReversedDocumentAccountingDocument{} = term),
+    do: ReversedDocumentAccountingDocument.dump(term)
 end

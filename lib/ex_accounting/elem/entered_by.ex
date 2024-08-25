@@ -79,7 +79,7 @@ defmodule ExAccounting.Elem.EnteredBy do
     with entered_by =
            term
            |> ExAccounting.SystemDictionary.UserName.create()
-           |>create() do
+           |> create() do
       {:ok, entered_by}
     end
   end
