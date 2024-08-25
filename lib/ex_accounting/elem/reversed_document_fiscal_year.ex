@@ -41,6 +41,7 @@ defmodule ExAccounting.Elem.ReversedDocumentFiscalYear do
 
   """
   @spec cast(t) :: {:ok, t()} | {:error, fiscal_year}
+  @spec cast(fiscal_year) :: {:ok, t()} | {:error, fiscal_year}
   def cast(%__MODULE__{} = term) do
     with %FiscalYear{fiscal_year: code} <- term.reversed_document_fiscal_year,
          true <- is_integer(code),

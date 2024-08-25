@@ -95,7 +95,7 @@ defmodule ExAccounting.Elem.FiscalYear do
       iex> FiscalYear.to_reversed_document_fiscal_year(%FiscalYear{fiscal_year: 2024})
       {:ok, %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 }}}
   """
-  @spec to_reversed_document_fiscal_year(t) :: ExAccounting.Elem.ReversedDocumentFiscalYear.t()
+  @spec to_reversed_document_fiscal_year(t) :: {:ok, ExAccounting.Elem.ReversedDocumentFiscalYear.t()} | :error
   def to_reversed_document_fiscal_year(%__MODULE__{} = fiscal_year) do
     ExAccounting.Elem.ReversedDocumentFiscalYear.cast(fiscal_year)
   end
