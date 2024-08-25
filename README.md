@@ -1,6 +1,6 @@
 # ExAccounting
 
-**TODO: Add description**
+ExAccounting is an accounting system using double entry system.  
 
 ## Installation
 

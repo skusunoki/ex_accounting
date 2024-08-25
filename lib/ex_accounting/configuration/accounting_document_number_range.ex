@@ -10,9 +10,9 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   @type t :: %__MODULE__{
           __meta__: Ecto.Schema.Metadata.t(),
           id: integer() | nil,
-          number_range_code: String.t() | nil,
-          accounting_document_number_from: integer() | nil,
-          accounting_document_number_to: integer() | nil
+          number_range_code: ExAccounting.Elem.AccountingDocumentNumberRangeCode.t() | nil,
+          accounting_document_number_from: ExAccounting.Elem.AccountingDocumentNumber.t() | nil,
+          accounting_document_number_to: ExAccounting.Elem.AccountingDocumentNumber.t() | nil
         }
 
   @typedoc "_Accounting Document Number Range Code_"
@@ -22,9 +22,9 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   @type read :: (number_range_code -> t)
 
   schema "accounting_document_number_ranges" do
-    field(:number_range_code, :string)
-    field(:accounting_document_number_from, :integer)
-    field(:accounting_document_number_to, :integer)
+    field(:number_range_code, ExAccounting.Elem.AccountingDocumentNumberRangeCode)
+    field(:accounting_document_number_from, ExAccounting.Elem.AccountingDocumentNumber)
+    field(:accounting_document_number_to, ExAccounting.Elem.AccountingDocumentNumber)
   end
 
   def changeset(accounting_document_number_range, params \\ %{}) do

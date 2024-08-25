@@ -8,6 +8,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias ExAccounting.Elem.AccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 
@@ -22,13 +23,13 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
           __meta__: Ecto.Schema.Metadata.t(),
           id: integer() | nil,
           number_range_code: number_range_code | nil,
-          current_document_number: integer | nil
+          current_document_number: AccountingDocumentNumber.t() | nil
         }
 
   @typedoc "Next document number which is incremented or newly created from the configuration of the accounting document number range."
   @type current_document_number :: %{
           number_range_code: AccountingDocumentNumberRangeCode.t(),
-          current_document_number: integer
+          current_document_number: AccountingDocumentNumber.t()
         }
   @typedoc "Function to read number range: _Accounting Document Number Range Code_ -> _Accounting Document Number Range_"
   @type read_config :: AccountingDocumentNumberRange.read()
@@ -38,7 +39,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
 
   schema "current_accounting_document_numbers" do
     field(:number_range_code, AccountingDocumentNumberRangeCode)
-    field(:current_document_number, :integer)
+    field(:current_document_number, AccountingDocumentNumber)
   end
 
   @doc """
@@ -85,11 +86,21 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   Increments the current document number by one.
   """
   @spec increment(current_document_number) :: current_document_number
-  def increment(current) do
-    %{
-      number_range_code: current.number_range_code,
-      current_document_number: current.current_document_number + 1
-    }
+  @spec increment(AccountingDocumentNumber.t) :: AccountingDocumentNumber.t
+  def increment(
+        %{number_range_code: _number_range_code, current_document_number: current_document_number} =
+          current
+      ) do
+    with %AccountingDocumentNumber{} <- current_document_number do
+      %{
+        number_range_code: current.number_range_code,
+        current_document_number: increment(current_document_number)
+      }
+    end
+  end
+
+  def increment(%AccountingDocumentNumber{accounting_document_number: number}) do
+    %AccountingDocumentNumber{accounting_document_number: number + 1}
   end
 
   @doc """

@@ -16,7 +16,9 @@ defmodule ExAccountingTest do
         &AccountingDocumentNumberRange.read(&1)
       )
 
-    assert result.current_document_number == before.current_document_number + 1
+    assert result.current_document_number.accounting_document_number ==
+             before.current_document_number.accounting_document_number + 1
+
     assert result.number_range_code == before.number_range_code
   end
 

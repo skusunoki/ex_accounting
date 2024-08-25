@@ -3,15 +3,16 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
+  alias ExAccounting.Elem.AccountingDocumentNumber
   doctest CurrentAccountingDocumentNumber, import: true
 
   test "Incremented current number 100 should be 101" do
     assert CurrentAccountingDocumentNumber.increment(%{
              number_range_code: "01",
-             current_document_number: 100
+             current_document_number: %AccountingDocumentNumber{accounting_document_number: 100}
            }) == %{
              number_range_code: "01",
-             current_document_number: 101
+             current_document_number: %AccountingDocumentNumber{accounting_document_number: 101}
            }
   end
 
@@ -45,20 +46,26 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
         fn _ ->
           %CurrentAccountingDocumentNumber{
             number_range_code: AccountingDocumentNumberRangeCode.create("01"),
-            current_document_number: 1_000_000_001
+            current_document_number: %AccountingDocumentNumber{
+              accounting_document_number: 1_000_000_001
+            }
           }
         end,
         fn _ ->
           %AccountingDocumentNumberRange{
             number_range_code: AccountingDocumentNumberRangeCode.create("01"),
-            accounting_document_number_from: 1_000_000_000,
-            accounting_document_number_to: 1_999_999_999
+            accounting_document_number_from: %AccountingDocumentNumber{
+              accounting_document_number: 1_000_000_000
+            },
+            accounting_document_number_to: %AccountingDocumentNumber{
+              accounting_document_number: 1_999_999_999
+            }
           }
         end
       )
 
     assert result.number_range_code == AccountingDocumentNumberRangeCode.create("01")
-    assert result.current_document_number == 1_000_000_002
+    assert result.current_document_number.accounting_document_number == 1_000_000_002
   end
 
   test "Issue new document number for number range 02 should be 2_000_000_001" do
@@ -68,20 +75,26 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
         fn _ ->
           %CurrentAccountingDocumentNumber{
             number_range_code: AccountingDocumentNumberRangeCode.create("02"),
-            current_document_number: 2_000_000_000
+            current_document_number: %AccountingDocumentNumber{
+              accounting_document_number: 2_000_000_000
+            }
           }
         end,
         fn _ ->
           %AccountingDocumentNumberRange{
             number_range_code: AccountingDocumentNumberRangeCode.create("02"),
-            accounting_document_number_from: 2_000_000_000,
-            accounting_document_number_to: 2_999_999_999
+            accounting_document_number_from: %AccountingDocumentNumber{
+              accounting_document_number: 2_000_000_000
+            },
+            accounting_document_number_to: %AccountingDocumentNumber{
+              accounting_document_number: 2_999_999_999
+            }
           }
         end
       )
 
     assert result.number_range_code == AccountingDocumentNumberRangeCode.create("02")
-    assert result.current_document_number == 2_000_000_001
+    assert result.current_document_number.accounting_document_number == 2_000_000_001
   end
 
   test "Issue new document number for the undefined document number range 10 should be first number" do
