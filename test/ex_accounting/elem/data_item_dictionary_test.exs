@@ -20,7 +20,8 @@ defmodule ExAccounting.ElemTest do
     PostedBy,
     AccountingDocumentNumberRangeCode,
     ReverseDocumentIndicator,
-    ReversedDocumentAccountingUnit
+    ReversedDocumentAccountingUnit,
+    ReversedDocumentFiscalYear
   }
 
   doctest FiscalYear
@@ -40,4 +41,5 @@ defmodule ExAccounting.ElemTest do
   doctest AccountingDocumentNumberRangeCode
   doctest ReverseDocumentIndicator
   doctest ReversedDocumentAccountingUnit
+  doctest ReversedDocumentFiscalYear
 end

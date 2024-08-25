@@ -46,9 +46,11 @@ defmodule ExAccounting.Elem do
   defdelegate to_posted_by(term), to: PostedBy, as: :cast
   defdelegate to_posting_date(term), to: PostingDate, as: :cast
   defdelegate to_reverse_document_indicator(term), to: ReverseDocumentIndicator, as: :cast
+
   defdelegate to_reversed_document_accounting_unit(term),
     to: ReversedDocumentAccountingUnit,
     as: :cast
+
   defdelegate to_reversed_document_fiscal_year(term),
     to: ReversedDocumentFiscalYear,
     as: :cast
@@ -75,5 +77,6 @@ defmodule ExAccounting.Elem do
 
   def dump(%ReversedDocumentAccountingUnit{} = term),
     do: ReversedDocumentAccountingUnit.dump(term)
+
   def dump(%ReversedDocumentFiscalYear{} = term), do: ReversedDocumentFiscalYear.dump(term)
 end
