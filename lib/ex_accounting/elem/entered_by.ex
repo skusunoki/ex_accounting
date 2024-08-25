@@ -83,4 +83,19 @@ defmodule ExAccounting.Elem.EnteredBy do
       {:ok, entered_by}
     end
   end
+
+  @doc """
+  Convert to _Entered By_ to _User Name_.
+
+  ## Examples
+
+      iex> to_user_name(%EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}})
+      {:ok, %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}}
+  """
+  @spec to_user_name(t) :: {:ok, user_name()} | :error
+  def to_user_name(%__MODULE__{entered_by: user_name}) do
+    {:ok, user_name}
+  end
+
+  def to_user_name(_), do: :error
 end

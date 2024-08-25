@@ -90,4 +90,19 @@ defmodule ExAccounting.Elem.PostedBy do
   def create(%ExAccounting.SystemDictionary.UserName{} = user_name) do
     %__MODULE__{posted_by: user_name}
   end
+
+  @doc """
+  Convert to _Posted By_ to _User Name_.
+
+  ## Examples
+
+      iex> to_user_name(%PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}})
+      {:ok, %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}}
+  """
+  @spec to_user_name(t) :: {:ok, user_name()} | :error
+  def to_user_name(%__MODULE__{posted_by: user_name}) do
+    {:ok, user_name}
+  end
+
+  def to_user_name(_), do: :error
 end
