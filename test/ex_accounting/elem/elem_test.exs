@@ -21,7 +21,8 @@ defmodule ExAccounting.ElemTest do
     AccountingDocumentNumberRangeCode,
     ReverseDocumentIndicator,
     ReversedDocumentAccountingUnit,
-    ReversedDocumentFiscalYear
+    ReversedDocumentFiscalYear,
+    ReversedDocumentAccountingDocument
   }
 
   doctest FiscalYear, import: true
@@ -42,4 +43,5 @@ defmodule ExAccounting.ElemTest do
   doctest ReverseDocumentIndicator, import: true
   doctest ReversedDocumentAccountingUnit, import: true
   doctest ReversedDocumentFiscalYear, import: true
+  doctest ReversedDocumentAccountingDocument, import: true
 end
