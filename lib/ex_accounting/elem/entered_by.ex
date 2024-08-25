@@ -1,6 +1,6 @@
 defmodule ExAccounting.Elem.EnteredBy do
   @moduledoc """
-  _Entered By_ is who inputs the accounting document.
+  _Entered By_ is _User Name_ who inputs the accounting document.
   """
   use Ecto.Type
 

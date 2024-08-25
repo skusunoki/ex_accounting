@@ -16,7 +16,7 @@ defmodule ExAccounting.Elem.AccountingPeriod do
   def type, do: :integer
 
   @doc """
-  Casts the given positive integer to the _Accounting Period_.
+  Casts the given positive integer or charlist to the _Accounting Period_.
   _Accounting Period_ must be between 1 and 12.
 
   ## Examples
@@ -95,7 +95,7 @@ defmodule ExAccounting.Elem.AccountingPeriod do
       iex> AccountingPeriod.load(12)
       {:ok, %AccountingPeriod{accounting_period: 12}}
   """
-  @spec load(integer) :: {:ok, t} | :error
+  @spec load(data :: integer) :: {:ok, t} | :error
   def load(data) when is_integer(data) do
     with stdata = %{accounting_period: data}, do: {:ok, struct!(__MODULE__, stdata)}
   end

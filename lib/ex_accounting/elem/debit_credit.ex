@@ -107,7 +107,7 @@ defmodule ExAccounting.Elem.DebitCredit do
 
   @doc """
     Generates valid _Debit Credit_.
-    Debit Credit can be either :debit or :credit.
+    Debit Credit can be either `:debit` or `:credit`.
 
   ## Examples
       iex> DebitCredit.create(:debit)

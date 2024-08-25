@@ -1,7 +1,11 @@
 defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
+  @moduledoc """
+  _Accounting Document Number Range_ is the configuration of the number range for the accounting document.
+  """
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
+
 
   @typedoc "_Accounting Document Number Range_"
   @type t :: %__MODULE__{
