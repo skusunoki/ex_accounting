@@ -1,6 +1,7 @@
 defmodule ExAccounting.ElemTest do
   use ExUnit.Case
 
+  alias ExAccounting.Elem.AmountInTransactionCurrency
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
 
   alias ExAccounting.Elem.{
@@ -22,7 +23,8 @@ defmodule ExAccounting.ElemTest do
     ReverseDocumentIndicator,
     ReversedDocumentAccountingUnit,
     ReversedDocumentFiscalYear,
-    ReversedDocumentAccountingDocument
+    ReversedDocumentAccountingDocument,
+    AmountInTransactionCurrency
   }
 
   doctest FiscalYear, import: true
@@ -44,4 +46,5 @@ defmodule ExAccounting.ElemTest do
   doctest ReversedDocumentAccountingUnit, import: true
   doctest ReversedDocumentFiscalYear, import: true
   doctest ReversedDocumentAccountingDocument, import: true
+  doctest AmountInTransactionCurrency, import: true
 end

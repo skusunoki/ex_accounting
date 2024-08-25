@@ -86,7 +86,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   Increments the current document number by one.
   """
   @spec increment(current_document_number) :: current_document_number
-  @spec increment(AccountingDocumentNumber.t) :: AccountingDocumentNumber.t
+  @spec increment(AccountingDocumentNumber.t()) :: AccountingDocumentNumber.t()
   def increment(
         %{number_range_code: _number_range_code, current_document_number: current_document_number} =
           current

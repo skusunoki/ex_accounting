@@ -21,7 +21,7 @@ defmodule ExAccounting.Elem.DebitCredit do
   def type, do: :string
 
   @doc """
-  Cast the given atom or string to the valid internal form of _Debit Credit_.
+  Casts the given atom or string to the valid internal form of _Debit Credit_.
 
   ## Examples
 

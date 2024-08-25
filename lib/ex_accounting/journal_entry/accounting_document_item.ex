@@ -21,7 +21,8 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     EnteredAt,
     EnteredBy,
     PostedBy,
-    ReverseDocumentIndicator
+    ReverseDocumentIndicator,
+    AmountInTransactionCurrency
   }
 
   @type t :: %__MODULE__{
@@ -87,7 +88,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
           exchange_rate_to_accounting_unit_currency: integer,
           date_of_exchange_rate_to_accounting_unit_currency: Date.t(),
           transaction_currency: String.t(),
-          amount_in_transaction_currency: integer,
+          amount_in_transaction_currency: AmountInTransactionCurrency.t(),
           accounting_area_currency: String.t(),
           amount_in_accounting_area_currency: integer,
           exchange_rate_type_to_accounting_area_currency: String.t(),
@@ -175,7 +176,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     field(:exchange_rate_to_accounting_unit_currency, :integer)
     field(:date_of_exchange_rate_to_accounting_unit_currency, :date)
     field(:transaction_currency, :string)
-    field(:amount_in_transaction_currency, :integer)
+    field(:amount_in_transaction_currency, AmountInTransactionCurrency)
     field(:accounting_area_currency, :string)
     field(:amount_in_accounting_area_currency, :integer)
     field(:exchange_rate_type_to_accounting_area_currency, :string)
