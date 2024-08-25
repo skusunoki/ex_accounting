@@ -14,7 +14,7 @@ defmodule ExAccounting.Elem.DocumentType do
 
   ## Examples
 
-      iex> DocumentType.type()
+      iex> type()
       :string
   """
   @spec type() :: :string
@@ -25,7 +25,7 @@ defmodule ExAccounting.Elem.DocumentType do
 
   ## Examples
 
-      iex> DocumentType.cast(~C[DR])
+      iex> cast(~C[DR])
       {:ok, %DocumentType{document_type: ~C[DR]}}
   """
   @spec cast(t | charlist) :: {:ok, t()} | :error
@@ -47,7 +47,7 @@ defmodule ExAccounting.Elem.DocumentType do
 
   ## Examples
 
-      iex> DocumentType.dump(%DocumentType{document_type: ~C[DR]})
+      iex> dump(%DocumentType{document_type: ~C[DR]})
       {:ok, "DR"}
   """
   @spec dump(t) :: {:ok, String.t()} | :error
@@ -59,7 +59,7 @@ defmodule ExAccounting.Elem.DocumentType do
 
   ## Examples
 
-      iex> DocumentType.load("DR")
+      iex> load("DR")
       {:ok, %DocumentType{document_type: ~C[DR]}}
   """
   @spec load(String.t()) :: {:ok, t()} | :error
@@ -75,7 +75,7 @@ defmodule ExAccounting.Elem.DocumentType do
     The argument must be 2 letters. Strings is not allowed.
 
   ## Examples
-      iex> DocumentType.create( ~C[DR] )
+      iex> create( ~C[DR] )
       %DocumentType{ document_type: ~C[DR]}
   """
   @spec create(charlist) :: t()

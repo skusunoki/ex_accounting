@@ -19,19 +19,16 @@ defmodule ExAccounting.Elem.AccountingArea do
   The argument must be alphanumeric 4 letters. Lower case letters are not allowed.
 
   ## Examples
-      iex> AccountingArea.cast(~C[0001])
+      iex> cast(~C[0001])
       {:ok, %AccountingArea{accounting_area: ~C[0001] }}
 
-      iex> alias ExAccounting.Elem.AccountingArea
-      iex> AccountingArea.cast("0001")
+      iex> cast("0001")
       {:ok, %AccountingArea{accounting_area: ~C[0001] }}
 
-      iex> alias ExAccounting.Elem.AccountingArea
-      iex> AccountingArea.cast(0001)
+      iex> cast(0001)
       {:error, 0001}
 
-      iex> alias ExAccounting.Elem.AccountingArea
-      iex> AccountingArea.cast(%ExAccounting.Elem.AccountingArea{accounting_area: ~c[x1]})
+      iex> cast(%ExAccounting.Elem.AccountingArea{accounting_area: ~c[x1]})
       {:error, %ExAccounting.Elem.AccountingArea{accounting_area: ~c[x1]}}
 
   """
@@ -60,7 +57,7 @@ defmodule ExAccounting.Elem.AccountingArea do
   Loads the _Accounting Area_ from the given binary data.
 
   ## Examples
-      iex> AccountingArea.load("0001")
+      iex> load("0001")
       {:ok, %AccountingArea{accounting_area: ~C[0001]}}
   """
   @spec load(binary) :: {:ok, t} | :error
@@ -73,7 +70,7 @@ defmodule ExAccounting.Elem.AccountingArea do
 
   ## Examples
 
-      iex> AccountingArea.dump(%AccountingArea{accounting_area: ~C[0001]})
+      iex> dump(%AccountingArea{accounting_area: ~C[0001]})
       {:ok, "0001"}
   """
   @spec dump(t) :: binary() | :error
@@ -92,7 +89,7 @@ defmodule ExAccounting.Elem.AccountingArea do
 
   ## Examples
 
-      iex> AccountingArea.equal?(%AccountingArea{accounting_area: ~C[0001]}, %AccountingArea{accounting_area: ~C[0001]})
+      iex> equal?(%AccountingArea{accounting_area: ~C[0001]}, %AccountingArea{accounting_area: ~C[0001]})
       true
   """
   @spec equal?(term1 :: t, term2 :: t) :: boolean()
@@ -107,8 +104,7 @@ defmodule ExAccounting.Elem.AccountingArea do
   Generates the valid _Accounting Area_ from the given charlist or strings.
 
   ## Examples
-      iex> alias ExAccounting.Elem.AccountingArea
-      iex> AccountingArea.create(~C[0001])
+      iex> create(~C[0001])
       %AccountingArea{accounting_area: ~C[0001]}
   """
   @spec create(charlist) :: t()

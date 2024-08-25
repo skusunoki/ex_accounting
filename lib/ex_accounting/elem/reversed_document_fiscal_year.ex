@@ -29,13 +29,13 @@ defmodule ExAccounting.Elem.ReversedDocumentFiscalYear do
 
   ## Examples
 
-      iex> ReversedDocumentFiscalYear.cast(%FiscalYear{ fiscal_year: 2024 })
+      iex> cast(%FiscalYear{ fiscal_year: 2024 })
       {:ok, %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 }}}
 
-      iex> ReversedDocumentFiscalYear.cast(2024)
+      iex> cast(2024)
       {:ok, %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 }}}
 
-      iex> ReversedDocumentFiscalYear.cast( %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 } })
+      iex> cast( %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 } })
       {:ok, %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 }}}
 
 
@@ -79,7 +79,7 @@ defmodule ExAccounting.Elem.ReversedDocumentFiscalYear do
 
   ## Examples
 
-      iex> ReversedDocumentFiscalYear.dump(%ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 } })
+      iex> dump(%ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 } })
       {:ok, 2024}
   """
   @spec dump(t) :: {:ok, integer} | :error
@@ -93,7 +93,7 @@ defmodule ExAccounting.Elem.ReversedDocumentFiscalYear do
 
   ## Examples
 
-      iex> ReversedDocumentFiscalYear.load(2024)
+      iex> load(2024)
       {:ok, %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 } }}
   """
   @spec load(integer) :: {:ok, t} | :error
@@ -110,7 +110,7 @@ defmodule ExAccounting.Elem.ReversedDocumentFiscalYear do
 
   ## Examples
 
-      iex> ReversedDocumentFiscalYear.to_fiscal_year(%ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 } })
+      iex> to_fiscal_year(%ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 } })
       {:ok, %FiscalYear{ fiscal_year: 2024 }}
   """
   @spec to_fiscal_year(ExAccounting.Elem.ReversedDocumentFiscalYear.t()) ::

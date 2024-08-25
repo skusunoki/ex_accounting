@@ -21,13 +21,13 @@ defmodule ExAccounting.Elem.AccountingPeriod do
 
   ## Examples
 
-      iex> AccountingPeriod.cast(12)
+      iex> cast(12)
       {:ok, %AccountingPeriod{accounting_period: 12}}
 
-      iex> AccountingPeriod.cast(0)
+      iex> cast(0)
       {:error, 0}
 
-      iex> AccountingPeriod.cast(13)
+      iex> cast(13)
       {:error, 13}
   """
   @spec cast(t | pos_integer | charlist) :: {:ok, t()} | {:error, pos_integer}
@@ -77,7 +77,7 @@ defmodule ExAccounting.Elem.AccountingPeriod do
 
   ## Examples
 
-      iex> AccountingPeriod.dump(%AccountingPeriod{accounting_period: 12})
+      iex> dump(%AccountingPeriod{accounting_period: 12})
       {:ok, 12}
   """
   @spec dump(t) :: {:ok, pos_integer} | :error
@@ -92,7 +92,7 @@ defmodule ExAccounting.Elem.AccountingPeriod do
 
   ## Examples
 
-      iex> AccountingPeriod.load(12)
+      iex> load(12)
       {:ok, %AccountingPeriod{accounting_period: 12}}
   """
   @spec load(data :: integer) :: {:ok, t} | :error
@@ -105,10 +105,10 @@ defmodule ExAccounting.Elem.AccountingPeriod do
 
   ## Examples
 
-      iex> AccountingPeriod.create(12)
+      iex> create(12)
       %AccountingPeriod{accounting_period: 12}
 
-      iex> AccountingPeriod.create(~C[12])
+      iex> create(~C[12])
       %AccountingPeriod{accounting_period: 12}
 
   """

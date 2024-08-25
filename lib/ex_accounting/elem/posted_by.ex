@@ -24,9 +24,9 @@ defmodule ExAccounting.Elem.PostedBy do
 
       iex> "JohnDoe"
       ...> |> ExAccounting.SystemDictionary.UserName.create()
-      ...> |> ExAccounting.Elem.PostedBy.create()
-      ...> |> ExAccounting.Elem.PostedBy.cast()
-      {:ok, %ExAccounting.Elem.PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
+      ...> |> create()
+      ...> |> cast()
+      {:ok, %PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
   """
   @spec cast(t | user_name) :: {:ok, t()} | :error
   def cast(%ExAccounting.Elem.PostedBy{} = term) do
@@ -55,7 +55,7 @@ defmodule ExAccounting.Elem.PostedBy do
 
   ## Examples
 
-      iex> PostedBy.dump(%PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}})
+      iex> dump(%PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}})
       {:ok, "johndoe"}
   """
   @spec dump(t) :: {:ok, String.t()} | :error
@@ -67,7 +67,7 @@ defmodule ExAccounting.Elem.PostedBy do
 
   ## Examples
 
-      iex> PostedBy.load("johndoe")
+      iex> load("johndoe")
       {:ok, %PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe]}}}
   """
   @spec load(String.t()) :: {:ok, t()} | :error
@@ -83,7 +83,7 @@ defmodule ExAccounting.Elem.PostedBy do
 
   ## Exampels
 
-      iex> PostedBy.create( ExAccounting.SystemDictionary.UserName.create( ~C[JohnDoe]))
+      iex> create( ExAccounting.SystemDictionary.UserName.create( ~C[JohnDoe]))
       %PostedBy{posted_by: %ExAccounting.SystemDictionary.UserName{ user_name: ~C[johndoe]}}
   """
   @spec create(user_name :: user_name) :: t()

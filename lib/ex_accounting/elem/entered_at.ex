@@ -14,7 +14,7 @@ defmodule ExAccounting.Elem.EnteredAt do
 
   ## Examples
 
-      iex> EnteredAt.type()
+      iex> type()
       :time
   """
   @spec type() :: :time
@@ -25,7 +25,7 @@ defmodule ExAccounting.Elem.EnteredAt do
 
   ## Examples
 
-      iex> EnteredAt.cast(~T[12:34:56.00])
+      iex> cast(~T[12:34:56.00])
       {:ok, %EnteredAt{entered_at: ~T[12:34:56.00]}}
   """
   @spec cast(t | Time.t()) :: {:ok, t()} | :error
@@ -44,7 +44,7 @@ defmodule ExAccounting.Elem.EnteredAt do
 
   ## Examples
 
-      iex> EnteredAt.dump(%EnteredAt{entered_at: ~T[12:34:56.00]})
+      iex> dump(%EnteredAt{entered_at: ~T[12:34:56.00]})
       {:ok, ~T[12:34:56.00]}
   """
   @spec dump(t) :: {:ok, Time.t()} | :error
@@ -56,7 +56,7 @@ defmodule ExAccounting.Elem.EnteredAt do
 
   ## Examples
 
-      iex> EnteredAt.load(~T[12:34:56.00])
+      iex> load(~T[12:34:56.00])
       {:ok, %EnteredAt{entered_at: ~T[12:34:56.00]}}
   """
   @spec load(Time.t()) :: {:ok, t()} | :error
@@ -68,7 +68,7 @@ defmodule ExAccounting.Elem.EnteredAt do
 
   ## Examples
 
-      iex> EnteredAt.create(~T[12:34:56.00])
+      iex> create(~T[12:34:56.00])
       %EnteredAt{entered_at: ~T[12:34:56.00]}
   """
   @spec create(Time.t()) :: t()

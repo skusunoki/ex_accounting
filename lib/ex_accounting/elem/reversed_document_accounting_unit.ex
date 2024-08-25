@@ -22,7 +22,7 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingUnit do
 
   ## Examples
 
-      iex> ReversedDocumentAccountingUnit.cast(~C[1000])
+      iex> cast(~C[1000])
       {:ok, %ReversedDocumentAccountingUnit{reversed_document_accounting_unit: %AccountingUnit{accounting_unit: ~C[1000]}}}
   """
   @spec cast(t | AccountingUnit.t() | charlist) :: {:ok, t()} | :error
@@ -58,7 +58,7 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingUnit do
 
   ## Examples
 
-      iex> ReversedDocumentAccountingUnit.dump(%ReversedDocumentAccountingUnit{reversed_document_accounting_unit: %AccountingUnit{accounting_unit: ~C[1000]}})
+      iex> dump(%ReversedDocumentAccountingUnit{reversed_document_accounting_unit: %AccountingUnit{accounting_unit: ~C[1000]}})
       {:ok, "1000"}
   """
   @spec dump(t) :: {:ok, String.t()} | :error
@@ -74,7 +74,7 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingUnit do
 
   ## Examples
 
-      iex> ReversedDocumentAccountingUnit.load("1000")
+      iex> load("1000")
       {:ok, %ReversedDocumentAccountingUnit{reversed_document_accounting_unit: %AccountingUnit{accounting_unit: ~C[1000]}}}
   """
   @spec load(String.t()) :: {:ok, t()} | :error

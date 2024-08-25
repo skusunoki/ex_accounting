@@ -14,7 +14,7 @@ defmodule ExAccounting.Elem.DocumentDate do
 
   ## Examples
 
-      iex> DocumentDate.type()
+      iex> type()
       :date
   """
   @spec type() :: :date
@@ -25,7 +25,7 @@ defmodule ExAccounting.Elem.DocumentDate do
 
   ## Examples
 
-      iex> DocumentDate.cast(~D[2024-08-03])
+      iex> cast(~D[2024-08-03])
       {:ok, %DocumentDate{document_date: ~D[2024-08-03]}}
   """
   @spec cast(t | Date.t()) :: {:ok, t()} | :error
@@ -44,7 +44,7 @@ defmodule ExAccounting.Elem.DocumentDate do
 
   ## Examples
 
-      iex> DocumentDate.dump(%DocumentDate{document_date: ~D[2024-08-03]})
+      iex> dump(%DocumentDate{document_date: ~D[2024-08-03]})
       {:ok, ~D[2024-08-03]}
   """
   @spec dump(t) :: {:ok, Date.t()} | :error
@@ -56,7 +56,7 @@ defmodule ExAccounting.Elem.DocumentDate do
 
   ## Examples
 
-      iex> DocumentDate.load(~D[2024-08-03])
+      iex> load(~D[2024-08-03])
       {:ok, %DocumentDate{document_date: ~D[2024-08-03]}}
   """
   @spec load(Date.t()) :: {:ok, t()} | :error
@@ -68,7 +68,7 @@ defmodule ExAccounting.Elem.DocumentDate do
 
   ## Examples
 
-      iex> DocumentDate.create(~D[2024-08-03])
+      iex> create(~D[2024-08-03])
       %DocumentDate{document_date: ~D[2024-08-03]}
   """
   @spec create(Date.t()) :: t()

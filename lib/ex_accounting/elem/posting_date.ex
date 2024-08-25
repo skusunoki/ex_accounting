@@ -17,8 +17,8 @@ defmodule ExAccounting.Elem.PostingDate do
 
   ## Examples
 
-      iex> ExAccounting.Elem.PostingDate.cast(~D[2024-08-01])
-      {:ok, %ExAccounting.Elem.PostingDate{posting_date: ~D[2024-08-01]}}
+      iex> cast(~D[2024-08-01])
+      {:ok, %PostingDate{posting_date: ~D[2024-08-01]}}
   """
   @spec cast(Date.t()) :: {:ok, t()} | :error
   def cast(date) do
@@ -34,7 +34,7 @@ defmodule ExAccounting.Elem.PostingDate do
 
   ## Examples
 
-      iex> ExAccounting.Elem.PostingDate.dump(%ExAccounting.Elem.PostingDate{posting_date: ~D[2024-08-01]})
+      iex> dump(%PostingDate{posting_date: ~D[2024-08-01]})
       {:ok, ~D[2024-08-01]}
   """
   @spec dump(t) :: {:ok, Date.t()} | :error
@@ -51,8 +51,8 @@ defmodule ExAccounting.Elem.PostingDate do
 
   ## Examples
 
-      iex> ExAccounting.Elem.PostingDate.load(~D[2024-08-01])
-      {:ok, %ExAccounting.Elem.PostingDate{posting_date: ~D[2024-08-01]}}
+      iex> load(~D[2024-08-01])
+      {:ok, %PostingDate{posting_date: ~D[2024-08-01]}}
   """
   @spec load(Date.t()) :: {:ok, t()} | {:error, Date.t()}
   def load(date) do
@@ -67,7 +67,7 @@ defmodule ExAccounting.Elem.PostingDate do
     Generates valid _Posting Date_ from the given date in Elixir Date type.
 
   ## Examples
-      iex> PostingDate.create(~D[2024-08-03])
+      iex> create(~D[2024-08-03])
       %PostingDate{posting_date: ~D[2024-08-03]}
   """
   @spec create(Date.t()) :: t()

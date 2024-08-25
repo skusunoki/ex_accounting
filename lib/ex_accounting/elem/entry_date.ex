@@ -13,7 +13,7 @@ defmodule ExAccounting.Elem.EntryDate do
 
   ## Examples
 
-      iex> EntryDate.type()
+      iex> type()
       :date
   """
   @spec type() :: :date
@@ -24,11 +24,11 @@ defmodule ExAccounting.Elem.EntryDate do
 
   ## Examples
 
-      iex> EntryDate.cast(~D[2024-08-03])
+      iex> cast(~D[2024-08-03])
       {:ok, %EntryDate{entry_date: ~D[2024-08-03]}}
 
-      iex> EntryDate.cast(%ExAccounting.Elem.EntryDate{entry_date: ~D[2024-08-03]})
-      {:ok, %ExAccounting.Elem.EntryDate{entry_date: ~D[2024-08-03]}}
+      iex> cast(%EntryDate{entry_date: ~D[2024-08-03]})
+      {:ok, %EntryDate{entry_date: ~D[2024-08-03]}}
   """
   @spec cast(Date.t()) :: {:ok, t} | :error
   @spec cast(t) :: {:ok, t}
@@ -50,7 +50,7 @@ defmodule ExAccounting.Elem.EntryDate do
 
   ## Examples
 
-      iex> EntryDate.dump(%EntryDate{entry_date: ~D[2024-08-03]})
+      iex> dump(%EntryDate{entry_date: ~D[2024-08-03]})
       ~D[2024-08-03]
   """
   @spec dump(t) :: Date.t() | :error
@@ -63,7 +63,7 @@ defmodule ExAccounting.Elem.EntryDate do
 
   ## Examples
 
-      iex> EntryDate.load(~D[2024-08-03])
+      iex> load(~D[2024-08-03])
       {:ok, %EntryDate{entry_date: ~D[2024-08-03]}}
   """
   @spec load(Date.t()) :: t() | :error
@@ -80,7 +80,7 @@ defmodule ExAccounting.Elem.EntryDate do
 
   ## Examples
 
-      iex> EntryDate.create(~D[2024-08-03])
+      iex> create(~D[2024-08-03])
       %EntryDate{entry_date: ~D[2024-08-03]}
   """
   @spec create(Date.t()) :: t()

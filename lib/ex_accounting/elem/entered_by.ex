@@ -23,8 +23,8 @@ defmodule ExAccounting.Elem.EnteredBy do
 
       iex> "JohnDoe"
       ...> |> ExAccounting.SystemDictionary.UserName.create()
-      ...> |> ExAccounting.Elem.EnteredBy.create()
-      ...> |> ExAccounting.Elem.EnteredBy.cast()
+      ...> |> create()
+      ...> |> cast()
       {:ok, %ExAccounting.Elem.EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{user_name: ~C[johndoe] }}}
   """
   @spec cast(t | user_name) :: {:ok, t()} | :error
@@ -52,7 +52,7 @@ defmodule ExAccounting.Elem.EnteredBy do
 
   ## Exampels
 
-      iex> EnteredBy.create( ExAccounting.SystemDictionary.UserName.create(~C[JohnDoe]))
+      iex> create( ExAccounting.SystemDictionary.UserName.create(~C[JohnDoe]))
       %EnteredBy{entered_by: %ExAccounting.SystemDictionary.UserName{ user_name: ~C[johndoe]}}
   """
   @spec create(ExAccounting.SystemDictionary.UserName.t()) :: t()
@@ -79,7 +79,7 @@ defmodule ExAccounting.Elem.EnteredBy do
     with entered_by =
            term
            |> ExAccounting.SystemDictionary.UserName.create()
-           |> ExAccounting.Elem.EnteredBy.create() do
+           |>create() do
       {:ok, entered_by}
     end
   end

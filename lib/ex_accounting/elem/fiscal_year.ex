@@ -13,7 +13,7 @@ defmodule ExAccounting.Elem.FiscalYear do
 
   ## Examples
 
-      iex>ExAccounting.Elem.FiscalYear.type
+      iex> type()
       :integer
 
   """
@@ -25,7 +25,7 @@ defmodule ExAccounting.Elem.FiscalYear do
 
   ## Examples
 
-      iex> FiscalYear.create(2024)
+      iex> create(2024)
       %FiscalYear{ fiscal_year: 2024 }
   """
   @spec create(pos_integer) :: t()
@@ -39,7 +39,7 @@ defmodule ExAccounting.Elem.FiscalYear do
 
   ## Examples
 
-      iex> FiscalYear.cast(2024)
+      iex> cast(2024)
       {:ok, %FiscalYear{ fiscal_year: 2024 }}
   """
   @spec cast(pos_integer) :: {:ok, t()} | {:error, pos_integer}
@@ -58,10 +58,10 @@ defmodule ExAccounting.Elem.FiscalYear do
 
   ## Examples
 
-      iex> FiscalYear.dump(%FiscalYear{fiscal_year: 2024})
+      iex> dump(%FiscalYear{fiscal_year: 2024})
       {:ok, 2024}
 
-      iex> FiscalYear.dump(2024)
+      iex> dump(2024)
       :error
 
   """
@@ -79,7 +79,7 @@ defmodule ExAccounting.Elem.FiscalYear do
 
   ## Examples
 
-      iex> FiscalYear.load(2024)
+      iex> load(2024)
       {:ok, %FiscalYear{fiscal_year: 2024}}
   """
   @spec load(pos_integer) :: {:ok, t()} | :error
@@ -92,10 +92,11 @@ defmodule ExAccounting.Elem.FiscalYear do
 
   ## Examples
 
-      iex> FiscalYear.to_reversed_document_fiscal_year(%FiscalYear{fiscal_year: 2024})
+      iex> to_reversed_document_fiscal_year(%FiscalYear{fiscal_year: 2024})
       {:ok, %ReversedDocumentFiscalYear{ reversed_document_fiscal_year: %FiscalYear{ fiscal_year: 2024 }}}
   """
-  @spec to_reversed_document_fiscal_year(t) :: {:ok, ExAccounting.Elem.ReversedDocumentFiscalYear.t()} | :error
+  @spec to_reversed_document_fiscal_year(t) ::
+          {:ok, ExAccounting.Elem.ReversedDocumentFiscalYear.t()} | :error
   def to_reversed_document_fiscal_year(%__MODULE__{} = fiscal_year) do
     ExAccounting.Elem.ReversedDocumentFiscalYear.cast(fiscal_year)
   end

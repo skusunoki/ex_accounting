@@ -14,7 +14,7 @@ defmodule ExAccounting.Elem.DebitCredit do
 
   ## Exapmles
 
-      iex> ExAccounting.Elem.DebitCredit.type()
+      iex> type()
       :string
   """
   @spec type() :: :string
@@ -25,19 +25,19 @@ defmodule ExAccounting.Elem.DebitCredit do
 
   ## Examples
 
-      iex> ExAccounting.Elem.DebitCredit.cast(:debit)
+      iex> cast(:debit)
       {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :debit}}
 
-      iex> ExAccounting.Elem.DebitCredit.cast(:credit)
+      iex> cast(:credit)
       {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :credit}}
 
-      iex> ExAccounting.Elem.DebitCredit.cast("D")
+      iex> cast("D")
       {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :debit}}
 
-      iex> ExAccounting.Elem.DebitCredit.cast("C")
+      iex> cast("C")
       {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :credit}}
 
-      iex> ExAccounting.Elem.DebitCredit.cast("X")
+      iex> cast("X")
       :error
 
   """
@@ -61,9 +61,9 @@ defmodule ExAccounting.Elem.DebitCredit do
 
   ## Examples
 
-      iex> ExAccounting.Elem.DebitCredit.dump(%ExAccounting.Elem.DebitCredit{debit_credit: :debit})
+      iex> dump(%ExAccounting.Elem.DebitCredit{debit_credit: :debit})
       {:ok, "D"}
-      iex> ExAccounting.Elem.DebitCredit.dump(%ExAccounting.Elem.DebitCredit{debit_credit: :credit})
+      iex> dump(%ExAccounting.Elem.DebitCredit{debit_credit: :credit})
       {:ok, "C"}
   """
   @spec dump(t) :: {:ok, String.t()} | :error
@@ -84,13 +84,13 @@ defmodule ExAccounting.Elem.DebitCredit do
 
   ## Examples
 
-      iex> ExAccounting.Elem.DebitCredit.load("D")
+      iex> load("D")
       {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :debit}}
 
-      iex> ExAccounting.Elem.DebitCredit.load("C")
+      iex> load("C")
       {:ok, %ExAccounting.Elem.DebitCredit{debit_credit: :credit}}
 
-      iex> ExAccounting.Elem.DebitCredit.load("X")
+      iex> load("X")
       :error
   """
   @spec load(String.t()) :: {:ok, t} | :error

@@ -19,13 +19,13 @@ defmodule ExAccounting.Elem.AccountingDocumentNumber do
 
   ## Examples
 
-        iex> AccountingDocumentNumber.cast(1010)
+        iex> cast(1010)
         {:ok, %AccountingDocumentNumber{accounting_document_number: 1010}}
 
-        iex> AccountingDocumentNumber.cast(0)
+        iex> cast(0)
         {:error, 0}
 
-        iex> AccountingDocumentNumber.cast(1_000_000_000_000)
+        iex> cast(1_000_000_000_000)
         {:error, 1_000_000_000_000}
   """
   @spec cast(t | pos_integer) :: {:ok, t()} | {:error, pos_integer}
@@ -54,7 +54,7 @@ defmodule ExAccounting.Elem.AccountingDocumentNumber do
 
   ## Examples
 
-      iex> AccountingDocumentNumber.dump(%AccountingDocumentNumber{accounting_document_number: 1010})
+      iex> dump(%AccountingDocumentNumber{accounting_document_number: 1010})
       {:ok, 1010}
   """
   @spec dump(t) :: {:ok, pos_integer} | :error
@@ -71,7 +71,7 @@ defmodule ExAccounting.Elem.AccountingDocumentNumber do
 
   ## Examples
 
-      iex> AccountingDocumentNumber.load(1010)
+      iex> load(1010)
       {:ok, %AccountingDocumentNumber{accounting_document_number: 1010}}
   """
   @spec load(integer) :: {:ok, t} | :error
@@ -89,7 +89,7 @@ defmodule ExAccounting.Elem.AccountingDocumentNumber do
 
   ## Examples
 
-      iex> AccountingDocumentNumber.create(1010)
+      iex> create(1010)
       %AccountingDocumentNumber{accounting_document_number: 1010}
   """
   @spec create(pos_integer) :: t()

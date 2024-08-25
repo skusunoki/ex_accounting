@@ -5,5 +5,5 @@ defmodule ExAccounting.SystemDictionaryTest do
     UserName
   }
 
-  doctest UserName
+  doctest UserName, import: true
 end

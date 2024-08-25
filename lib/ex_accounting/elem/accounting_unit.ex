@@ -14,7 +14,7 @@ defmodule ExAccounting.Elem.AccountingUnit do
 
   ## Examples
 
-      iex> AccountingUnit.type()
+      iex> type()
       :string
   """
   @spec type() :: :string
@@ -25,16 +25,16 @@ defmodule ExAccounting.Elem.AccountingUnit do
 
   ## Examples
 
-      iex> AccountingUnit.cast(~C[1000])
+      iex> cast(~C[1000])
       {:ok, %AccountingUnit{accounting_unit: ~C[1000]}}
 
-      iex> AccountingUnit.cast("1000")
+      iex> cast("1000")
       {:ok, %AccountingUnit{accounting_unit: ~C[1000]}}
 
-      iex> AccountingUnit.cast(1000)
+      iex> cast(1000)
       {:error, 1000}
 
-      iex> AccountingUnit.cast(%AccountingUnit{accounting_unit: ~c[1000]})
+      iex> cast(%AccountingUnit{accounting_unit: ~c[1000]})
       {:ok, %AccountingUnit{accounting_unit: ~c[1000]}}
   """
   @spec cast(t | String.t() | charlist) :: {:ok, t} | :error
@@ -62,7 +62,7 @@ defmodule ExAccounting.Elem.AccountingUnit do
 
   ## Examples
 
-      iex> AccountingUnit.load("1000")
+      iex> load("1000")
       {:ok, %AccountingUnit{accounting_unit: ~C[1000]}}
   """
   @spec load(String.t()) :: {:ok, t} | :error
@@ -78,7 +78,7 @@ defmodule ExAccounting.Elem.AccountingUnit do
 
   ## Examples
 
-      iex> AccountingUnit.dump(%AccountingUnit{accounting_unit: ~C[1000]})
+      iex> dump(%AccountingUnit{accounting_unit: ~C[1000]})
       {:ok, "1000"}
   """
   @spec dump(t) :: {:ok, String.t()} | :error
@@ -96,7 +96,7 @@ defmodule ExAccounting.Elem.AccountingUnit do
 
   ## Examples
 
-      iex> AccountingUnit.create(~C[1000])
+      iex> create(~C[1000])
       %AccountingUnit{ accounting_unit: ~C[1000]}
 
   """
