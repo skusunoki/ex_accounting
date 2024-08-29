@@ -56,9 +56,6 @@ defmodule ExAccounting.Elem.AmountInTransactionCurrency do
     end
   end
 
-
-
-
   @doc """
   Dumps _Amount In Transaction Currency to decimal.
 
