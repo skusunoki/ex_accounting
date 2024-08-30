@@ -1,6 +1,7 @@
 # ExAccounting
 
-ExAccounting is an accounting system using double entry system.  
+ExAccounting is an accounting system using double entry system. 
+General ledger 
 
 ## Installation
 

@@ -8,7 +8,16 @@ defmodule ExAccounting.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      ExAccounting.Repo
+      ExAccounting.Repo,
+      %{
+        id: ExAccounting.Configuration.CurrencyConfiguration,
+        start: {ExAccounting.Configuration.CurrencyConfiguration, :start_link, [:init]}
+      },
+      %{
+        id: ExAccounting.Configuration.AccountingDocumentNumberRange,
+        start: {ExAccounting.Configuration.AccountingDocumentNumberRange, :start_link, [:init]}
+      }
+
       # Starts a worker by calling: ElAccountingGl.Worker.start_link(arg)
       # {ElAccountingGl.Worker, arg}
     ]
