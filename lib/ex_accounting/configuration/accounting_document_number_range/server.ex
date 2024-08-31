@@ -30,4 +30,8 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Server do
        accounting_document_number_to
      )}
   end
+
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, :init, name: __MODULE__)
+  end
 end

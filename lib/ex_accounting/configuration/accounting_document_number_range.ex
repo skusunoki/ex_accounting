@@ -46,11 +46,6 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
     field(:accounting_document_number_from, ExAccounting.Elem.AccountingDocumentNumber)
     field(:accounting_document_number_to, ExAccounting.Elem.AccountingDocumentNumber)
   end
-
-  def start_link(_args) do
-    GenServer.start_link(@server, :init, name: @server)
-  end
-
   @doc """
   Reads the accounting document number ranges.
 

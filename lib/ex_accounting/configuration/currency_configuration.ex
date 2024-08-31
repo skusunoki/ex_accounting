@@ -16,10 +16,6 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
     field(:currency, ExAccounting.Money.Currency, primary_key: true)
   end
 
-  def start_link(_args) do
-    GenServer.start_link(@server, :init, name: @server)
-  end
-
   def add(currency) do
     GenServer.call(@server, {:add, currency})
   end

@@ -14,4 +14,9 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration.Server do
   def handle_call({:add, currency}, _from, currencies) do
     {:reply, currencies, Impl.add(currencies, currency)}
   end
+
+
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, :init, name: __MODULE__)
+  end
 end

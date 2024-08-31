@@ -37,4 +37,8 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server do
       {:reply, Impl.filter(initiated, number_range_code), initiated}
     end
   end
+
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, :init, name: __MODULE__)
+  end
 end
