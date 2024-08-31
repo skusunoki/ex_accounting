@@ -16,7 +16,12 @@ defmodule ExAccounting.Application do
       %{
         id: ExAccounting.Configuration.AccountingDocumentNumberRange,
         start: {ExAccounting.Configuration.AccountingDocumentNumberRange, :start_link, [:init]}
+      },
+      %{
+        id: ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber,
+        start: {ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber, :start_link, [:init]}
       }
+
 
       # Starts a worker by calling: ElAccountingGl.Worker.start_link(arg)
       # {ElAccountingGl.Worker, arg}

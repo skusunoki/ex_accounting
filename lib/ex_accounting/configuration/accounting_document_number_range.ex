@@ -17,19 +17,17 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   """
 
   use Ecto.Schema
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange.Changeset
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange
   alias ExAccounting.Configuration.AccountingDocumentNumberRange.DbGateway
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange.Changeset
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
+  alias ExAccounting.Elem.AccountingDocumentNumber
 
   @typedoc "_Accounting Document Number Range_"
   @type t :: %__MODULE__{
           __meta__: Ecto.Schema.Metadata.t(),
           id: integer() | nil,
-          number_range_code: ExAccounting.Elem.AccountingDocumentNumberRangeCode.t() | nil,
-          accounting_document_number_from: ExAccounting.Elem.AccountingDocumentNumber.t() | nil,
-          accounting_document_number_to: ExAccounting.Elem.AccountingDocumentNumber.t() | nil
+          number_range_code: AccountingDocumentNumberRangeCode.t() | nil,
+          accounting_document_number_from: AccountingDocumentNumber.t() | nil,
+          accounting_document_number_to: AccountingDocumentNumber.t() | nil
         }
 
   @typedoc "_Accounting Document Number Range Code_"
@@ -53,15 +51,38 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
     GenServer.start_link(@server, :init, name: @server)
   end
 
-  @spec read(number_range_code) :: t
-  def read(number_range_code) do
-    GenServer.call(@server, {:read, number_range_code})
-  end
+  @doc """
+  Reads the accounting document number ranges.
 
+  ## Examples
+
+      iex> modify("TS", 100, 199)
+      iex> read("TS")
+      [
+        %ExAccounting.Configuration.AccountingDocumentNumberRange{
+          __meta__: #Ecto.Schema.Metadata<:loaded, "accounting_document_number_ranges">,
+          id: nil,
+          number_range_code: "TS",
+          accounting_document_number_from: 100,
+          accounting_document_number_to: 199
+        }
+      ]
+  """
+  @spec read() :: [t]
+  @spec read(number_range_code) :: [t]
   def read() do
     GenServer.call(@server, :read)
   end
 
+  def read(number_range_code) do
+    GenServer.call(@server, {:read, number_range_code})
+  end
+
+  @spec modify(
+          number_range_code :: String.t(),
+          accounting_document_number_from :: integer(),
+          accounting_document_number_to :: integer()
+        ) :: [t]
   def modify(
         number_range_code,
         accounting_document_number_from,
@@ -74,90 +95,12 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   end
 
   @doc """
-  Creates the accounting document number range from the given number range code, the first number of accounting document, and the last number of accounting document.
+  Saves the accouting document number ranges to the database.
   """
-
+  @spec save() :: {:ok, [Ecto.Changeset.t()]} | {:error, [Ecto.Changeset.t()]}
   def save() do
-    with db = DbGateway.read(),
-         server = read() do
-      server
-      |> Enum.filter(fn x ->
-        Enum.any?(db, fn y -> x.number_range_code == y.number_range_code end)
-      end)
-      |> Enum.map(fn x -> update(x) end)
-
-      server
-      |> Enum.filter(fn x ->
-        not Enum.any?(db, fn y -> x.number_range_code == y.number_range_code end)
-      end)
-      |> Enum.map(fn x -> insert(x) end)
+    with server = read() do
+      DbGateway.save(server)
     end
-  end
-
-  def insert(accounting_document_number_range) do
-    DbGateway.create()
-    |> Changeset.changeset(%{
-      number_range_code: accounting_document_number_range.number_range_code,
-      accounting_document_number_from:
-        accounting_document_number_range.accounting_document_number_from,
-      accounting_document_number_to:
-        accounting_document_number_range.accounting_document_number_to
-    })
-    |> ExAccounting.Repo.insert()
-  end
-
-  def update(accounting_document_number_range) do
-    DbGateway.read(accounting_document_number_range.number_range_code)
-    |> Changeset.changeset(%{
-      number_range_code: accounting_document_number_range.number_range_code,
-      accounting_document_number_from:
-        accounting_document_number_range.accounting_document_number_from,
-      accounting_document_number_to:
-        accounting_document_number_range.accounting_document_number_to
-    })
-    |> ExAccounting.Repo.update()
-  end
-
-  @spec create_accounting_document_number_range(
-          number_range_code ::
-            accounting_document_number_range_code,
-          accounting_document_number_from :: integer,
-          accounting_document_number_to :: integer
-        ) :: {:ok, AccountingDocumentNumberRange.t()} | {:error, Ecto.Changeset.t()}
-  def create_accounting_document_number_range(
-        number_range_code,
-        accounting_document_number_from,
-        accounting_document_number_to
-      ) do
-    DbGateway.create()
-    |> Changeset.changeset(%{
-      number_range_code: number_range_code,
-      accounting_document_number_from: accounting_document_number_from,
-      accounting_document_number_to: accounting_document_number_to
-    })
-    |> ExAccounting.Repo.insert()
-  end
-
-  @doc """
-  Changes the accounting document number range from the given number range code, the first number of accounting document, and the last number of accounting document.
-  """
-  @spec change_accounting_document_number_range(
-          number_range_code ::
-            accounting_document_number_range_code,
-          accounting_document_number_from :: integer,
-          accounting_document_number_to :: integer
-        ) :: {:ok, AccountingDocumentNumberRange.t()} | {:error, Ecto.Changeset.t()}
-  def change_accounting_document_number_range(
-        number_range_code,
-        accounting_document_number_from,
-        accounting_document_number_to
-      ) do
-    read(number_range_code)
-    |> Changeset.changeset(%{
-      number_range_code: number_range_code,
-      accounting_document_number_from: accounting_document_number_from,
-      accounting_document_number_to: accounting_document_number_to
-    })
-    |> ExAccounting.Repo.update()
   end
 end

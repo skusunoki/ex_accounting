@@ -1,29 +1,29 @@
-defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.DbGateway do
+defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.DbGateway do
   import Ecto.Query
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange.Changeset
+  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
+  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Changeset
 
   @typedoc "_Accounting Document Number Range Code_"
   @type number_range_code :: AccountingDocumentNumberRangeCode.t()
 
-  @spec read() :: [AccountingDocumentNumberRange.t()]
-  def read() do
-    AccountingDocumentNumberRange
-    |> ExAccounting.Repo.all()
-  end
-
-  @spec read(number_range_code) :: AccountingDocumentNumberRange.t()
-  def read(number_range_code) do
-    from(p in AccountingDocumentNumberRange,
-      where: p.number_range_code == ^number_range_code
-    )
+  @spec read(number_range_code) :: CurrentAccountingDocumentNumber.t()
+  def read(
+        %AccountingDocumentNumberRangeCode{
+          accounting_document_number_range_code: code
+        } = _number_range_code
+      ) do
+    from(p in CurrentAccountingDocumentNumber, where: p.number_range_code == ^code)
     |> ExAccounting.Repo.one()
   end
 
-  @spec create() :: AccountingDocumentNumberRange.t()
-  def create() do
-    %AccountingDocumentNumberRange{}
+  @doc """
+  Reads the current accounting document number from the database.
+  """
+  @spec read() :: [CurrentAccountingDocumentNumber.t()]
+  def read() do
+    CurrentAccountingDocumentNumber
+    |> ExAccounting.Repo.all()
   end
 
   def save(server) do
@@ -49,16 +49,20 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.DbGateway do
     end
   end
 
+  defp accumulate_result({acc_result, acc_changeset}, {result, changeset}) do
+    case result do
+      :ok -> {acc_result, acc_changeset ++ [changeset]}
+      _ -> {:error, acc_changeset ++ [changeset]}
+    end
+  end
+
   @spec insert(ExAccounting.Configuration.AccountingDocumentNumberRange.t()) ::
           {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
   defp insert(accounting_document_number_range) do
     create()
     |> Changeset.changeset(%{
       number_range_code: accounting_document_number_range.number_range_code,
-      accounting_document_number_from:
-        accounting_document_number_range.accounting_document_number_from,
-      accounting_document_number_to:
-        accounting_document_number_range.accounting_document_number_to
+      current_document_number: accounting_document_number_range.current_document_number
     })
     |> ExAccounting.Repo.insert()
   end
@@ -69,18 +73,12 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.DbGateway do
     read(accounting_document_number_range.number_range_code)
     |> Changeset.changeset(%{
       number_range_code: accounting_document_number_range.number_range_code,
-      accounting_document_number_from:
-        accounting_document_number_range.accounting_document_number_from,
-      accounting_document_number_to:
-        accounting_document_number_range.accounting_document_number_to
+      current_document_number: accounting_document_number_range.current_document_number
     })
     |> ExAccounting.Repo.update()
   end
 
-  defp accumulate_result({acc_result, acc_changeset}, {result, changeset}) do
-    case result do
-      :ok -> {acc_result, acc_changeset ++ [changeset]}
-      _ -> {:error, acc_changeset ++ [changeset]}
-    end
+  defp create() do
+    %CurrentAccountingDocumentNumber{}
   end
 end

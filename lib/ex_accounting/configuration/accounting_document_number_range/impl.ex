@@ -46,4 +46,17 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Impl do
   def create() do
     %AccountingDocumentNumberRange{}
   end
+
+  @spec filter(
+          accounting_document_number_ranges :: [
+            ExAccounting.Configuration.AccountingDocumentNumberRange
+          ],
+          accounting_document_number_range_code :: String.t()
+        ) :: [ExAccounting.Configuration.AccountingDocumentNumberRange.t()] | nil
+  def filter(accounting_document_number_ranges, accounting_document_number_range_code) do
+    Enum.filter(accounting_document_number_ranges, fn accounting_document_number_range ->
+      accounting_document_number_range.number_range_code.accounting_document_number_range_code ==
+        accounting_document_number_range_code.accounting_document_number_range_code
+    end)
+  end
 end

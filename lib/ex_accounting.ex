@@ -22,12 +22,18 @@ defmodule ExAccounting do
     with {:ok, code} <-
            number_range_code
            |> AccountingDocumentNumberRangeCode.cast(),
-         {:ok, result} <-
+         result <-
            code
-           |> CurrentAccountingDocumentNumber.issue(current_value_reader, config_reader)
-           |> CurrentAccountingDocumentNumber.make_changeset()
-           |> ExAccounting.Repo.upsert() do
+           |> CurrentAccountingDocumentNumber.issue(current_value_reader, config_reader),
+         {:ok, _} <- CurrentAccountingDocumentNumber.save() do
       {:ok, result}
+    end
+  end
+
+  def issue_accounting_document_number(number_range_code) do
+    with current_value_reader <- &CurrentAccountingDocumentNumber.read/1,
+         config_reader <- &AccountingDocumentNumberRange.read/1 do
+      issue_accounting_document_number(number_range_code, current_value_reader, config_reader)
     end
   end
 end

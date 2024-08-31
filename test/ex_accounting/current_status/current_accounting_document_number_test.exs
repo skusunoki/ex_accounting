@@ -6,15 +6,6 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   alias ExAccounting.Elem.AccountingDocumentNumber
   doctest CurrentAccountingDocumentNumber, import: true
 
-  test "Incremented current number 100 should be 101" do
-    assert CurrentAccountingDocumentNumber.increment(%{
-             number_range_code: "01",
-             current_document_number: %AccountingDocumentNumber{accounting_document_number: 100}
-           }) == %{
-             number_range_code: "01",
-             current_document_number: %AccountingDocumentNumber{accounting_document_number: 101}
-           }
-  end
 
   test "Read current document number for number range 01 is 1_000_000_001" do
     result =
@@ -29,18 +20,18 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
       CurrentAccountingDocumentNumber.read(AccountingDocumentNumberRangeCode.create("02"))
 
     assert result.number_range_code.accounting_document_number_range_code == "02"
-    assert result.current_document_number >= 2_000_000_000
+    assert result.current_document_number.accounting_document_number >= 2_000_000_000
   end
 
-  test "Read current document number for undefined number range 10 is nil" do
+  test "Read current document number for undefined number range DM is nil" do
     result =
-      CurrentAccountingDocumentNumber.read(AccountingDocumentNumberRangeCode.create("10"))
+      CurrentAccountingDocumentNumber.read(AccountingDocumentNumberRangeCode.create("DM"))
 
     assert result == nil
   end
 
   test "Issue new document number for number range 01 should be 1_000_000_002" do
-    {_, _, result} =
+    result =
       CurrentAccountingDocumentNumber.issue(
         AccountingDocumentNumberRangeCode.create("01"),
         fn _ ->
@@ -52,7 +43,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
           }
         end,
         fn _ ->
-          %AccountingDocumentNumberRange{
+          [%AccountingDocumentNumberRange{
             number_range_code: AccountingDocumentNumberRangeCode.create("01"),
             accounting_document_number_from: %AccountingDocumentNumber{
               accounting_document_number: 1_000_000_000
@@ -60,7 +51,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
             accounting_document_number_to: %AccountingDocumentNumber{
               accounting_document_number: 1_999_999_999
             }
-          }
+          }]
         end
       )
 
@@ -69,7 +60,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   end
 
   test "Issue new document number for number range 02 should be 2_000_000_001" do
-    {_, _, result} =
+    result =
       CurrentAccountingDocumentNumber.issue(
         AccountingDocumentNumberRangeCode.create("02"),
         fn _ ->
@@ -98,20 +89,20 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   end
 
   test "Issue new document number for the undefined document number range 10 should be first number" do
-    {_, _, result} =
+    result =
       CurrentAccountingDocumentNumber.issue(
-        AccountingDocumentNumberRangeCode.create("01"),
+        AccountingDocumentNumberRangeCode.create("10"),
         fn _ -> nil end,
         fn _ ->
-          %AccountingDocumentNumberRange{
-            number_range_code: AccountingDocumentNumberRangeCode.create("01"),
+          [%AccountingDocumentNumberRange{
+            number_range_code: AccountingDocumentNumberRangeCode.create("10"),
             accounting_document_number_from: 1_000_000_000,
             accounting_document_number_to: 1_999_999_999
-          }
+          }]
         end
       )
 
-    assert result.number_range_code == AccountingDocumentNumberRangeCode.create("01")
-    assert result.current_document_number == 1_000_000_000
+    assert result.number_range_code == AccountingDocumentNumberRangeCode.create("10")
+    assert result.current_document_number == ExAccounting.Elem.AccountingDocumentNumber.create(1_000_000_000)
   end
 end
