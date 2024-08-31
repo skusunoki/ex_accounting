@@ -55,7 +55,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
 
   @spec read(number_range_code) :: t
   def read(number_range_code) do
-    DbGateway.read(number_range_code)
+    GenServer.call(@server, {:read, number_range_code})
   end
 
   def read() do
@@ -78,6 +78,44 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   """
 
   def save() do
+    with db = DbGateway.read(),
+         server = read() do
+      server
+      |> Enum.filter(fn x ->
+        Enum.any?(db, fn y -> x.number_range_code == y.number_range_code end)
+      end)
+      |> Enum.map(fn x -> update(x) end)
+
+      server
+      |> Enum.filter(fn x ->
+        not Enum.any?(db, fn y -> x.number_range_code == y.number_range_code end)
+      end)
+      |> Enum.map(fn x -> insert(x) end)
+    end
+  end
+
+  def insert(accounting_document_number_range) do
+    DbGateway.create()
+    |> Changeset.changeset(%{
+      number_range_code: accounting_document_number_range.number_range_code,
+      accounting_document_number_from:
+        accounting_document_number_range.accounting_document_number_from,
+      accounting_document_number_to:
+        accounting_document_number_range.accounting_document_number_to
+    })
+    |> ExAccounting.Repo.insert()
+  end
+
+  def update(accounting_document_number_range) do
+    DbGateway.read(accounting_document_number_range.number_range_code)
+    |> Changeset.changeset(%{
+      number_range_code: accounting_document_number_range.number_range_code,
+      accounting_document_number_from:
+        accounting_document_number_range.accounting_document_number_from,
+      accounting_document_number_to:
+        accounting_document_number_range.accounting_document_number_to
+    })
+    |> ExAccounting.Repo.update()
   end
 
   @spec create_accounting_document_number_range(

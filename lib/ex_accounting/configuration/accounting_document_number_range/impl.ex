@@ -10,7 +10,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Impl do
         accounting_document_number_to
       ) do
     case Enum.find(accounting_document_number_ranges, fn accounting_document_number_range ->
-           accounting_document_number_range.number_range_code ==
+           accounting_document_number_range.number_range_code.accounting_document_number_range_code ==
              accounting_document_number_range_code
          end) do
       nil ->
@@ -34,7 +34,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Impl do
                  accounting_document_number_to: accounting_document_number_to
                })
                |> apply_changes() do
-          accounting_document_number_ranges -- ([code] ++ [accounting_document_number_range])
+          (accounting_document_number_ranges -- [code]) ++ [accounting_document_number_range]
         end
     end
   end

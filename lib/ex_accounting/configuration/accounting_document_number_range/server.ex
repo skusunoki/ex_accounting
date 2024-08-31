@@ -11,6 +11,13 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Server do
     {:reply, accounting_document_number_ranges, accounting_document_number_ranges}
   end
 
+  def handle_call({:read, number_range_code}, _from, accounting_document_number_ranges) do
+    {:reply,
+     Enum.filter(accounting_document_number_ranges, fn x ->
+       x.number_range_code.accounting_document_number_range_code == number_range_code
+     end), accounting_document_number_ranges}
+  end
+
   def handle_call(
         {:modify, accounting_document_number_range, accounting_document_number_from,
          accounting_document_number_to},
