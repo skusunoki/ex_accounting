@@ -48,12 +48,25 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   """
   @spec read() :: [t]
   @spec read(number_range_code) :: t
-  def read(%AccountingDocumentNumberRangeCode{} = number_range_code) do
+  def read(
+        %AccountingDocumentNumberRangeCode{} = number_range_code
+      ) do
     GenServer.call(@server, {:read, number_range_code})
   end
 
   def read() do
     GenServer.call(@server, :read)
+  end
+
+
+  @doc """
+  Issues the new document number for the given number range.
+  Default _read_ function is used to read the current document number from the database;
+  and the default _read_of_confg_ funtion is used to read the configuration of the accounting document number range.
+  """
+  @spec issue(number_range_code) :: any()
+  def issue(number_range_code) do
+    issue(number_range_code, &read/1, &ExAccounting.Configuration.AccountingDocumentNumberRange.read/1)
   end
 
   @doc """
@@ -66,7 +79,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
           number_range_code,
           read(),
           read_config()
-        ) :: any()
+        ) :: any() | :error
   def issue(
         %AccountingDocumentNumberRangeCode{} = number_range_code,
         read,
@@ -78,22 +91,9 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     else
       nil ->
         GenServer.call(@server, {:initiate, number_range_code, reader_of_config})
-
       _ ->
         :error
     end
-  end
-
-  def issue(number_range_code) do
-    issue(
-      number_range_code,
-      &read/1,
-      &ExAccounting.Configuration.AccountingDocumentNumberRange.read/1
-    )
-  end
-
-  def start_link(_args) do
-    GenServer.start_link(@server, :init, name: @server)
   end
 
   def save() do
