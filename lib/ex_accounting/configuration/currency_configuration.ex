@@ -9,7 +9,8 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
   @typedoc "_Currency Configuration_"
 
   @type t :: %__MODULE__{
-          currency: ExAccounting.Money.Currency.t()
+          currency: ExAccounting.Money.Currency.t(),
+          cent_factor: integer
         }
 
   @server ExAccounting.Configuration.CurrencyConfiguration.Server
@@ -17,6 +18,7 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
   @primary_key false
   embedded_schema do
     field(:currency, ExAccounting.Money.Currency)
+    field(:cent_factor, :integer)
   end
 
   @spec add(ExAccounting.Money.Currency.t()) :: :ok
@@ -30,13 +32,8 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
   end
 
   def save() do
-    with db_currencies = DbGateway.read(),
-         currencies = read(),
-         difference = currencies -- db_currencies,
-         true <- length(difference) > 0 do
-      for(c <- difference) do
-        DbGateway.insert(c)
-      end
+    with server <- read() do
+      DbGateway.save(server)
     end
   end
 
@@ -45,6 +42,7 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
     |> cast(params, [:currency])
   end
 
+  # TODO: Implement the data base read function
   def cent_factor(currency) do
     GenServer.call(@server, {:cent_factor, currency})
     case currency do

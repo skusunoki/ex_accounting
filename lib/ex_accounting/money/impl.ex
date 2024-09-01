@@ -148,7 +148,7 @@ defmodule ExAccounting.Money.Impl do
     with {:ok, currency} <- ExAccounting.Money.Currency.cast(params.currency) do
     cast(money, params, [:amount, :currency])
     |> validate_required([:amount, :currency])
-    |> validate_inclusion(:currency, ExAccounting.Configuration.CurrencyConfiguration.read(),
+    |> validate_inclusion(:currency, ExAccounting.Configuration.CurrencyConfiguration.read() |> Enum.map(fn x -> x.currency end),
       message: "should be in the list of the available currencies in the configuration"
     )
     |> put_change(:cent_factor, ExAccounting.Configuration.CurrencyConfiguration.cent_factor(currency.currency))
