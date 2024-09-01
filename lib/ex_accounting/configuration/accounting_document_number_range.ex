@@ -46,6 +46,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
     field(:accounting_document_number_from, ExAccounting.Elem.AccountingDocumentNumber)
     field(:accounting_document_number_to, ExAccounting.Elem.AccountingDocumentNumber)
   end
+
   @doc """
   Reads the accounting document number ranges.
 

@@ -13,6 +13,7 @@ defmodule ExAccounting.Application do
       ExAccounting.Configuration.AccountingDocumentNumberRange.Server,
       ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server
     ]
+
     opts = [strategy: :one_for_one, name: ExAccounting.Supervisor]
     Supervisor.start_link(children, opts)
   end

@@ -21,10 +21,11 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server do
         _from,
         current_accounting_document_numbers
       ) do
-        with incremented = Impl.increment(current_document_number, current_accounting_document_numbers),
-        filtered = Impl.filter(incremented, current_document_number.number_range_code) do
-          {:reply, filtered, incremented}
-        end
+    with incremented =
+           Impl.increment(current_document_number, current_accounting_document_numbers),
+         filtered = Impl.filter(incremented, current_document_number.number_range_code) do
+      {:reply, filtered, incremented}
+    end
   end
 
   def handle_call(
@@ -33,7 +34,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server do
         current_accounting_document_numbers
       ) do
     with db <- read_config.(number_range_code),
-    initiated <- Impl.initiate(number_range_code, db, current_accounting_document_numbers) do
+         initiated <- Impl.initiate(number_range_code, db, current_accounting_document_numbers) do
       {:reply, Impl.filter(initiated, number_range_code), initiated}
     end
   end

@@ -48,9 +48,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   """
   @spec read() :: [t]
   @spec read(number_range_code) :: t
-  def read(
-        %AccountingDocumentNumberRangeCode{} = number_range_code
-      ) do
+  def read(%AccountingDocumentNumberRangeCode{} = number_range_code) do
     GenServer.call(@server, {:read, number_range_code})
   end
 
@@ -80,13 +78,18 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     else
       nil ->
         GenServer.call(@server, {:initiate, number_range_code, reader_of_config})
+
       _ ->
         :error
     end
   end
 
   def issue(number_range_code) do
-    issue(number_range_code, &read/1, &ExAccounting.Configuration.AccountingDocumentNumberRange.read/1)
+    issue(
+      number_range_code,
+      &read/1,
+      &ExAccounting.Configuration.AccountingDocumentNumberRange.read/1
+    )
   end
 
   def start_link(_args) do

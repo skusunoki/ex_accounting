@@ -22,12 +22,12 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Impl do
   def increment(%CurrentAccountingDocumentNumber{} = current_accounting_document_number) do
     with %CurrentAccountingDocumentNumber{
            current_document_number: current_document_number
-    } <- current_accounting_document_number do
-    Map.put(
-      current_accounting_document_number,
-      :current_document_number,
-      increment(current_document_number)
-    )
+         } <- current_accounting_document_number do
+      Map.put(
+        current_accounting_document_number,
+        :current_document_number,
+        increment(current_document_number)
+      )
     end
   end
 
@@ -54,20 +54,26 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Impl do
   @spec filter([CurrentAccountingDocumentNumber.t()], AccountingDocumentNumberRangeCode.t()) ::
           CurrentAccountingDocumentNumber.t() | nil
   def filter(current_accounting_document_numbers, number_range_code) do
-    result = Enum.filter(current_accounting_document_numbers, fn current_accounting_document_number ->
-      current_accounting_document_number.number_range_code.accounting_document_number_range_code == number_range_code.accounting_document_number_range_code
-    end)
+    result =
+      Enum.filter(current_accounting_document_numbers, fn current_accounting_document_number ->
+        current_accounting_document_number.number_range_code.accounting_document_number_range_code ==
+          number_range_code.accounting_document_number_range_code
+      end)
+
     case result do
       [] -> nil
-      [h|_t] -> h
+      [h | _t] -> h
     end
   end
 
   def initiate(number_range_code, db, current_accounting_document_numbers) do
-    with  [one|_] <- db,
-          to_be_inserted = %CurrentAccountingDocumentNumber{
+    with [one | _] <- db,
+         to_be_inserted = %CurrentAccountingDocumentNumber{
            number_range_code: number_range_code,
-           current_document_number: ExAccounting.Elem.AccountingDocumentNumber.create(one.accounting_document_number_from)
+           current_document_number:
+             ExAccounting.Elem.AccountingDocumentNumber.create(
+               one.accounting_document_number_from
+             )
          } do
       [to_be_inserted | current_accounting_document_numbers]
     end

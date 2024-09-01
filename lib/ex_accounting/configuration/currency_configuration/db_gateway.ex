@@ -1,10 +1,15 @@
 defmodule ExAccounting.Configuration.CurrencyConfiguration.DbGateway do
+  use Ecto.Schema
   import Ecto.Changeset
 
-  def read_from_db() do
-    ExAccounting.Configuration.CurrencyConfiguration
+  schema "currency_configurations" do
+    field(:currency, ExAccounting.Money.Currency, primary_key: true)
+  end
+
+  def read() do
+    __MODULE__
     |> ExAccounting.Repo.all()
-    |> Enum.map(& &1.currency.currency)
+    |> Enum.map( fn x -> x.currency end)
   end
 
   def changeset(currency_configuration, params \\ %{}) do

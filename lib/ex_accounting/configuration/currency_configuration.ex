@@ -3,29 +3,34 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
   _Currency Configuration_ defines the currencies available in the system.
   """
   use Ecto.Schema
+  import Ecto.Changeset
   alias ExAccounting.Configuration.CurrencyConfiguration.DbGateway
 
-  @server ExAccounting.Configuration.CurrencyConfiguration.Server
-
   @typedoc "_Currency Configuration_"
+
   @type t :: %__MODULE__{
           currency: ExAccounting.Money.Currency.t()
         }
 
-  schema "currency_configurations" do
-    field(:currency, ExAccounting.Money.Currency, primary_key: true)
+  @server ExAccounting.Configuration.CurrencyConfiguration.Server
+
+  @primary_key false
+  embedded_schema do
+    field(:currency, ExAccounting.Money.Currency)
   end
 
+  @spec add(ExAccounting.Money.Currency.t()) :: :ok
   def add(currency) do
     GenServer.call(@server, {:add, currency})
   end
 
+  @spec read() :: [atom()]
   def read() do
     GenServer.call(@server, :read)
   end
 
   def save() do
-    with db_currencies = DbGateway.read_from_db(),
+    with db_currencies = DbGateway.read(),
          currencies = read(),
          difference = currencies -- db_currencies,
          true <- length(difference) > 0 do
@@ -33,5 +38,10 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
         DbGateway.insert(c)
       end
     end
+  end
+
+  def changeset(%__MODULE__{} = struct, %{currency: _currency} = params) do
+    struct
+    |> cast(params, [:currency])
   end
 end

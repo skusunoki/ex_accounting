@@ -194,11 +194,11 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> new(1000, :usd)
-      %Money{amount: Decimal.new("1000"), currency: %Currency{currency: :usd}}
+      iex> new(1000, :USD)
+      %Money{amount: Decimal.new("1000"), currency: %Currency{currency: :USD}}
 
-      iex> new(Decimal.new("1000"), :usd)
-      %Money{amount: Decimal.new("1000"), currency: %Currency{currency: :usd}}
+      iex> new(Decimal.new("1000"), :USD)
+      %Money{amount: Decimal.new("1000"), currency: %Currency{currency: :USD}}
   """
   @spec new(Decimal.t() | integer, currency) :: t | :error
   def new(%Decimal{} = amount, currency) do
@@ -230,5 +230,7 @@ defmodule ExAccounting.Money do
 
   def changeset(money, params) do
     cast(money, params, [:amount, :currency])
+    |> validate_required([:amount, :currency])
+    |> validate_inclusion(:currency, ExAccounting.Configuration.CurrencyConfiguration.read())
   end
 end

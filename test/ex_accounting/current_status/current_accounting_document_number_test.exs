@@ -6,7 +6,6 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
   alias ExAccounting.Elem.AccountingDocumentNumber
   doctest CurrentAccountingDocumentNumber, import: true
 
-
   test "Read current document number for number range 01 is 1_000_000_001" do
     result =
       CurrentAccountingDocumentNumber.read(AccountingDocumentNumberRangeCode.create("01"))
@@ -43,15 +42,17 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
           }
         end,
         fn _ ->
-          [%AccountingDocumentNumberRange{
-            number_range_code: AccountingDocumentNumberRangeCode.create("01"),
-            accounting_document_number_from: %AccountingDocumentNumber{
-              accounting_document_number: 1_000_000_000
-            },
-            accounting_document_number_to: %AccountingDocumentNumber{
-              accounting_document_number: 1_999_999_999
+          [
+            %AccountingDocumentNumberRange{
+              number_range_code: AccountingDocumentNumberRangeCode.create("01"),
+              accounting_document_number_from: %AccountingDocumentNumber{
+                accounting_document_number: 1_000_000_000
+              },
+              accounting_document_number_to: %AccountingDocumentNumber{
+                accounting_document_number: 1_999_999_999
+              }
             }
-          }]
+          ]
         end
       )
 
@@ -94,15 +95,19 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
         AccountingDocumentNumberRangeCode.create("10"),
         fn _ -> nil end,
         fn _ ->
-          [%AccountingDocumentNumberRange{
-            number_range_code: AccountingDocumentNumberRangeCode.create("10"),
-            accounting_document_number_from: 1_000_000_000,
-            accounting_document_number_to: 1_999_999_999
-          }]
+          [
+            %AccountingDocumentNumberRange{
+              number_range_code: AccountingDocumentNumberRangeCode.create("10"),
+              accounting_document_number_from: 1_000_000_000,
+              accounting_document_number_to: 1_999_999_999
+            }
+          ]
         end
       )
 
     assert result.number_range_code == AccountingDocumentNumberRangeCode.create("10")
-    assert result.current_document_number == ExAccounting.Elem.AccountingDocumentNumber.create(1_000_000_000)
+
+    assert result.current_document_number ==
+             ExAccounting.Elem.AccountingDocumentNumber.create(1_000_000_000)
   end
 end
