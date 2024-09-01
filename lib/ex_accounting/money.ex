@@ -8,7 +8,8 @@ defmodule ExAccounting.Money do
   @typedoc "_Money_"
   @type t :: %__MODULE__{
           amount: Decimal.t(),
-          currency: ExAccounting.Money.Currency.t()
+          currency: ExAccounting.Money.Currency.t(),
+          cent_factor: integer
         }
 
   @typedoc "_Currency_"
@@ -19,6 +20,7 @@ defmodule ExAccounting.Money do
   embedded_schema do
     field(:amount, :decimal)
     field(:currency, ExAccounting.Money.Currency)
+    field(:cent_factor, :integer)
   end
 
   @doc """
@@ -26,8 +28,8 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> Money.abs(%Money{amount: Decimal.new("-100"), currency: %Currency{currency: :usd}})
-      %Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}
+      iex> Money.abs(%Money{amount: Decimal.new("-100"), currency: %Currency{currency: :USD}})
+      %Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}}
   """
   @spec abs(t) :: t | :error
   defdelegate abs(money), to: Impl
@@ -37,8 +39,8 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> add(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :usd}})
-      %Money{amount: Decimal.new("300"), currency: %Currency{currency: :usd}}
+      iex> add(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :USD}})
+      %Money{amount: Decimal.new("300"), cent_factor: 100, currency: %Currency{currency: :USD}}
   """
   @spec add(t, t) :: t | :error
   defdelegate add(money, addend), to: Impl
@@ -48,10 +50,10 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> is_less_than?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :usd}})
+      iex> is_less_than?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :USD}})
       true
 
-      iex> is_less_than?(%Money{amount: Decimal.new("200"), currency: %Currency{currency: :usd}}, %Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}})
+      iex> is_less_than?(%Money{amount: Decimal.new("200"), currency: %Currency{currency: :USD}}, %Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}})
       false
   """
   @spec is_less_than?(t, t) :: :error | false | true
@@ -90,8 +92,8 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> multiply(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}, 2)
-      %Money{amount: Decimal.new("200"), currency: %Currency{currency: :usd}}
+      iex> multiply(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}}, 2)
+      %Money{amount: Decimal.new("200"), cent_factor: 100, currency: %Currency{currency: :USD}}
   """
   @spec multiply(t, factor :: number) :: :error | t
   defdelegate multiply(money, factor), to: Impl
@@ -101,8 +103,8 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> negate(%Money{amount: Decimal.new("-100"), currency: %Currency{currency: :usd}})
-      %Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}
+      iex> negate(%Money{amount: Decimal.new("-100"), currency: %Currency{currency: :USD}})
+      %Money{amount: Decimal.new("100"), cent_factor: 100, currency: %Currency{currency: :USD}}
   """
   @spec negate(t) :: :error | t
   defdelegate negate(money), to: Impl
@@ -112,22 +114,23 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> is_negative?(%Money{amount: Decimal.new("-100"), currency: %Currency{currency: :usd}})
+      iex> is_negative?(%Money{amount: Decimal.new("-100"), currency: %Currency{currency: :USD}})
       true
   """
   @spec is_negative?(t) :: :error | t
   defdelegate is_negative?(money), to: Impl
 
   @doc """
-  Generates a new _Money_ from the given amount and currency
+  Generates a new _Money_ from the given amount and currency.
+  Currency must be configured in the system.
 
   ## Examples
 
       iex> new(1000, :USD)
-      %Money{amount: Decimal.new("1000"), currency: %Currency{currency: :USD}}
+      %Money{amount: Decimal.new("1000"), cent_factor: 100, currency: %Currency{currency: :USD}}
 
-      iex> new(Decimal.new("1000"), :USD)
-      %Money{amount: Decimal.new("1000"), currency: %Currency{currency: :USD}}
+      iex> new(Decimal.new("1000"), "USD")
+      %Money{amount: Decimal.new("1000"), cent_factor: 100, currency: %Currency{currency: :USD}}
   """
   @spec new(integer | Decimal.t(), currency) :: t
   defdelegate new(amount, currency), to: Impl
@@ -136,4 +139,19 @@ defmodule ExAccounting.Money do
   def new(%{amount: amount, currency: currency}) do
     new(amount, currency)
   end
+
+  @doc """
+  Allocates the _Money_ to the given number of parts.
+
+  ## Examples
+
+      iex> new(100, :USD) |> allocate(3)
+      [
+        %Money{amount: Decimal.new("33.34"), cent_factor: 100, currency: %Currency{currency: :USD}},
+        %Money{amount: Decimal.new("33.33"), cent_factor: 100, currency: %Currency{currency: :USD}},
+        %Money{amount: Decimal.new("33.33"), cent_factor: 100, currency: %Currency{currency: :USD}}
+      ]
+  """
+  @spec allocate(t, integer) :: [t]
+  defdelegate allocate(money, parts), to: Impl
 end

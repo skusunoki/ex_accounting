@@ -44,4 +44,14 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
     struct
     |> cast(params, [:currency])
   end
+
+  def cent_factor(currency) do
+    GenServer.call(@server, {:cent_factor, currency})
+    case currency do
+      :USD -> 100
+      :JPY -> 1
+      :EUR -> 100
+      _ -> 100
+    end
+  end
 end

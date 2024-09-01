@@ -28,4 +28,8 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration.Server do
       {:reply, new_state, new_state}
     end
   end
+
+  def handle_call({:cent_factor, currency}, _from, currencies) do
+    {:reply, Impl.cent_factor(currency), currencies}
+  end
 end
