@@ -3,6 +3,10 @@
 ExAccounting is an accounting system using double entry system. 
 General ledger 
 
+## TODO
+
+See [github issues](https://github.com/skusunoki/ex_accounting/issues)
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
