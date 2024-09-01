@@ -9,7 +9,7 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration.DbGateway do
   def read() do
     __MODULE__
     |> ExAccounting.Repo.all()
-    |> Enum.map( fn x -> x.currency end)
+    |> Enum.map(fn x -> x.currency end)
   end
 
   def changeset(currency_configuration, params \\ %{}) do

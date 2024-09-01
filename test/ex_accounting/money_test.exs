@@ -4,4 +4,5 @@ defmodule ExAccounting.MoneyTest do
   alias ExAccounting.Money.Currency
 
   doctest ExAccounting.Money, import: true
+  doctest ExAccounting.Money.Currency, import: true
 end

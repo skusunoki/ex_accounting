@@ -20,36 +20,38 @@ defmodule ExAccounting.Money.Currency do
       {:ok, %Currency{currency: :USD}}
 
       iex> cast("usd")
-      :error
+      {:error, "currency must be uppercase"}
 
   """
   @spec cast(t) :: {:ok, t} | :error
   def cast(%__MODULE__{} = term) do
-    with %__MODULE__{currency: code} <- term,
-    true <- is_atom(code) do
+    with %__MODULE__{currency: code} = term,
+         {:M1, true} <- {:M1, is_atom(code)},
+         {:M2, true} <- {:M2, to_string(code) == String.upcase(to_string(code))} do
       {:ok, term}
     else
-      _ -> :error
+      {:M1, _} -> {:error, "currency must be 3 letters"}
+      {:M2, _} -> {:error, "currency must be uppercase"}
     end
   end
 
   def cast(term) when is_atom(term) do
-    with true <- is_atom(term),
-    true <- String.length(to_string(term)) == 3,
-    true <- to_string(term) == String.upcase(to_string(term)) do
+    with {:M1, true} <- {:M1, String.length(to_string(term)) == 3},
+         {:M2, true} <- {:M2, to_string(term) == String.upcase(to_string(term))} do
       {:ok, %__MODULE__{currency: term}}
     else
-      _ -> :error
+      {:M1, _} -> {:error, "currency must be 3 letters"}
+      {:M2, _} -> {:error, "currency must be uppercase"}
     end
   end
 
   def cast(term) when is_binary(term) do
-    with true <- is_binary(term),
-    true <- String.length(term) == 3,
-    true <- term == String.upcase(term) do
+    with {:M1, true} <- {:M1, String.length(term) == 3},
+         {:M2, true} <- {:M2, term == String.upcase(term)} do
       {:ok, %__MODULE__{currency: String.to_atom(term)}}
     else
-      _ -> :error
+      {:M1, _} -> {:error, "currency must be 3 letters"}
+      {:M2, _} -> {:error, "currency must be uppercase"}
     end
   end
 
@@ -79,11 +81,10 @@ defmodule ExAccounting.Money.Currency do
   @spec dump(t) :: binary() | :error
   def dump(term) do
     with %__MODULE__{currency: code} <- term,
-    true <- is_atom(code) do
+         true <- is_atom(code) do
       {:ok, Atom.to_string(code)}
     else
       _ -> :error
     end
   end
-
 end

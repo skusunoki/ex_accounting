@@ -209,7 +209,7 @@ defmodule ExAccounting.Money do
            |> apply_action(:update) do
       return
     else
-      _ -> :error
+      {:error, reson} -> {:error, reson}
     end
   end
 
@@ -224,13 +224,15 @@ defmodule ExAccounting.Money do
            |> apply_action(:update) do
       return
     else
-      _ -> :error
+      {:error, reson} -> {:error, reson}
     end
   end
 
   def changeset(money, params) do
     cast(money, params, [:amount, :currency])
     |> validate_required([:amount, :currency])
-    |> validate_inclusion(:currency, ExAccounting.Configuration.CurrencyConfiguration.read())
+    |> validate_inclusion(:currency, ExAccounting.Configuration.CurrencyConfiguration.read(),
+      message: "should be in the list of the available currencies in the configuration"
+    )
   end
 end
