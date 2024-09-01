@@ -3,6 +3,7 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration.Impl do
     [currency | currencies]
   end
 
+  # TODO: Implement the datba base read function
   def cent_factor(currency) do
     case currency do
       :USD -> 100
