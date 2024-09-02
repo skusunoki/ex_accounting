@@ -64,10 +64,10 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> is_greater_than?(%Money{amount: Decimal.new("200"), currency: %Currency{currency: :usd}}, %Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}})
+      iex> is_greater_than?(%Money{amount: Decimal.new("200"), currency: %Currency{currency: :USD}}, %Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}})
       true
 
-      iex> is_greater_than?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :usd}})
+      iex> is_greater_than?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :USD}})
       false
   """
   @spec is_greater_than?(t, t) :: :error | false | true
@@ -78,10 +78,10 @@ defmodule ExAccounting.Money do
 
   ## Examples
 
-      iex> is_equal?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}, %Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}})
+      iex> is_equal?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}}, %Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}})
       true
 
-      iex> is_equal?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :usd}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :usd}})
+      iex> is_equal?(%Money{amount: Decimal.new("100"), currency: %Currency{currency: :USD}}, %Money{amount: Decimal.new("200"), currency: %Currency{currency: :USD}})
       false
   """
   @spec is_equal?(t, t) :: :error | false | true
