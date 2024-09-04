@@ -45,6 +45,7 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
   # TODO: Implement the data base read function
   def cent_factor(currency) do
     GenServer.call(@server, {:cent_factor, currency})
+
     case currency do
       :USD -> 100
       :JPY -> 1

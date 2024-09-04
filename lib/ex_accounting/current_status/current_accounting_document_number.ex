@@ -1,7 +1,8 @@
 defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   @moduledoc """
   _Current Accounting Document Number_ is the state management of the document number issued for accounting document.
-  Database table holds the last number issued for the accounting document; and the number is incremented by one for the next accounting document.
+  _Current Accounting Document Number Server_ holds the last number issued for the accounting document;
+  and the number is incremented by one for the next accounting document.
   """
 
   use Ecto.Schema
@@ -48,16 +49,13 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   """
   @spec read() :: [t]
   @spec read(number_range_code) :: t
-  def read(
-        %AccountingDocumentNumberRangeCode{} = number_range_code
-      ) do
-    GenServer.call(@server, {:read, number_range_code})
-  end
-
   def read() do
     GenServer.call(@server, :read)
   end
 
+  def read(%AccountingDocumentNumberRangeCode{} = number_range_code) do
+    GenServer.call(@server, {:read, number_range_code})
+  end
 
   @doc """
   Issues the new document number for the given number range.
@@ -66,7 +64,11 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   """
   @spec issue(number_range_code) :: any()
   def issue(number_range_code) do
-    issue(number_range_code, &read/1, &ExAccounting.Configuration.AccountingDocumentNumberRange.read/1)
+    issue(
+      number_range_code,
+      &read/1,
+      &ExAccounting.Configuration.AccountingDocumentNumberRange.read/1
+    )
   end
 
   @doc """
@@ -91,6 +93,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
     else
       nil ->
         GenServer.call(@server, {:initiate, number_range_code, reader_of_config})
+
       _ ->
         :error
     end

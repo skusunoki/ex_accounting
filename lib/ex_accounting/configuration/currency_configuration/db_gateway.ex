@@ -33,16 +33,20 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration.DbGateway do
 
   def save(server) do
     with db = read() do
+      result =
+        server
+        |> Enum.filter(fn x -> Enum.any?(db, fn y -> x.currency == y.currency end) end)
+        |> Enum.map(fn x -> update(x.currency, x.cent_factor) end)
+        |> Enum.reduce({:ok, []}, fn {ok_error, changeset}, acc ->
+          accumulate_result(acc, {ok_error, changeset})
+        end)
 
-    result = server
-    |> Enum.filter(fn x -> Enum.any?(db, fn y -> x.currency == y.currency end) end)
-    |> Enum.map(fn x -> update(x.currency, x.cent_factor) end)
-    |> Enum.reduce({:ok, []}, fn {ok_error, changeset}, acc -> accumulate_result(acc, {ok_error, changeset}) end)
-
-    server
-    |> Enum.filter(fn x -> not Enum.any?(db, fn y -> x.currency == y.currency end) end)
-    |> Enum.map(fn x -> insert(x.currency, x.cent_factor) end)
-    |> Enum.reduce(result, fn {ok_error, changeset}, acc -> accumulate_result(acc, {ok_error, changeset}) end)
+      server
+      |> Enum.filter(fn x -> not Enum.any?(db, fn y -> x.currency == y.currency end) end)
+      |> Enum.map(fn x -> insert(x.currency, x.cent_factor) end)
+      |> Enum.reduce(result, fn {ok_error, changeset}, acc ->
+        accumulate_result(acc, {ok_error, changeset})
+      end)
     end
   end
 

@@ -21,7 +21,8 @@ defmodule ExAccounting.Elem do
     ReverseDocumentIndicator,
     ReversedDocumentAccountingUnit,
     ReversedDocumentFiscalYear,
-    ReversedDocumentAccountingDocument
+    ReversedDocumentAccountingDocument,
+    ReversedDocumentAccountingDocumentItem
   }
 
   defdelegate to_accounting_area(term), to: AccountingArea, as: :cast
@@ -67,6 +68,10 @@ defmodule ExAccounting.Elem do
     to: ReversedDocumentAccountingDocument,
     as: :cast
 
+  defdelegate to_reversed_document_accounting_document_item(term),
+    to: ReversedDocumentAccountingDocumentItem,
+    as: :cast
+
   def dump(%AccountingArea{} = term), do: AccountingArea.dump(term)
   def dump(%AccountingDocumentItemNumber{} = term), do: AccountingDocumentItemNumber.dump(term)
 
@@ -94,4 +99,7 @@ defmodule ExAccounting.Elem do
 
   def dump(%ReversedDocumentAccountingDocument{} = term),
     do: ReversedDocumentAccountingDocument.dump(term)
+
+  def dump(%ReversedDocumentAccountingDocumentItem{} = term),
+    do: ReversedDocumentAccountingDocumentItem.dump(term)
 end

@@ -24,7 +24,6 @@ defmodule ExAccounting.Money.Impl do
          %Decimal{} <- amount,
          %Decimal{} <- addend_amount,
          true <- currency == addend_currency do
-
       m
       |> changeset(%{amount: Decimal.add(amount, addend_amount), currency: currency})
       |> apply_changes()
@@ -77,9 +76,9 @@ defmodule ExAccounting.Money.Impl do
     with %ExAccounting.Money{amount: amount, currency: currency} <- money,
          %Decimal{} <- amount,
          true <- is_number(multiplier) or Decimal.is_decimal(multiplier) do
-          money
-          |> changeset(%{amount: Decimal.mult(amount, multiplier), currency: currency})
-          |> apply_changes()
+      money
+      |> changeset(%{amount: Decimal.mult(amount, multiplier), currency: currency})
+      |> apply_changes()
     else
       _ -> :error
     end
@@ -89,9 +88,9 @@ defmodule ExAccounting.Money.Impl do
   def negate(%ExAccounting.Money{} = money) do
     with %ExAccounting.Money{amount: amount, currency: currency} <- money,
          %Decimal{} <- amount do
-          money
-          |> changeset(%{amount: Decimal.negate(amount), currency: currency})
-          |> apply_changes()
+      money
+      |> changeset(%{amount: Decimal.negate(amount), currency: currency})
+      |> apply_changes()
     else
       _ -> :error
     end
@@ -146,39 +145,47 @@ defmodule ExAccounting.Money.Impl do
 
   def changeset(money, params) do
     with {:ok, currency} <- ExAccounting.Money.Currency.cast(params.currency) do
-    cast(money, params, [:amount, :currency])
-    |> validate_required([:amount, :currency])
-    |> validate_inclusion(:currency, ExAccounting.Configuration.CurrencyConfiguration.read() |> Enum.map(fn x -> x.currency end),
-      message: "should be in the list of the available currencies in the configuration"
-    )
-    |> put_change(:cent_factor, ExAccounting.Configuration.CurrencyConfiguration.cent_factor(currency.currency))
+      cast(money, params, [:amount, :currency])
+      |> validate_required([:amount, :currency])
+      |> validate_inclusion(
+        :currency,
+        ExAccounting.Configuration.CurrencyConfiguration.read()
+        |> Enum.map(fn x -> x.currency end),
+        message: "should be in the list of the available currencies in the configuration"
+      )
+      |> put_change(
+        :cent_factor,
+        ExAccounting.Configuration.CurrencyConfiguration.cent_factor(currency.currency)
+      )
     end
   end
+
   @spec divide(Money.t(), by :: integer) :: Money.t()
   def divide(%ExAccounting.Money{} = money, by) do
-    with %ExAccounting.Money{amount: amount, currency: currency, cent_factor: cent_factor} <- money,
+    with %ExAccounting.Money{amount: amount, currency: currency, cent_factor: cent_factor} <-
+           money,
          %Decimal{} <- amount,
          true <- is_number(by) or Decimal.is_decimal(by),
          param =
-      %{
-        amount:
-          amount
-          |> Decimal.mult(cent_factor)
-          |> Decimal.div_int(by)
-          |> Decimal.div(cent_factor),
-        currency: currency
-      }
-      do
-        money
-        |> changeset(param)
-        |> apply_changes()
+           %{
+             amount:
+               amount
+               |> Decimal.mult(cent_factor)
+               |> Decimal.div_int(by)
+               |> Decimal.div(cent_factor),
+             currency: currency
+           } do
+      money
+      |> changeset(param)
+      |> apply_changes()
     else
       _ -> :error
     end
   end
 
   def allocate(money, by) do
-    with %ExAccounting.Money{amount: amount, currency: currency, cent_factor: cent_factor} <- money,
+    with %ExAccounting.Money{amount: amount, currency: currency, cent_factor: cent_factor} <-
+           money,
          %Decimal{} <- amount,
          true <- is_integer(by),
          true <- by > 0,

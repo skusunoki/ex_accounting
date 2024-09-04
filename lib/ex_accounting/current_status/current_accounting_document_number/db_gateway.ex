@@ -26,6 +26,8 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.DbGateway d
     |> ExAccounting.Repo.all()
   end
 
+  @spec save([CurrentAccountingDocumentNumber.t()]) ::
+          {:ok, [Ecto.Changeset.t()]} | {:error, [Ecto.Changeset.t()]}
   def save(server) do
     with db <- read() do
       result =

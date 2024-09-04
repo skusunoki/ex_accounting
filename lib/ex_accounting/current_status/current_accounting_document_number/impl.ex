@@ -18,7 +18,6 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Impl do
   @spec increment(CurrentAccountingDocumentNumber.t(), [CurrentAccountingDocumentNumber.t()]) :: [
           CurrentAccountingDocumentNumber.t()
         ]
-
   def increment(%CurrentAccountingDocumentNumber{} = current_accounting_document_number) do
     with %CurrentAccountingDocumentNumber{
            current_document_number: current_document_number
