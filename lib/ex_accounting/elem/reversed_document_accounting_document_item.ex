@@ -28,6 +28,17 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingDocumentItem do
 
   @doc """
   Casts the given _Accounting Document Item_ to the _Reversed Document Accounting Document Item_.
+
+  ## Examples
+
+      iex> cast(%AccountingDocumentItemNumber{accounting_document_item_number: 1010})
+      {:ok, %ReversedDocumentAccountingDocumentItem{reversed_document_accounting_document_item: %AccountingDocumentItemNumber{accounting_document_item_number: 1010}}}
+
+      iex> cast(1010)
+      {:ok, %ReversedDocumentAccountingDocumentItem{reversed_document_accounting_document_item: %AccountingDocumentItemNumber{accounting_document_item_number: 1010}}}
+
+      iex> cast( %ReversedDocumentAccountingDocumentItem{ reversed_document_accounting_document_item: %AccountingDocumentItemNumber{ accounting_document_item_number: 1010 } })
+      {:ok, %ReversedDocumentAccountingDocumentItem{ reversed_document_accounting_document_item: %AccountingDocumentItemNumber{ accounting_document_item_number: 1010 } }}
   """
   @spec cast(t | accounting_document_item) :: {:ok, t()} | :error
   def cast(%__MODULE__{} = reversed_document_accounting_document_item) do
@@ -58,6 +69,11 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingDocumentItem do
 
   @doc """
   Dumps the _Reversed Document Accounting Document Item_ into the database form.
+
+  ## Examples
+
+      iex> dump(%ReversedDocumentAccountingDocumentItem{reversed_document_accounting_document_item: %AccountingDocumentItemNumber{accounting_document_item_number: 1010}})
+      {:ok, 1010}
   """
   @spec dump(t) :: {:ok, integer} | :error
   def dump(%__MODULE__{
@@ -72,6 +88,11 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingDocumentItem do
 
   @doc """
   Loads the _Reversed Document Accounting Document Item_ from the database form data.
+
+  ## Examples
+
+      iex> load(1010)
+      {:ok, %ReversedDocumentAccountingDocumentItem{reversed_document_accounting_document_item: %AccountingDocumentItemNumber{accounting_document_item_number: 1010}}}
   """
   @spec load(integer) :: {:ok, t()} | :error
   def load(number) do
