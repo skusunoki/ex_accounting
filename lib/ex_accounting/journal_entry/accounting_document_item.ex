@@ -5,6 +5,8 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias ExAccounting.Elem.ReversedDocumentAccountingDocument
+  alias ExAccounting.Elem.ReversedDocumentFiscalYear
   alias ExAccounting.Elem.AccountingUnit
 
   alias ExAccounting.Elem.{
@@ -22,7 +24,11 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     EnteredBy,
     PostedBy,
     ReverseDocumentIndicator,
-    AmountInTransactionCurrency
+    AmountInTransactionCurrency,
+    ReversedDocumentAccountingDocumentItem,
+    ReversedDocumentAccountingDocument,
+    ReversedDocumentAccountingUnit,
+    ReversedDocumentFiscalYear,
   }
 
   @type t :: %__MODULE__{
@@ -42,9 +48,9 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
           posted_by: PostedBy.t(),
           reverse_document_indicator: ReverseDocumentIndicator.t(),
           reverse_document_accounting_unit: String.t(),
-          reverse_document_fiscal_year: integer,
-          reverse_document_accounting_document: integer,
-          reverse_document_accounting_document_item: integer,
+          reverse_document_fiscal_year: ReversedDocumentFiscalYear.t(),
+          reverse_document_accounting_document: ReversedDocumentAccountingDocument.t(),
+          reverse_document_accounting_document_item: ReversedDocumentAccountingDocumentItem.t(),
           reverse_document_accounting_period: integer,
           clearing_document_indicator: String.t(),
           clearing_document_accounting_unit: String.t(),
@@ -129,10 +135,10 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     field(:entered_by, EnteredBy)
     field(:posted_by, PostedBy)
     field(:reverse_document_indicator, ReverseDocumentIndicator)
-    field(:reverse_document_accounting_unit, :string)
-    field(:reverse_document_fiscal_year, :integer)
-    field(:reverse_document_accounting_document, :integer)
-    field(:reverse_document_accounting_document_item, :integer)
+    field(:reverse_document_accounting_unit, ReversedDocumentAccountingUnit)
+    field(:reverse_document_fiscal_year, ReversedDocumentFiscalYear)
+    field(:reverse_document_accounting_document, ReversedDocumentAccountingDocument)
+    field(:reverse_document_accounting_document_item, ReversedDocumentAccountingDocumentItem)
     field(:reverse_document_accounting_period, :integer)
     field(:clearing_document_indicator, :string)
     field(:clearing_document_accounting_unit, :string)

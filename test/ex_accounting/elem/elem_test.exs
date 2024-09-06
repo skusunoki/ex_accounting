@@ -25,6 +25,7 @@ defmodule ExAccounting.ElemTest do
     ReversedDocumentFiscalYear,
     ReversedDocumentAccountingDocument,
     ReversedDocumentAccountingDocumentItem,
+    ReversedDocumentAccountingPeriod,
     AmountInTransactionCurrency
   }
 
@@ -48,5 +49,6 @@ defmodule ExAccounting.ElemTest do
   doctest ReversedDocumentFiscalYear, import: true
   doctest ReversedDocumentAccountingDocument, import: true
   doctest ReversedDocumentAccountingDocumentItem, import: true
+  doctest ReversedDocumentAccountingPeriod, import: true
   doctest AmountInTransactionCurrency, import: true
 end
