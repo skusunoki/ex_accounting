@@ -26,6 +26,34 @@ defmodule ExAccounting.Elem do
     ReversedDocumentAccountingPeriod
   }
 
+  @typedoc "_Accounting Area_"
+  @type accounting_area :: AccountingArea.t()
+
+  @typedoc "_Accounting Document Item Number_"
+  @type accounting_document_item_number :: AccountingDocumentItemNumber.t()
+
+  @typedoc "_Accounting Document Number Range Code_"
+  @type accounting_document_number_range_code :: AccountingDocumentNumberRangeCode.t()
+
+  @typedoc "_Accounting Document Number_"
+  @type accounting_document_number :: AccountingDocumentNumber.t()
+
+  @typedoc "_Accounting Period_"
+  @type accounting_period :: AccountingPeriod.t()
+
+  @typedoc "_Accounting Unit_"
+  @type accounting_unit :: AccountingUnit.t()
+
+  @typedoc "_Debit Credit_"
+  @type debit_credit :: DebitCredit.t()
+
+  @typedoc "_Document Date_"
+  @type document_date :: DocumentDate.t()
+
+  @typedoc "_Document Type_"
+  @type document_type :: DocumentType.t()
+
+
   defdelegate to_accounting_area(term), to: AccountingArea, as: :cast
 
   defdelegate to_accounting_document_item_number(term),

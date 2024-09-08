@@ -1,4 +1,5 @@
 defmodule ExAccounting.Configuration.Currency.DbGateway do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

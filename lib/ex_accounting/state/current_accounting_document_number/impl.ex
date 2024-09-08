@@ -1,4 +1,5 @@
 defmodule ExAccounting.State.CurrentAccountingDocumentNumber.Impl do
+  @moduledoc false
   alias ExAccounting.Elem.AccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.State.CurrentAccountingDocumentNumber

@@ -1,4 +1,6 @@
 defmodule ExAccounting.Configuration.Currency.Server do
+  @moduledoc false
+
   use GenServer
   alias ExAccounting.Configuration.Currency.Impl
   alias ExAccounting.Configuration.Currency.DbGateway

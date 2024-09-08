@@ -1,10 +1,13 @@
 defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.DbGateway do
+  @moduledoc false
+
   import Ecto.Query
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange.Changeset
 
   # TODO: organize the db_gateway module and changeset module
+
   @typedoc "_Accounting Document Number Range Code_"
   @type number_range_code :: AccountingDocumentNumberRangeCode.t()
 

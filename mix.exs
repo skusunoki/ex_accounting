@@ -16,8 +16,8 @@ defmodule ExAccounting.MixProject do
         main: "readme",
         extras: ["README.md", "CHANGELOG.md"],
         groups_for_modules: [
-          schema: ~r"Schema",
           embedded_schema: ~r"EmbeddedSchema",
+          schema: ~r"Schema",
           state: ~r"State",
           elem: ~r"Elem",
           configuration: ~r"Configuration"

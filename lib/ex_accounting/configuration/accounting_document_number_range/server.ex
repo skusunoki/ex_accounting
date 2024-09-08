@@ -1,4 +1,5 @@
 defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Server do
+  @moduledoc false
   use GenServer
   alias ExAccounting.Configuration.AccountingDocumentNumberRange.Impl
   alias ExAccounting.Configuration.AccountingDocumentNumberRange.DbGateway

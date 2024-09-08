@@ -1,4 +1,6 @@
 defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Impl do
+  @moduledoc false
+
   import Ecto.Changeset
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
   alias ExAccounting.Configuration.AccountingDocumentNumberRange.Changeset

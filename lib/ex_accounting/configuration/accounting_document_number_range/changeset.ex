@@ -1,4 +1,6 @@
 defmodule ExAccounting.Configuration.AccountingDocumentNumberRange.Changeset do
+  @moduledoc false
+
   import Ecto.Changeset
 
   def changeset(accounting_document_number_range, params \\ %{}) do

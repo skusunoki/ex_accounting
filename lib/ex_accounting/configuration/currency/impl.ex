@@ -1,4 +1,6 @@
 defmodule ExAccounting.Configuration.Currency.Impl do
+  @moduledoc false
+
   def add(currencies, currency) do
     [currency | currencies]
   end

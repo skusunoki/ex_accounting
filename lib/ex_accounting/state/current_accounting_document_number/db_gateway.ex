@@ -1,4 +1,5 @@
 defmodule ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway do
+  @moduledoc false
   import Ecto.Query
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.State.CurrentAccountingDocumentNumber

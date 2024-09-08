@@ -1,4 +1,6 @@
 defmodule ExAccounting.State.CurrentAccountingDocumentNumber.Changeset do
+  @moduledoc false
+
   import Ecto.Changeset
   alias ExAccounting.State.CurrentAccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumber

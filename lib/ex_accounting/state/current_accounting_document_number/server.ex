@@ -1,4 +1,5 @@
 defmodule ExAccounting.State.CurrentAccountingDocumentNumber.Server do
+  @moduledoc false
   use GenServer
   alias ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway
   alias ExAccounting.State.CurrentAccountingDocumentNumber.Impl
