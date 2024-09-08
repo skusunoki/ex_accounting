@@ -4,5 +4,4 @@ defmodule ExAccounting.Repo do
   use Ecto.Repo,
     otp_app: :ex_accounting,
     adapter: Ecto.Adapters.Postgres
-
 end

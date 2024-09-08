@@ -5,6 +5,9 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias ExAccounting.Elem.ClearingDocumentAccountingPeriod
+  alias ExAccounting.Elem.ClearingDocumentAccountingDocumentItem
+  alias ExAccounting.Elem.ReversedDocumentAccountingPeriod
   alias ExAccounting.Elem.ReversedDocumentAccountingDocument
   alias ExAccounting.Elem.ReversedDocumentFiscalYear
   alias ExAccounting.Elem.AccountingUnit
@@ -29,6 +32,12 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     ReversedDocumentAccountingDocument,
     ReversedDocumentAccountingUnit,
     ReversedDocumentFiscalYear,
+    ClearingDocumentIndicator,
+    ClearingDocumentFiscalYear,
+    ClearingDocumentAccountingUnit,
+    ClearingDocumentAccountingDocument,
+    ClearingDocumentAccountingDocumentItem,
+    ClearingDocumentAccountingPeriod,
   }
 
   @type t :: %__MODULE__{
@@ -51,13 +60,13 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
           reverse_document_fiscal_year: ReversedDocumentFiscalYear.t(),
           reverse_document_accounting_document: ReversedDocumentAccountingDocument.t(),
           reverse_document_accounting_document_item: ReversedDocumentAccountingDocumentItem.t(),
-          reverse_document_accounting_period: integer,
-          clearing_document_indicator: String.t(),
-          clearing_document_accounting_unit: String.t(),
-          clearing_document_fiscal_year: integer,
-          clearing_document_accounting_document: integer,
-          clearing_document_accounting_document_item: integer,
-          cleairng_document_accounting_period: integer,
+          reverse_document_accounting_period: ReversedDocumentAccountingPeriod.t(),
+          clearing_document_indicator: ClearingDocumentIndicator.t(),
+          clearing_document_accounting_unit: ClearingDocumentAccountingUnit.t(),
+          clearing_document_fiscal_year: ClearingDocumentFiscalYear.t(),
+          clearing_document_accounting_document: ClearingDocumentAccountingDocument.t(),
+          clearing_document_accounting_document_item: ClearingDocumentAccountingDocumentItem.t(),
+          cleairng_document_accounting_period: ClearingDocumentAccountingPeriod.t(),
           reference_area: String.t(),
           reference_key: String.t(),
           general_ledger_account_transaction_type: String.t(),
@@ -139,13 +148,13 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     field(:reverse_document_fiscal_year, ReversedDocumentFiscalYear)
     field(:reverse_document_accounting_document, ReversedDocumentAccountingDocument)
     field(:reverse_document_accounting_document_item, ReversedDocumentAccountingDocumentItem)
-    field(:reverse_document_accounting_period, :integer)
-    field(:clearing_document_indicator, :string)
-    field(:clearing_document_accounting_unit, :string)
-    field(:clearing_document_fiscal_year, :integer)
-    field(:clearing_document_accounting_document, :integer)
-    field(:clearing_document_accounting_document_item, :integer)
-    field(:cleairng_document_accounting_period, :integer)
+    field(:reverse_document_accounting_period, ReversedDocumentAccountingPeriod)
+    field(:clearing_document_indicator, ClearingDocumentIndicator)
+    field(:clearing_document_accounting_unit, ClearingDocumentAccountingUnit)
+    field(:clearing_document_fiscal_year, ClearingDocumentFiscalYear)
+    field(:clearing_document_accounting_document, ClearingDocumentAccountingDocument)
+    field(:clearing_document_accounting_document_item, ClearingDocumentAccountingDocumentItem)
+    field(:cleairng_document_accounting_period, ClearingDocumentAccountingPeriod)
     field(:reference_area, :string)
     field(:reference_key, :string)
     field(:general_ledger_account_transaction_type, :string)

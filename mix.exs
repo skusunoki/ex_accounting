@@ -1,4 +1,4 @@
-defmodule ElAccountingGl.MixProject do
+defmodule ExAccounting.MixProject do
   use Mix.Project
 
   def project do
@@ -30,7 +30,13 @@ defmodule ElAccountingGl.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {ExAccounting.Application, []}
+      mod: {ExAccounting.Application, []},
+      registered: [
+        ExAccounting.Repo,
+        ExAccounting.Configuration.CurrencyConfiguration.Server,
+        ExAccounting.Configuration.AccountingDocumentNumberRange.Server,
+        ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server
+      ]
     ]
   end
 

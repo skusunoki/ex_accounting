@@ -71,7 +71,8 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingPeriod do
       {:ok, %ReversedDocumentAccountingPeriod{reversed_document_accounting_period: %AccountingPeriod{accounting_period: 12}}}
   """
   @spec load(integer) :: {:ok, t()} | :error
-  def load(reversed_document_accounting_period) when is_integer(reversed_document_accounting_period) do
+  def load(reversed_document_accounting_period)
+      when is_integer(reversed_document_accounting_period) do
     with {:ok, accounting_period} <- AccountingPeriod.load(reversed_document_accounting_period) do
       {:ok, %__MODULE__{reversed_document_accounting_period: accounting_period}}
     else
