@@ -1,4 +1,4 @@
-defmodule ExAccounting.Repo.Migrations.CurrencyConfiguration do
+defmodule ExAccounting.Repo.Migrations.Currency do
   use Ecto.Migration
 
   def change do

@@ -149,13 +149,13 @@ defmodule ExAccounting.Money.Impl do
       |> validate_required([:amount, :currency])
       |> validate_inclusion(
         :currency,
-        ExAccounting.Configuration.CurrencyConfiguration.read()
+        ExAccounting.Configuration.Currency.read()
         |> Enum.map(fn x -> x.currency end),
         message: "should be in the list of the available currencies in the configuration"
       )
       |> put_change(
         :cent_factor,
-        ExAccounting.Configuration.CurrencyConfiguration.cent_factor(currency.currency)
+        ExAccounting.Configuration.Currency.cent_factor(currency.currency)
       )
     end
   end

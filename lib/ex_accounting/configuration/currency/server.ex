@@ -1,7 +1,7 @@
-defmodule ExAccounting.Configuration.CurrencyConfiguration.Server do
+defmodule ExAccounting.Configuration.Currency.Server do
   use GenServer
-  alias ExAccounting.Configuration.CurrencyConfiguration.Impl
-  alias ExAccounting.Configuration.CurrencyConfiguration.DbGateway
+  alias ExAccounting.Configuration.Currency.Impl
+  alias ExAccounting.Configuration.Currency.DbGateway
 
   def start_link(_args) do
     GenServer.start_link(__MODULE__, :init, name: __MODULE__)

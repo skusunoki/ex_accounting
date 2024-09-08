@@ -9,7 +9,7 @@ defmodule ExAccounting.Application do
   def start(_type, _args) do
     children = [
       ExAccounting.Repo,
-      ExAccounting.Configuration.CurrencyConfiguration.Server,
+      ExAccounting.Configuration.Currency.Server,
       ExAccounting.Configuration.AccountingDocumentNumberRange.Server,
       ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server
     ]

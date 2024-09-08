@@ -1,4 +1,4 @@
-defmodule ExAccounting.Configuration.CurrencyConfiguration.DbGateway do
+defmodule ExAccounting.Configuration.Currency.DbGateway do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -1,10 +1,10 @@
-defmodule ExAccounting.Configuration.CurrencyConfiguration do
+defmodule ExAccounting.Configuration.Currency do
   @moduledoc """
   _Currency Configuration_ defines the currencies available in the system.
   """
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExAccounting.Configuration.CurrencyConfiguration.DbGateway
+  alias ExAccounting.Configuration.Currency.DbGateway
 
   @typedoc "_Currency Configuration_"
 
@@ -13,7 +13,7 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
           cent_factor: integer
         }
 
-  @server ExAccounting.Configuration.CurrencyConfiguration.Server
+  @server ExAccounting.Configuration.Currency.Server
 
   @primary_key false
   embedded_schema do
@@ -42,10 +42,9 @@ defmodule ExAccounting.Configuration.CurrencyConfiguration do
     |> cast(params, [:currency])
   end
 
-  # TODO: Implement the data base read function
+  # TODO: Implement the database read function
   def cent_factor(currency) do
     GenServer.call(@server, {:cent_factor, currency})
-
     case currency do
       :USD -> 100
       :JPY -> 1

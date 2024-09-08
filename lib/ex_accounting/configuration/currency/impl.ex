@@ -1,4 +1,4 @@
-defmodule ExAccounting.Configuration.CurrencyConfiguration.Impl do
+defmodule ExAccounting.Configuration.Currency.Impl do
   def add(currencies, currency) do
     [currency | currencies]
   end
