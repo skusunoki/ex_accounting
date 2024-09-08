@@ -5,6 +5,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias ExAccounting.Elem.AccountingUnitCurrency
   alias ExAccounting.Elem.ClearingDocumentAccountingPeriod
   alias ExAccounting.Elem.ClearingDocumentAccountingDocumentItem
   alias ExAccounting.Elem.ReversedDocumentAccountingPeriod
@@ -38,6 +39,11 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     ClearingDocumentAccountingDocument,
     ClearingDocumentAccountingDocumentItem,
     ClearingDocumentAccountingPeriod,
+    AmountInAccountingAreaCurrency,
+    AmountInAccountingUnitCurrency,
+    TransactionCurrency,
+    AccountingUnitCurrency,
+    AccountingAreaCurrency
   }
 
   @type t :: %__MODULE__{
@@ -56,7 +62,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
           entered_by: EnteredBy.t(),
           posted_by: PostedBy.t(),
           reverse_document_indicator: ReverseDocumentIndicator.t(),
-          reverse_document_accounting_unit: String.t(),
+          reverse_document_accounting_unit: ReversedDocumentAccountingUnit.t(),
           reverse_document_fiscal_year: ReversedDocumentFiscalYear.t(),
           reverse_document_accounting_document: ReversedDocumentAccountingDocument.t(),
           reverse_document_accounting_document_item: ReversedDocumentAccountingDocumentItem.t(),
@@ -97,15 +103,15 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
           partner_profit_center: String.t(),
           partner_cost_center: String.t(),
           partner_functional_area: String.t(),
-          accounting_unit_currency: String.t(),
-          amount_in_accounting_unit_currency: integer,
+          accounting_unit_currency: AccountingUnitCurrency.t(),
+          amount_in_accounting_unit_currency: AmountInAccountingUnitCurrency.t(),
           exchange_rate_type_to_accounting_unit_currency: String.t(),
           exchange_rate_to_accounting_unit_currency: integer,
           date_of_exchange_rate_to_accounting_unit_currency: Date.t(),
-          transaction_currency: String.t(),
+          transaction_currency: TransactionCurrency.t(),
           amount_in_transaction_currency: AmountInTransactionCurrency.t(),
-          accounting_area_currency: String.t(),
-          amount_in_accounting_area_currency: integer,
+          accounting_area_currency: AccountingAreaCurrency.t(),
+          amount_in_accounting_area_currency: AmountInAccountingAreaCurrency.t(),
           exchange_rate_type_to_accounting_area_currency: String.t(),
           exchange_rate_to_accounting_area_currency: integer,
           date_of_exchagne_rate_to_accounting_area_currency: Date.t(),
@@ -185,15 +191,15 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
     field(:partner_profit_center, :string)
     field(:partner_cost_center, :string)
     field(:partner_functional_area, :string)
-    field(:accounting_unit_currency, :string)
-    field(:amount_in_accounting_unit_currency, :integer)
+    field(:accounting_unit_currency, AccountingUnitCurrency)
+    field(:amount_in_accounting_unit_currency, AmountInAccountingUnitCurrency)
     field(:exchange_rate_type_to_accounting_unit_currency, :string)
     field(:exchange_rate_to_accounting_unit_currency, :integer)
     field(:date_of_exchange_rate_to_accounting_unit_currency, :date)
-    field(:transaction_currency, :string)
+    field(:transaction_currency, TransactionCurrency)
     field(:amount_in_transaction_currency, AmountInTransactionCurrency)
-    field(:accounting_area_currency, :string)
-    field(:amount_in_accounting_area_currency, :integer)
+    field(:accounting_area_currency, AccountingAreaCurrency)
+    field(:amount_in_accounting_area_currency, AmountInAccountingAreaCurrency)
     field(:exchange_rate_type_to_accounting_area_currency, :string)
     field(:exchange_rate_to_accounting_area_currency, :integer)
     field(:date_of_exchagne_rate_to_accounting_area_currency, :date)

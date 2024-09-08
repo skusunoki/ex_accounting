@@ -26,7 +26,18 @@ defmodule ExAccounting.ElemTest do
     ReversedDocumentAccountingDocument,
     ReversedDocumentAccountingDocumentItem,
     ReversedDocumentAccountingPeriod,
-    AmountInTransactionCurrency
+    ClearingDocumentIndicator,
+    ClearingDocumentAccountingUnit,
+    ClearingDocumentFiscalYear,
+    ClearingDocumentAccountingDocument,
+    ClearingDocumentAccountingDocumentItem,
+    ClearingDocumentAccountingPeriod,
+    AmountInTransactionCurrency,
+    AmountInAccountingAreaCurrency,
+    AmountInAccountingUnitCurrency,
+    TransactionCurrency,
+    AccountingAreaCurrency,
+    AccountingUnitCurrency
   }
 
   doctest FiscalYear, import: true
@@ -50,5 +61,16 @@ defmodule ExAccounting.ElemTest do
   doctest ReversedDocumentAccountingDocument, import: true
   doctest ReversedDocumentAccountingDocumentItem, import: true
   doctest ReversedDocumentAccountingPeriod, import: true
+  doctest ClearingDocumentIndicator, import: true
+  doctest ClearingDocumentAccountingUnit, import: true
+  doctest ClearingDocumentFiscalYear, import: true
+  doctest ClearingDocumentAccountingDocument, import: true
+  doctest ClearingDocumentAccountingDocumentItem, import: true
+  doctest ClearingDocumentAccountingPeriod, import: true
   doctest AmountInTransactionCurrency, import: true
+  doctest AmountInAccountingAreaCurrency, import: true
+  doctest AmountInAccountingUnitCurrency, import: true
+  doctest TransactionCurrency, import: true
+  doctest AccountingAreaCurrency, import: true
+  doctest AccountingUnitCurrency, import: true
 end
