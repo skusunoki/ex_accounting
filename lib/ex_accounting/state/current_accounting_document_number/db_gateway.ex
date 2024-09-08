@@ -1,8 +1,8 @@
-defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.DbGateway do
+defmodule ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway do
   import Ecto.Query
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Changeset
+  alias ExAccounting.State.CurrentAccountingDocumentNumber
+  alias ExAccounting.State.CurrentAccountingDocumentNumber.Changeset
 
   @typedoc "_Accounting Document Number Range Code_"
   @type number_range_code :: AccountingDocumentNumberRangeCode.t()

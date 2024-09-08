@@ -1,17 +1,17 @@
-defmodule ExAccounting.Money.Impl do
+defmodule ExAccounting.EmbeddedSchema.Money.Impl do
   @moduledoc false
   require Decimal
   import Ecto.Changeset
-  alias ExAccounting.Money.Currency
-  alias ExAccounting.Money
+  alias ExAccounting.EmbeddedSchema.Money.Currency
+  alias ExAccounting.EmbeddedSchema.Money
 
-  @type currency :: ExAccounting.Money.currency()
+  @type currency :: ExAccounting.EmbeddedSchema.Money.currency()
 
   @spec abs(Money.t()) :: Money.t() | :error
-  def abs(%ExAccounting.Money{} = money) do
-    with %ExAccounting.Money{amount: amount, currency: currency} <- money,
+  def abs(%ExAccounting.EmbeddedSchema.Money{} = money) do
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: currency} <- money,
          %Decimal{} <- amount do
-      %ExAccounting.Money{amount: Decimal.abs(amount), currency: currency}
+      %ExAccounting.EmbeddedSchema.Money{amount: Decimal.abs(amount), currency: currency}
     else
       _ -> :error
     end
@@ -19,8 +19,9 @@ defmodule ExAccounting.Money.Impl do
 
   @spec add(m :: Money.t(), addend :: Money.t()) :: Money.t()
   def add(m, addend) do
-    with %ExAccounting.Money{amount: amount, currency: currency} <- m,
-         %ExAccounting.Money{amount: addend_amount, currency: addend_currency} <- addend,
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: currency} <- m,
+         %ExAccounting.EmbeddedSchema.Money{amount: addend_amount, currency: addend_currency} <-
+           addend,
          %Decimal{} <- amount,
          %Decimal{} <- addend_amount,
          true <- currency == addend_currency do
@@ -34,8 +35,8 @@ defmodule ExAccounting.Money.Impl do
 
   @spec is_less_than?(m :: Money.t(), n :: Money.t()) :: boolean | :error
   def is_less_than?(m, n) do
-    with %ExAccounting.Money{amount: amount, currency: currency} <- m,
-         %ExAccounting.Money{amount: n_amount, currency: n_currency} <- n,
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: currency} <- m,
+         %ExAccounting.EmbeddedSchema.Money{amount: n_amount, currency: n_currency} <- n,
          %Decimal{} <- amount,
          %Decimal{} <- n_amount,
          true <- currency == n_currency do
@@ -47,8 +48,8 @@ defmodule ExAccounting.Money.Impl do
 
   @spec is_greater_than?(m :: Money.t(), n :: Money.t()) :: boolean | :error
   def is_greater_than?(m, n) do
-    with %ExAccounting.Money{amount: amount, currency: currency} <- m,
-         %ExAccounting.Money{amount: n_amount, currency: n_currency} <- n,
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: currency} <- m,
+         %ExAccounting.EmbeddedSchema.Money{amount: n_amount, currency: n_currency} <- n,
          %Decimal{} <- amount,
          %Decimal{} <- n_amount,
          true <- currency == n_currency do
@@ -60,8 +61,8 @@ defmodule ExAccounting.Money.Impl do
 
   @spec is_equal?(m :: Money.t(), n :: Money.t()) :: boolean | :error
   def is_equal?(m, n) do
-    with %ExAccounting.Money{amount: amount, currency: currency} <- m,
-         %ExAccounting.Money{amount: n_amount, currency: n_currency} <- n,
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: currency} <- m,
+         %ExAccounting.EmbeddedSchema.Money{amount: n_amount, currency: n_currency} <- n,
          %Decimal{} <- amount,
          %Decimal{} <- n_amount,
          true <- currency == n_currency do
@@ -72,8 +73,8 @@ defmodule ExAccounting.Money.Impl do
   end
 
   @spec multiply(Money.t(), multiplier :: integer | float | Decimal.t()) :: Money.t()
-  def multiply(%ExAccounting.Money{} = money, multiplier) do
-    with %ExAccounting.Money{amount: amount, currency: currency} <- money,
+  def multiply(%ExAccounting.EmbeddedSchema.Money{} = money, multiplier) do
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: currency} <- money,
          %Decimal{} <- amount,
          true <- is_number(multiplier) or Decimal.is_decimal(multiplier) do
       money
@@ -85,8 +86,8 @@ defmodule ExAccounting.Money.Impl do
   end
 
   @spec negate(money :: Money.t()) :: Money.t() | :error
-  def negate(%ExAccounting.Money{} = money) do
-    with %ExAccounting.Money{amount: amount, currency: currency} <- money,
+  def negate(%ExAccounting.EmbeddedSchema.Money{} = money) do
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: currency} <- money,
          %Decimal{} <- amount do
       money
       |> changeset(%{amount: Decimal.negate(amount), currency: currency})
@@ -97,8 +98,8 @@ defmodule ExAccounting.Money.Impl do
   end
 
   @spec is_negative?(Money.t()) :: boolean | :error
-  def is_negative?(%ExAccounting.Money{} = money) do
-    with %ExAccounting.Money{amount: amount, currency: _currency} <- money,
+  def is_negative?(%ExAccounting.EmbeddedSchema.Money{} = money) do
+    with %ExAccounting.EmbeddedSchema.Money{amount: amount, currency: _currency} <- money,
          %Decimal{} <- amount do
       Decimal.negative?(amount)
     else
@@ -110,7 +111,7 @@ defmodule ExAccounting.Money.Impl do
   def new(%Decimal{} = amount, currency) do
     with {:ok, currency} <- Currency.cast(currency),
          {:ok, return} <-
-           %ExAccounting.Money{}
+           %ExAccounting.EmbeddedSchema.Money{}
            |> changeset(%{amount: amount, currency: currency})
            |> apply_action(:update) do
       return
@@ -122,7 +123,7 @@ defmodule ExAccounting.Money.Impl do
   def new(amount, currency) when is_number(amount) do
     with {:ok, currency} <- Currency.cast(currency),
          {:ok, return} <-
-           %ExAccounting.Money{}
+           %ExAccounting.EmbeddedSchema.Money{}
            |> changeset(%{
              amount: Decimal.new(to_string(amount)),
              currency: currency
@@ -144,7 +145,7 @@ defmodule ExAccounting.Money.Impl do
   """
 
   def changeset(money, params) do
-    with {:ok, currency} <- ExAccounting.Money.Currency.cast(params.currency) do
+    with {:ok, currency} <- ExAccounting.EmbeddedSchema.Money.Currency.cast(params.currency) do
       cast(money, params, [:amount, :currency])
       |> validate_required([:amount, :currency])
       |> validate_inclusion(
@@ -161,8 +162,12 @@ defmodule ExAccounting.Money.Impl do
   end
 
   @spec divide(Money.t(), by :: integer) :: Money.t()
-  def divide(%ExAccounting.Money{} = money, by) do
-    with %ExAccounting.Money{amount: amount, currency: currency, cent_factor: cent_factor} <-
+  def divide(%ExAccounting.EmbeddedSchema.Money{} = money, by) do
+    with %ExAccounting.EmbeddedSchema.Money{
+           amount: amount,
+           currency: currency,
+           cent_factor: cent_factor
+         } <-
            money,
          %Decimal{} <- amount,
          true <- is_number(by) or Decimal.is_decimal(by),
@@ -184,7 +189,11 @@ defmodule ExAccounting.Money.Impl do
   end
 
   def allocate(money, by) do
-    with %ExAccounting.Money{amount: amount, currency: currency, cent_factor: cent_factor} <-
+    with %ExAccounting.EmbeddedSchema.Money{
+           amount: amount,
+           currency: currency,
+           cent_factor: cent_factor
+         } <-
            money,
          %Decimal{} <- amount,
          true <- is_integer(by),

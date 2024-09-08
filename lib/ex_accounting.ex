@@ -5,7 +5,7 @@ defmodule ExAccounting do
   Accounting data is recorded in the form of balanced journal entries to ensure the accuracy of ledgers.
 
   """
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
+  alias ExAccounting.State.CurrentAccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
 

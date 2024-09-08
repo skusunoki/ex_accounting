@@ -1,4 +1,4 @@
-defmodule ExAccounting.SystemDictionary.UserName do
+defmodule ExAccounting.Elem.UserName do
   @moduledoc """
   _User Name_ represents individual responsibility of the business processes.
 
@@ -24,10 +24,10 @@ defmodule ExAccounting.SystemDictionary.UserName do
 
   ## Examples
 
-      iex> ExAccounting.SystemDictionary.UserName.cast("johndoe")
-      {:ok, %ExAccounting.SystemDictionary.UserName{user_name: ~c[johndoe]}}
+      iex> ExAccounting.Elem.UserName.cast("johndoe")
+      {:ok, %ExAccounting.Elem.UserName{user_name: ~c[johndoe]}}
 
-      iex> ExAccounting.SystemDictionary.UserName.cast("ng_case,")
+      iex> ExAccounting.Elem.UserName.cast("ng_case,")
       :error
   """
   @spec cast(t) :: {:ok, t}
@@ -65,8 +65,8 @@ defmodule ExAccounting.SystemDictionary.UserName do
 
   ## Examples
 
-      iex> ExAccounting.SystemDictionary.UserName.load("johndoe")
-      {:ok, %ExAccounting.SystemDictionary.UserName{user_name: ~c[johndoe]}}
+      iex> ExAccounting.Elem.UserName.load("johndoe")
+      {:ok, %ExAccounting.Elem.UserName{user_name: ~c[johndoe]}}
   """
   def load(data) do
     with user_name = to_charlist(data),
@@ -115,10 +115,10 @@ defmodule ExAccounting.SystemDictionary.UserName do
 
   ## Examples
 
-      iex> ExAccounting.SystemDictionary.UserName.validate_user_name(~C[johndoe])
+      iex> ExAccounting.Elem.UserName.validate_user_name(~C[johndoe])
       {:ok, ~C[johndoe]}
 
-      iex> ExAccounting.SystemDictionary.UserName.validate_user_name(~C[JohnDoe])
+      iex> ExAccounting.Elem.UserName.validate_user_name(~C[JohnDoe])
       {:error, ~C[JohnDoe]}
   """
   @spec validate_user_name(charlist) :: {:ok, charlist} | {:error, charlist}

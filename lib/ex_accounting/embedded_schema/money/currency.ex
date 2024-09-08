@@ -1,4 +1,4 @@
-defmodule ExAccounting.Money.Currency do
+defmodule ExAccounting.EmbeddedSchema.Money.Currency do
   @moduledoc """
   __Currency__ represents a currency code.
   """

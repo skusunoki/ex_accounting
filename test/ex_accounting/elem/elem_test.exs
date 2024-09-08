@@ -37,7 +37,8 @@ defmodule ExAccounting.ElemTest do
     AmountInAccountingUnitCurrency,
     TransactionCurrency,
     AccountingAreaCurrency,
-    AccountingUnitCurrency
+    AccountingUnitCurrency,
+    UserName
   }
 
   doctest FiscalYear, import: true
@@ -73,4 +74,5 @@ defmodule ExAccounting.ElemTest do
   doctest TransactionCurrency, import: true
   doctest AccountingAreaCurrency, import: true
   doctest AccountingUnitCurrency, import: true
+  doctest UserName, import: true
 end

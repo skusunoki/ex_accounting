@@ -1,25 +1,25 @@
-defmodule ExAccounting.Money do
+defmodule ExAccounting.EmbeddedSchema.Money do
   @moduledoc """
   _Money_ is a representation of a monetary value in a specific currency.
   """
   use Ecto.Schema
-  alias ExAccounting.Money.Impl
+  alias ExAccounting.EmbeddedSchema.Money.Impl
 
   @typedoc "_Money_"
   @type t :: %__MODULE__{
           amount: Decimal.t(),
-          currency: ExAccounting.Money.Currency.t(),
+          currency: ExAccounting.EmbeddedSchema.Money.Currency.t(),
           cent_factor: integer
         }
 
   @typedoc "_Currency_"
-  @type currency :: ExAccounting.Money.Currency.t()
+  @type currency :: ExAccounting.EmbeddedSchema.Money.Currency.t()
   #  defstruct amount: nil, currency: nil
 
   @primary_key false
   embedded_schema do
     field(:amount, :decimal)
-    field(:currency, ExAccounting.Money.Currency)
+    field(:currency, ExAccounting.EmbeddedSchema.Money.Currency)
     field(:cent_factor, :integer)
   end
 

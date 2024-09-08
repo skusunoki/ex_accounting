@@ -16,11 +16,11 @@ defmodule ExAccounting.MixProject do
         main: "readme",
         extras: ["README.md", "CHANGELOG.md"],
         groups_for_modules: [
-          journal_entry: ~r"JournalEntry",
-          current_status: ~r"CurrentStatus",
+          schema: ~r"Schema",
+          embedded_schema: ~r"EmbeddedSchema",
+          state: ~r"State",
           elem: ~r"Elem",
-          configuration: ~r"Configuration",
-          system_dictionary: ~r"SystemDictionary"
+          configuration: ~r"Configuration"
         ]
       ]
     ]
@@ -29,13 +29,13 @@ defmodule ExAccounting.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :observer, :wx, :runtime_tools],
       mod: {ExAccounting.Application, []},
       registered: [
         ExAccounting.Repo,
-        ExAccounting.Configuration.CurrencyConfiguration.Server,
+        ExAccounting.Configuration.Currency.Server,
         ExAccounting.Configuration.AccountingDocumentNumberRange.Server,
-        ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server
+        ExAccounting.State.CurrentAccountingDocumentNumber.Server
       ]
     ]
   end

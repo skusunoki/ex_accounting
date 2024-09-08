@@ -26,11 +26,11 @@ defmodule ExAccounting.Elem.AccountingAreaCurrency do
 
   ## Examples
 
-      iex> cast(ExAccounting.Money.new(100, "USD"))
+      iex> cast(ExAccounting.EmbeddedSchema.Money.new(100, "USD"))
       {:ok, %AccountingAreaCurrency{accounting_area_currency: :USD}}
   """
-  def cast(%ExAccounting.Money{} = money) do
-    with {:ok, value} <- ExAccounting.Money.Currency.cast(money.currency) do
+  def cast(%ExAccounting.EmbeddedSchema.Money{} = money) do
+    with {:ok, value} <- ExAccounting.EmbeddedSchema.Money.Currency.cast(money.currency) do
       {:ok, %__MODULE__{accounting_area_currency: value.currency}}
     else
       _ -> :error

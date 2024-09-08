@@ -1,7 +1,7 @@
-defmodule ExAccounting.MoneyTest do
+defmodule ExAccounting.EmbeddedSchema.MoneyTest do
   use ExUnit.Case
-  alias ExAccounting.Money
-  alias ExAccounting.Money.Currency
+  alias ExAccounting.EmbeddedSchema.Money
+  alias ExAccounting.EmbeddedSchema.Money.Currency
 
   doctest Money, import: true
   doctest Currency, import: true

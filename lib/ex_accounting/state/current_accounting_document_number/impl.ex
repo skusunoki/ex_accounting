@@ -1,7 +1,7 @@
-defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Impl do
+defmodule ExAccounting.State.CurrentAccountingDocumentNumber.Impl do
   alias ExAccounting.Elem.AccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
+  alias ExAccounting.State.CurrentAccountingDocumentNumber
 
   @typedoc "Next document number which is incremented or newly created from the configuration of the accounting document number range."
   @type current_document_number :: %{

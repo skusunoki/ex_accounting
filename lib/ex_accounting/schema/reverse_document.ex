@@ -1,4 +1,4 @@
-defmodule ExAccounting.JournalEntry.ReverseDocument do
+defmodule ExAccounting.Schema.ReverseDocument do
   defstruct [
     :reverse_document_indicator,
     :reversed_document_accounting_unit,

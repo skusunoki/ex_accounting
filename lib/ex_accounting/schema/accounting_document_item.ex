@@ -1,4 +1,4 @@
-defmodule ExAccounting.JournalEntry.AccountingDocumentItem do
+defmodule ExAccounting.Schema.AccountingDocumentItem do
   @moduledoc """
   _Accounting Document Item_ is atomic data object in the accounting system.
   """

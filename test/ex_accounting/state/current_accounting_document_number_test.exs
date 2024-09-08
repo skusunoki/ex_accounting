@@ -1,6 +1,6 @@
-defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumberTest do
+defmodule ExAccounting.State.CurrentAccountingDocumentNumberTest do
   use ExUnit.Case
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber
+  alias ExAccounting.State.CurrentAccountingDocumentNumber
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Elem.AccountingDocumentNumber

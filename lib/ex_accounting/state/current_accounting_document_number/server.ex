@@ -1,7 +1,7 @@
-defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server do
+defmodule ExAccounting.State.CurrentAccountingDocumentNumber.Server do
   use GenServer
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.DbGateway
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Impl
+  alias ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway
+  alias ExAccounting.State.CurrentAccountingDocumentNumber.Impl
 
   def init(_dummy) do
     {:ok, DbGateway.read()}

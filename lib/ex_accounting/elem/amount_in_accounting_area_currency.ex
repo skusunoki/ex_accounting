@@ -29,7 +29,7 @@ defmodule ExAccounting.Elem.AmountInAccountingAreaCurrency do
       iex> cast(Decimal.new("100"))
       {:ok, %AmountInAccountingAreaCurrency{amount_in_accounting_area_currency: Decimal.new("100")}}
 
-      iex> cast(ExAccounting.Money.new(100, "USD"))
+      iex> cast(ExAccounting.EmbeddedSchema.Money.new(100, "USD"))
       {:ok, %AmountInAccountingAreaCurrency{amount_in_accounting_area_currency: Decimal.new("100")}}
   """
   @spec cast(Decimal.t() | t | integer) :: {:ok, t} | :error
@@ -58,7 +58,7 @@ defmodule ExAccounting.Elem.AmountInAccountingAreaCurrency do
     end
   end
 
-  def cast(%ExAccounting.Money{} = money) do
+  def cast(%ExAccounting.EmbeddedSchema.Money{} = money) do
     with {:ok, value} <- Decimal.cast(money.amount) do
       {:ok, %__MODULE__{amount_in_accounting_area_currency: value}}
     else

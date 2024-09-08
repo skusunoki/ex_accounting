@@ -1,4 +1,4 @@
-defmodule ExAccounting.JournalEntry.AccountingDocumentHeader do
+defmodule ExAccounting.Schema.AccountingDocumentHeader do
   @moduledoc """
   _Accounting Document Header_ is the header of the accounting document.
   """
@@ -66,7 +66,7 @@ defmodule ExAccounting.JournalEntry.AccountingDocumentHeader do
           ExAccounting.Elem.EnteredAt.t(),
           ExAccounting.Elem.EnteredBy.t(),
           ExAccounting.Elem.PostedBy.t()
-        ) :: ExAccounting.JournalEntry.AccountingDocumentHeader.t()
+        ) :: ExAccounting.Schema.AccountingDocumentHeader.t()
   def create(
         document_type,
         posting_date,

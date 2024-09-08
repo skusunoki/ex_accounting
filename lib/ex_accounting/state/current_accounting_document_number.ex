@@ -1,4 +1,4 @@
-defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
+defmodule ExAccounting.State.CurrentAccountingDocumentNumber do
   @moduledoc """
   _Current Accounting Document Number_ is the state management of the document number issued for accounting document.
   _Current Accounting Document Number Server_ holds the last number issued for the accounting document;
@@ -10,7 +10,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   alias ExAccounting.Elem.AccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Configuration.AccountingDocumentNumberRange
-  alias ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.DbGateway
+  alias ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway
 
   @typedoc "_Accounting Document Number Range Code_"
   @type number_range_code :: AccountingDocumentNumberRangeCode.t()
@@ -37,7 +37,7 @@ defmodule ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber do
   @typedoc "Function to read the current document number from the database."
   @type read :: (number_range_code -> t)
 
-  @server ExAccounting.CurrentStatus.CurrentAccountingDocumentNumber.Server
+  @server ExAccounting.State.CurrentAccountingDocumentNumber.Server
 
   schema "current_accounting_document_numbers" do
     field(:number_range_code, AccountingDocumentNumberRangeCode)
