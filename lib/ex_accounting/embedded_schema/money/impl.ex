@@ -2,10 +2,10 @@ defmodule ExAccounting.EmbeddedSchema.Money.Impl do
   @moduledoc false
   require Decimal
   import Ecto.Changeset
-  alias ExAccounting.EmbeddedSchema.Money.Currency
+  alias ExAccounting.Elem.Currency
   alias ExAccounting.EmbeddedSchema.Money
 
-  @type currency :: ExAccounting.EmbeddedSchema.Money.currency()
+  @type currency :: ExAccounting.Elem.Currency.t()
 
   @spec abs(Money.t()) :: Money.t() | :error
   def abs(%ExAccounting.EmbeddedSchema.Money{} = money) do
@@ -145,7 +145,7 @@ defmodule ExAccounting.EmbeddedSchema.Money.Impl do
   """
 
   def changeset(money, params) do
-    with {:ok, currency} <- ExAccounting.EmbeddedSchema.Money.Currency.cast(params.currency) do
+    with {:ok, currency} <- ExAccounting.Elem.Currency.cast(params.currency) do
       cast(money, params, [:amount, :currency])
       |> validate_required([:amount, :currency])
       |> validate_inclusion(

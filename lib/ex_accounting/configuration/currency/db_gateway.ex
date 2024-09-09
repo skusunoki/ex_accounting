@@ -4,7 +4,7 @@ defmodule ExAccounting.Configuration.Currency.DbGateway do
   import Ecto.Changeset
 
   schema "currency_configurations" do
-    field(:currency, ExAccounting.EmbeddedSchema.Money.Currency, primary_key: true)
+    field(:currency, ExAccounting.Elem.Currency, primary_key: true)
     field(:cent_factor, :integer)
   end
 

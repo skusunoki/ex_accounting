@@ -8,18 +8,18 @@ defmodule ExAccounting.EmbeddedSchema.Money do
   @typedoc "_Money_"
   @type t :: %__MODULE__{
           amount: Decimal.t(),
-          currency: ExAccounting.EmbeddedSchema.Money.Currency.t(),
+          currency: ExAccounting.Elem.Currency.t(),
           cent_factor: integer
         }
 
   @typedoc "_Currency_"
-  @type currency :: ExAccounting.EmbeddedSchema.Money.Currency.t()
+  @type currency :: ExAccounting.Elem.Currency.t()
   #  defstruct amount: nil, currency: nil
 
   @primary_key false
   embedded_schema do
     field(:amount, :decimal)
-    field(:currency, ExAccounting.EmbeddedSchema.Money.Currency)
+    field(:currency, ExAccounting.Elem.Currency)
     field(:cent_factor, :integer)
   end
 

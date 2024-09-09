@@ -8,6 +8,7 @@ defmodule ExAccounting.EmbeddedSchema.GeneralLedgerTransaction do
   embedded_schema do
     field(:general_ledger_account, :string)
     field(:general_leadger_transaction_type, :string)
+    field(:debit_credit, :string)
   end
 
   def new(account, type) do

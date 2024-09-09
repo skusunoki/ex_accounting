@@ -9,7 +9,7 @@ defmodule ExAccounting.Configuration.Currency do
   @typedoc "_Currency Configuration_"
 
   @type t :: %__MODULE__{
-          currency: ExAccounting.EmbeddedSchema.Money.Currency.t(),
+          currency: ExAccounting.Elem.Currency.t(),
           cent_factor: integer
         }
 
@@ -17,11 +17,11 @@ defmodule ExAccounting.Configuration.Currency do
 
   @primary_key false
   embedded_schema do
-    field(:currency, ExAccounting.EmbeddedSchema.Money.Currency)
+    field(:currency, ExAccounting.Elem.Currency)
     field(:cent_factor, :integer)
   end
 
-  @spec add(ExAccounting.EmbeddedSchema.Money.Currency.t()) :: :ok
+  @spec add(ExAccounting.Elem.Currency.t()) :: :ok
   def add(currency) do
     GenServer.call(@server, {:add, currency})
   end

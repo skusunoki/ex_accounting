@@ -26,7 +26,7 @@ defmodule ExAccounting.Elem do
     ReversedDocumentAccountingPeriod
   }
 
-  @typedoc "_Accounting Area_"
+  @typedoc "_Accounting Area_ : _Accounting Area_ is an organization unit for aggregation (consolidation) of multiple entities."
   @type accounting_area :: AccountingArea.t()
 
   @typedoc "_Accounting Document Item Number_"

@@ -30,7 +30,7 @@ defmodule ExAccounting.Elem.AccountingAreaCurrency do
       {:ok, %AccountingAreaCurrency{accounting_area_currency: :USD}}
   """
   def cast(%ExAccounting.EmbeddedSchema.Money{} = money) do
-    with {:ok, value} <- ExAccounting.EmbeddedSchema.Money.Currency.cast(money.currency) do
+    with {:ok, value} <- ExAccounting.Elem.Currency.cast(money.currency) do
       {:ok, %__MODULE__{accounting_area_currency: value.currency}}
     else
       _ -> :error
