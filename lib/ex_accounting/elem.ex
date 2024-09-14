@@ -53,7 +53,6 @@ defmodule ExAccounting.Elem do
   @typedoc "_Document Type_"
   @type document_type :: DocumentType.t()
 
-
   defdelegate to_accounting_area(term), to: AccountingArea, as: :cast
 
   defdelegate to_accounting_document_item_number(term),
