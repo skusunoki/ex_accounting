@@ -1,4 +1,4 @@
-defmodule Learning.Money do
+defmodule Learning.Money.Money do
   use Ecto.Type
   defstruct amount: nil, currency: nil
 

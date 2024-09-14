@@ -1,4 +1,4 @@
-defmodule Learning.CompositeType.Vector do
+defmodule Learning.Persistence.Vector do
   use Ecto.Type
 
   defstruct x: nil, y: nil

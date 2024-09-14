@@ -1,11 +1,11 @@
-defmodule Learning.DocumentItem do
+defmodule Learning.Money.DocumentItem do
   use Ecto.Schema
   import Ecto.Changeset
 
   embedded_schema do
     field(:item, :integer)
-    field(:transaction_amount, Learning.Money)
-    field(:accounting_amount, Learning.Money)
+    field(:transaction_amount, Learning.Money.Money)
+    field(:accounting_amount, Learning.Money.Money)
   end
 
   def changeset(item, params \\ %{}) do

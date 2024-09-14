@@ -1,4 +1,4 @@
-defmodule Learning.PositionY do
+defmodule Learning.Persistence.PositionY do
   use Ecto.Type
 
   defstruct y: nil
@@ -9,7 +9,7 @@ defmodule Learning.PositionY do
     {:ok, %__MODULE__{y: y_axis}}
   end
 
-  def cast(%Learning.CompositeType.Vector{y: y_axis}) do
+  def cast(%Learning.Persistence.Vector{y: y_axis}) do
     {:ok, %__MODULE__{y: y_axis}}
   end
 

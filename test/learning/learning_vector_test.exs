@@ -1,7 +1,7 @@
 defmodule Learning.VectorTest do
   use ExUnit.Case
-  alias Learning.CompositeType.Vector
-  alias Learning.EmbeddedSchema
+  alias Learning.Persistence.Vector
+  alias Learning.Persistence.EmbeddedSchema
 
   test "vector" do
     vector = %Vector{x: 1, y: 2}
@@ -25,8 +25,8 @@ defmodule Learning.VectorTest do
     vector2 = %Vector{x: 3, y: 4}
     vector3 = %Vector{x: 5, y: 6}
 
-    %Learning.Schema{}
-    |> Learning.Persistable.changeset(%{
+    %Learning.Persistence.Schema{}
+    |> Learning.Persistence.Persistable.changeset(%{
       position1_x: vector1,
       position1_y: vector1,
       position2_x: vector2,
@@ -42,14 +42,14 @@ defmodule Learning.VectorTest do
     vector2 = %{x: 3, y: 4}
     vector3 = %{x: 5, y: 6}
 
-    %Learning.EmbeddedSchema{}
-    |> Learning.EmbeddedSchema.changeset(%{
+    %Learning.Persistence.EmbeddedSchema{}
+    |> Learning.Persistence.EmbeddedSchema.changeset(%{
       position1: vector1,
       position2: vector2,
       position3: vector3
     })
     |> Ecto.Changeset.apply_changes()
-    |> Learning.EmbeddedSchema.to_repo(%Learning.Schema{})
+    |> Learning.Persistence.EmbeddedSchema.to_repo(%Learning.Persistence.Schema{})
     |> ExAccounting.Repo.insert()
   end
 
@@ -58,14 +58,14 @@ defmodule Learning.VectorTest do
     vector2 = %{x: 3, y: 40}
     vector3 = %{x: 5, y: 6}
 
-    %Learning.EmbeddedSchema{}
-    |> Learning.EmbeddedSchema.changeset(%{
+    %Learning.Persistence.EmbeddedSchema{}
+    |> Learning.Persistence.EmbeddedSchema.changeset(%{
       position1: vector1,
       position2: vector2,
       position3: vector3
     })
     |> Ecto.Changeset.apply_changes()
-    |> (&Learning.Persistable.changeset(%Learning.Schema{}, &1)).()
+    |> (&Learning.Persistence.Persistable.changeset(%Learning.Persistence.Schema{}, &1)).()
     |> ExAccounting.Repo.insert()
   end
 end

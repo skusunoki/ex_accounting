@@ -1,4 +1,4 @@
-defmodule Learning.UserInterface do
+defmodule Learning.Money.UserInterface do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -20,7 +20,7 @@ defmodule Learning.UserInterface do
            transaction_amount: %{amount: params.amount1, currency: params.currency1},
            accounting_amount: %{amount: params.amount2, currency: params.currency2}
          } do
-      Learning.DocumentItem.changeset(%Learning.DocumentItem{}, params)
+      Learning.Money.DocumentItem.changeset(%Learning.Money.DocumentItem{}, params)
     end
   end
 end

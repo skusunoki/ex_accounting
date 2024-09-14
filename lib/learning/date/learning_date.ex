@@ -1,4 +1,4 @@
-defmodule Learning.LearningDate do
+defmodule Learning.Date.LearningDate do
   use Ecto.Schema
   import Ecto.Changeset
 

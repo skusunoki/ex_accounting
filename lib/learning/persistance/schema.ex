@@ -1,20 +1,20 @@
-defmodule Learning.Schema do
+defmodule Learning.Persistence.Schema do
   use Ecto.Schema
 
   schema "three_vectors" do
-    field(:position1_x, Learning.PositionX)
-    field(:position1_y, Learning.PositionY)
-    field(:position2_x, Learning.PositionX)
-    field(:position2_y, Learning.PositionY)
-    field(:position3_x, Learning.PositionX)
-    field(:position3_y, Learning.PositionY)
+    field(:position1_x, Learning.Persistence.PositionX)
+    field(:position1_y, Learning.Persistence.PositionY)
+    field(:position2_x, Learning.Persistence.PositionX)
+    field(:position2_y, Learning.Persistence.PositionY)
+    field(:position3_x, Learning.Persistence.PositionX)
+    field(:position3_y, Learning.Persistence.PositionY)
   end
 
 end
 
-defimpl Learning.Persistable, for: Learning.Schema do
+defimpl Learning.Persistence.Persistable, for: Learning.Persistence.Schema do
   import Ecto.Changeset
-  def changeset(schema, %Learning.EmbeddedSchema{} = params) do
+  def changeset(schema, %Learning.Persistence.EmbeddedSchema{} = params) do
     schema
     |> cast(%{position1_x: params.position1, position1_y: params.position1}, [
       :position1_x,
