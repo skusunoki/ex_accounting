@@ -6,8 +6,10 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias ExAccounting.Elem.OrderTransactionType
   alias ExAccounting.Elem.PartnerAccountingUnit
   alias ExAccounting.Elem.FunctionalArea
+
   alias ExAccounting.Elem.{
     FiscalYear,
     AccountingArea,
@@ -64,7 +66,11 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     FunctionalAreaTransactionType,
     PartnerAccountingUnit,
     PartnerProfitCenter,
-    PartnerCostCenter
+    PartnerCostCenter,
+    PartnerFunctionalArea,
+    OffsettingGeneralLedgerAccount,
+    Order,
+    OrderTransactionType
   }
 
   @type t :: %__MODULE__{
@@ -112,8 +118,8 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           functional_area: FunctionalArea.t(),
           cost_center_transaction_type: CostCenterTransactionType.t(),
           cost_center: CostCenter.t(),
-          order_transaction_type: String.t(),
-          order: String.t(),
+          order_transaction_type: OrderTransactionType.t(),
+          order: Order.t(),
           wbs_element_transaction_type: String.t(),
           wbs_element: String.t(),
           sales_order_transaction_type: String.t(),
@@ -123,7 +129,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           partner_accounting_unit: PartnerAccountingUnit.t(),
           partner_profit_center: PartnerProfitCenter.t(),
           partner_cost_center: PartnerCostCenter.t(),
-          partner_functional_area: String.t(),
+          partner_functional_area: PartnerFunctionalArea.t(),
           accounting_unit_currency: AccountingUnitCurrency.t(),
           amount_in_accounting_unit_currency: AmountInAccountingUnitCurrency.t(),
           exchange_rate_type_to_accounting_unit_currency: String.t(),
@@ -136,7 +142,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           exchange_rate_type_to_accounting_area_currency: String.t(),
           exchange_rate_to_accounting_area_currency: integer,
           date_of_exchagne_rate_to_accounting_area_currency: Date.t(),
-          offsetting_general_ledger_account: String.t(),
+          offsetting_general_ledger_account: OffsettingGeneralLedgerAccount.t(),
           offsetting_vendor: String.t(),
           offsetting_customer: String.t(),
           offsetting_fixed_asset: String.t(),
@@ -200,8 +206,8 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:functional_area, FunctionalArea)
     field(:cost_center_transaction_type, CostCenterTransactionType)
     field(:cost_center, CostCenter)
-    field(:order_transaction_type, :string)
-    field(:order, :string)
+    field(:order_transaction_type, OrderTransactionType)
+    field(:order, Order)
     field(:wbs_element_transaction_type, :string)
     field(:wbs_element, :string)
     field(:sales_order_transaction_type, :string)
@@ -211,7 +217,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:partner_accounting_unit, PartnerAccountingUnit)
     field(:partner_profit_center, PartnerProfitCenter)
     field(:partner_cost_center, PartnerCostCenter)
-    field(:partner_functional_area, :string)
+    field(:partner_functional_area, PartnerFunctionalArea)
     field(:accounting_unit_currency, AccountingUnitCurrency)
     field(:amount_in_accounting_unit_currency, AmountInAccountingUnitCurrency)
     field(:exchange_rate_type_to_accounting_unit_currency, :string)
@@ -224,7 +230,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:exchange_rate_type_to_accounting_area_currency, :string)
     field(:exchange_rate_to_accounting_area_currency, :integer)
     field(:date_of_exchagne_rate_to_accounting_area_currency, :date)
-    field(:offsetting_general_ledger_account, :string)
+    field(:offsetting_general_ledger_account, OffsettingGeneralLedgerAccount)
     field(:offsetting_vendor, :string)
     field(:offsetting_customer, :string)
     field(:offsetting_fixed_asset, :string)

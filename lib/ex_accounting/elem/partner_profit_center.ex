@@ -32,7 +32,9 @@ defmodule ExAccounting.Elem.PartnerProfitCenter do
 
   def cast(_), do: :error
 
-  def dump(%__MODULE__{} = partner_profit_center), do: {:ok, to_string(partner_profit_center.partner_profit_center)}
+  def dump(%__MODULE__{} = partner_profit_center),
+    do: {:ok, to_string(partner_profit_center.partner_profit_center)}
+
   def dump(_), do: :error
 
   def load(term) do

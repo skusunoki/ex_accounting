@@ -1,21 +1,21 @@
-defmodule ExAccounting.Elem.PartnerCostCenter do
+defmodule ExAccounting.Elem.Order do
   @moduledoc false
 
   use Ecto.Type
 
   @type t :: %__MODULE__{
-          partner_cost_center: charlist()
+          order: charlist()
         }
-  defstruct partner_cost_center: nil
+  defstruct order: nil
 
   def type, do: :string
 
-  def cast(%__MODULE__{} = partner_cost_center), do: {:ok, partner_cost_center}
+  def cast(%__MODULE__{} = order), do: {:ok, order}
 
   def cast(term) when is_binary(term) do
     with {:ok, validated} <- ExAccounting.Utility.validate(to_charlist(term)),
          true <- String.length(term) <= 10 do
-      {:ok, %__MODULE__{partner_cost_center: validated}}
+      {:ok, %__MODULE__{order: validated}}
     else
       _ -> :error
     end
@@ -24,7 +24,7 @@ defmodule ExAccounting.Elem.PartnerCostCenter do
   def cast(term) when is_list(term) do
     with {:ok, validated} <- ExAccounting.Utility.validate(term),
          true <- length(term) <= 10 do
-      {:ok, %__MODULE__{partner_cost_center: validated}}
+      {:ok, %__MODULE__{order: validated}}
     else
       _ -> :error
     end
@@ -32,15 +32,13 @@ defmodule ExAccounting.Elem.PartnerCostCenter do
 
   def cast(_), do: :error
 
-  def dump(%__MODULE__{} = partner_cost_center),
-    do: {:ok, to_string(partner_cost_center.partner_cost_center)}
-
+  def dump(%__MODULE__{} = order), do: {:ok, to_string(order.order)}
   def dump(_), do: :error
 
   def load(term) do
     with {:ok, validated} <- ExAccounting.Utility.validate(to_charlist(term)),
          true <- length(validated) <= 10 do
-      {:ok, %__MODULE__{partner_cost_center: validated}}
+      {:ok, %__MODULE__{order: validated}}
     else
       _ -> :error
     end
