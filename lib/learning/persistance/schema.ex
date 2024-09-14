@@ -9,11 +9,11 @@ defmodule Learning.Persistence.Schema do
     field(:position3_x, Learning.Persistence.PositionX)
     field(:position3_y, Learning.Persistence.PositionY)
   end
-
 end
 
 defimpl Learning.Persistence.Persistable, for: Learning.Persistence.Schema do
   import Ecto.Changeset
+
   def changeset(schema, %Learning.Persistence.EmbeddedSchema{} = params) do
     schema
     |> cast(%{position1_x: params.position1, position1_y: params.position1}, [

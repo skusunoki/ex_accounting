@@ -5,14 +5,8 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExAccounting.Elem.AccountingUnitCurrency
-  alias ExAccounting.Elem.ClearingDocumentAccountingPeriod
-  alias ExAccounting.Elem.ClearingDocumentAccountingDocumentItem
-  alias ExAccounting.Elem.ReversedDocumentAccountingPeriod
-  alias ExAccounting.Elem.ReversedDocumentAccountingDocument
-  alias ExAccounting.Elem.ReversedDocumentFiscalYear
-  alias ExAccounting.Elem.AccountingUnit
 
+  alias ExAccounting.Elem.FunctionalArea
   alias ExAccounting.Elem.{
     FiscalYear,
     AccountingArea,
@@ -43,7 +37,30 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     AmountInAccountingUnitCurrency,
     TransactionCurrency,
     AccountingUnitCurrency,
-    AccountingAreaCurrency
+    AccountingAreaCurrency,
+    Vendor,
+    VendorTransactionType,
+    Customer,
+    CustomerTransactionType,
+    CostCenter,
+    CostCenterTransactionType,
+    ProfitCenter,
+    ProfitCenterTransactionType,
+    PaymentService,
+    PaymentServiceTransactionType,
+    GeneralLedgerAccount,
+    GeneralLedgerAccountTransactionType,
+    FixedAsset,
+    FixedAssetTransactionType,
+    AccountingUnitCurrency,
+    ClearingDocumentAccountingPeriod,
+    ClearingDocumentAccountingDocumentItem,
+    ReversedDocumentAccountingPeriod,
+    ReversedDocumentAccountingDocument,
+    ReversedDocumentFiscalYear,
+    AccountingUnit,
+    FunctionalArea,
+    FunctionalAreaTransactionType
   }
 
   @type t :: %__MODULE__{
@@ -75,22 +92,22 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           cleairng_document_accounting_period: ClearingDocumentAccountingPeriod.t(),
           reference_area: String.t(),
           reference_key: String.t(),
-          general_ledger_account_transaction_type: String.t(),
-          general_ledger_account: String.t(),
-          vendor_transaction_type: String.t(),
-          vendor: String.t(),
-          customer_transaction_type: String.t(),
-          customer: String.t(),
-          fixed_asset_transaction_type: String.t(),
-          fixed_asset: String.t(),
-          payment_service_trainsaction_type: String.t(),
-          payment_service: String.t(),
-          profit_center_transaction_type: String.t(),
-          profit_center: String.t(),
-          functional_area_transaction_type: String.t(),
-          functional_area: String.t(),
-          cost_center_transaction_type: String.t(),
-          cost_center: String.t(),
+          general_ledger_account_transaction_type: GeneralLedgerAccountTransactionType.t(),
+          general_ledger_account: GeneralLedgerAccount.t(),
+          vendor_transaction_type: VendorTransactionType.t(),
+          vendor: Vendor.t(),
+          customer_transaction_type: CustomerTransactionType.t(),
+          customer: Customer.t(),
+          fixed_asset_transaction_type: FixedAssetTransactionType.t(),
+          fixed_asset: FixedAsset.t(),
+          payment_service_trainsaction_type: PaymentServiceTransactionType.t(),
+          payment_service: PaymentService.t(),
+          profit_center_transaction_type: ProfitCenterTransactionType.t(),
+          profit_center: ProfitCenter.t(),
+          functional_area_transaction_type: FunctionalAreaTransactionType.t(),
+          functional_area: FunctionalArea.t(),
+          cost_center_transaction_type: CostCenterTransactionType.t(),
+          cost_center: CostCenter.t(),
           order_transaction_type: String.t(),
           order: String.t(),
           wbs_element_transaction_type: String.t(),
@@ -163,22 +180,22 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:cleairng_document_accounting_period, ClearingDocumentAccountingPeriod)
     field(:reference_area, :string)
     field(:reference_key, :string)
-    field(:general_ledger_account_transaction_type, :string)
-    field(:general_ledger_account, :string)
-    field(:vendor_transaction_type, :string)
-    field(:vendor, :string)
-    field(:customer_transaction_type, :string)
-    field(:customer, :string)
-    field(:fixed_asset_transaction_type, :string)
-    field(:fixed_asset, :string)
-    field(:payment_service_trainsaction_type, :string)
-    field(:payment_service, :string)
-    field(:profit_center_transaction_type, :string)
-    field(:profit_center, :string)
-    field(:functional_area_transaction_type, :string)
-    field(:functional_area, :string)
-    field(:cost_center_transaction_type, :string)
-    field(:cost_center, :string)
+    field(:general_ledger_account_transaction_type, GeneralLedgerAccountTransactionType)
+    field(:general_ledger_account, GeneralLedgerAccount)
+    field(:vendor_transaction_type, VendorTransactionType)
+    field(:vendor, Vendor)
+    field(:customer_transaction_type, CustomerTransactionType)
+    field(:customer, Customer)
+    field(:fixed_asset_transaction_type, FixedAssetTransactionType)
+    field(:fixed_asset, FixedAsset)
+    field(:payment_service_trainsaction_type, PaymentServiceTransactionType)
+    field(:payment_service, PaymentService)
+    field(:profit_center_transaction_type, ProfitCenterTransactionType)
+    field(:profit_center, ProfitCenter)
+    field(:functional_area_transaction_type, FunctionalAreaTransactionType)
+    field(:functional_area, FunctionalArea)
+    field(:cost_center_transaction_type, CostCenterTransactionType)
+    field(:cost_center, CostCenter)
     field(:order_transaction_type, :string)
     field(:order, :string)
     field(:wbs_element_transaction_type, :string)
