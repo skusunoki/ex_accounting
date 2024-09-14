@@ -6,6 +6,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias ExAccounting.Elem.PartnerAccountingUnit
   alias ExAccounting.Elem.FunctionalArea
   alias ExAccounting.Elem.{
     FiscalYear,
@@ -60,7 +61,10 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     ReversedDocumentFiscalYear,
     AccountingUnit,
     FunctionalArea,
-    FunctionalAreaTransactionType
+    FunctionalAreaTransactionType,
+    PartnerAccountingUnit,
+    PartnerProfitCenter,
+    PartnerCostCenter
   }
 
   @type t :: %__MODULE__{
@@ -116,9 +120,9 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           sales_order: String.t(),
           sales_order_item_transaction_type: String.t(),
           sales_order_item: String.t(),
-          partner_accounting_unit: String.t(),
-          partner_profit_center: String.t(),
-          partner_cost_center: String.t(),
+          partner_accounting_unit: PartnerAccountingUnit.t(),
+          partner_profit_center: PartnerProfitCenter.t(),
+          partner_cost_center: PartnerCostCenter.t(),
           partner_functional_area: String.t(),
           accounting_unit_currency: AccountingUnitCurrency.t(),
           amount_in_accounting_unit_currency: AmountInAccountingUnitCurrency.t(),
@@ -204,9 +208,9 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:sales_order, :string)
     field(:sales_order_item_transaction_type, :string)
     field(:sales_order_item, :string)
-    field(:partner_accounting_unit, :string)
-    field(:partner_profit_center, :string)
-    field(:partner_cost_center, :string)
+    field(:partner_accounting_unit, PartnerAccountingUnit)
+    field(:partner_profit_center, PartnerProfitCenter)
+    field(:partner_cost_center, PartnerCostCenter)
     field(:partner_functional_area, :string)
     field(:accounting_unit_currency, AccountingUnitCurrency)
     field(:amount_in_accounting_unit_currency, AmountInAccountingUnitCurrency)
