@@ -83,7 +83,18 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     OffsettingFixedAsset,
     OffsettingCustomer,
     OffsettingVendor,
-    WbsElementTransactionType
+    WbsElementTransactionType,
+    SalesOrder,
+    SalesOrderTransactionType,
+    SalesOrderItem,
+    SalesOrderItemTransactionType,
+    ExchangeRateTypeToAccountingUnitCurrency,
+    ExchangeRateTypeToAccountingAreaCurrency,
+    ExchangeRateToAccountingAreaCurrency,
+    ExchangeRateToAccountingUnitCurrency,
+    VatCode,
+    DateOfExchangeRateToAccountingAreaCurrency,
+    DateOfExchangeRateToAccountingUnitCurrency
   }
 
   @type t :: %__MODULE__{
@@ -135,26 +146,26 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           order: Order.t(),
           wbs_element_transaction_type: WbsElementTransactionType.t(),
           wbs_element: WbsElement.t(),
-          sales_order_transaction_type: String.t(),
-          sales_order: String.t(),
-          sales_order_item_transaction_type: String.t(),
-          sales_order_item: String.t(),
+          sales_order_transaction_type: SalesOrderTransactionType.t(),
+          sales_order: SalesOrder.t(),
+          sales_order_item_transaction_type: SalesOrderItemTransactionType.t(),
+          sales_order_item: SalesOrderItem.t(),
           partner_accounting_unit: PartnerAccountingUnit.t(),
           partner_profit_center: PartnerProfitCenter.t(),
           partner_cost_center: PartnerCostCenter.t(),
           partner_functional_area: PartnerFunctionalArea.t(),
           accounting_unit_currency: AccountingUnitCurrency.t(),
           amount_in_accounting_unit_currency: AmountInAccountingUnitCurrency.t(),
-          exchange_rate_type_to_accounting_unit_currency: String.t(),
-          exchange_rate_to_accounting_unit_currency: integer,
-          date_of_exchange_rate_to_accounting_unit_currency: Date.t(),
+          exchange_rate_type_to_accounting_unit_currency: ExchangeRateTypeToAccountingUnitCurrency.t(),
+          exchange_rate_to_accounting_unit_currency: ExchangeRateToAccountingUnitCurrency.t(),
+          date_of_exchange_rate_to_accounting_unit_currency: DateOfExchangeRateToAccountingUnitCurrency.t(),
           transaction_currency: TransactionCurrency.t(),
           amount_in_transaction_currency: AmountInTransactionCurrency.t(),
           accounting_area_currency: AccountingAreaCurrency.t(),
           amount_in_accounting_area_currency: AmountInAccountingAreaCurrency.t(),
-          exchange_rate_type_to_accounting_area_currency: String.t(),
-          exchange_rate_to_accounting_area_currency: integer,
-          date_of_exchagne_rate_to_accounting_area_currency: Date.t(),
+          exchange_rate_type_to_accounting_area_currency: ExchangeRateTypeToAccountingAreaCurrency.t(),
+          exchange_rate_to_accounting_area_currency: ExchangeRateToAccountingAreaCurrency.t(),
+          date_of_exchagne_rate_to_accounting_area_currency: DateOfExchangeRateToAccountingAreaCurrency.t(),
           offsetting_general_ledger_account: OffsettingGeneralLedgerAccount.t(),
           offsetting_vendor: OffsettingVendor.t(),
           offsetting_customer: OffsettingCustomer.t(),
@@ -165,7 +176,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           offsetting_cost_center: OffsettingCostCenter.t(),
           offsetting_functional_area: OffsettingFunctionalArea.t(),
           offsetting_wbs_element: String.t(),
-          vat_code: String.t(),
+          vat_code: VatCode.t(),
           vat_amount_of_accounting_unit_currency: VatAmountOfAccountingUnitCurrency.t(),
           vat_amount_of_transaction_currency: VatAmountOfAccountingUnitCurrency.t(),
           vat_amount_of_accounting_area_currency: VatAmountOfAccountingAreaCurrency.t(),
@@ -223,26 +234,26 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:order, Order)
     field(:wbs_element_transaction_type, WbsElementTransactionType)
     field(:wbs_element, WbsElement)
-    field(:sales_order_transaction_type, :string)
-    field(:sales_order, :string)
-    field(:sales_order_item_transaction_type, :string)
-    field(:sales_order_item, :string)
+    field(:sales_order_transaction_type, SalesOrderTransactionType)
+    field(:sales_order, SalesOrder)
+    field(:sales_order_item_transaction_type, SalesOrderItemTransactionType)
+    field(:sales_order_item, SalesOrderItem)
     field(:partner_accounting_unit, PartnerAccountingUnit)
     field(:partner_profit_center, PartnerProfitCenter)
     field(:partner_cost_center, PartnerCostCenter)
     field(:partner_functional_area, PartnerFunctionalArea)
     field(:accounting_unit_currency, AccountingUnitCurrency)
     field(:amount_in_accounting_unit_currency, AmountInAccountingUnitCurrency)
-    field(:exchange_rate_type_to_accounting_unit_currency, :string)
-    field(:exchange_rate_to_accounting_unit_currency, :integer)
-    field(:date_of_exchange_rate_to_accounting_unit_currency, :date)
+    field(:exchange_rate_type_to_accounting_unit_currency, ExchangeRateTypeToAccountingUnitCurrency)
+    field(:exchange_rate_to_accounting_unit_currency, ExchangeRateTypeToAccountingUnitCurrency)
+    field(:date_of_exchange_rate_to_accounting_unit_currency, DateOfExchangeRateToAccountingUnitCurrency)
     field(:transaction_currency, TransactionCurrency)
     field(:amount_in_transaction_currency, AmountInTransactionCurrency)
     field(:accounting_area_currency, AccountingAreaCurrency)
     field(:amount_in_accounting_area_currency, AmountInAccountingAreaCurrency)
-    field(:exchange_rate_type_to_accounting_area_currency, :string)
-    field(:exchange_rate_to_accounting_area_currency, :integer)
-    field(:date_of_exchagne_rate_to_accounting_area_currency, :date)
+    field(:exchange_rate_type_to_accounting_area_currency, ExchangeRateTypeToAccountingAreaCurrency)
+    field(:exchange_rate_to_accounting_area_currency, ExchangeRateToAccountingAreaCurrency)
+    field(:date_of_exchagne_rate_to_accounting_area_currency, DateOfExchangeRateToAccountingAreaCurrency)
     field(:offsetting_general_ledger_account, OffsettingGeneralLedgerAccount)
     field(:offsetting_vendor, OffsettingVendor)
     field(:offsetting_customer, OffsettingCustomer)
@@ -253,7 +264,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:offsetting_cost_center, OffsettingCostCenter)
     field(:offsetting_functional_area, OffsettingFunctionalArea)
     field(:offsetting_wbs_element, :string)
-    field(:vat_code, :string)
+    field(:vat_code, VatCode)
     field(:vat_amount_of_accounting_unit_currency, VatAmountOfAccountingUnitCurrency)
     field(:vat_amount_of_transaction_currency, VatAmountOfTransactionCurrency)
     field(:vat_amount_of_accounting_area_currency, VatAmountOfAccountingAreaCurrency)
