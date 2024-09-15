@@ -3,6 +3,6 @@ defmodule ExAccounting.Schema.PhoneNumber do
 
   schema "phone_numbers" do
     field(:phone_number, :string)
-    belongs_to(:destination, ExAccounting.Schema.Communication)
+    belongs_to(:communication, ExAccounting.Schema.Communication)
   end
 end

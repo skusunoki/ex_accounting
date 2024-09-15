@@ -3,6 +3,6 @@ defmodule ExAccounting.Schema.EmailAddress do
 
   schema "email_addresses" do
     field(:email, :string)
-    belongs_to(:destination, ExAccounting.Schema.Communication)
+    belongs_to(:communication, ExAccounting.Schema.Communication)
   end
 end
