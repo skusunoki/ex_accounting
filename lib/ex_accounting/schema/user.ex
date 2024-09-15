@@ -4,6 +4,7 @@ defmodule ExAccounting.Schema.User do
 
   schema "users" do
     field(:user_name, :string)
+    belongs_to(:individual_entity, ExAccounting.Schema.IndividualEntity)
   end
 
   @doc """

@@ -1,13 +1,13 @@
-defmodule ExAccounting.Schema.Vendor do
+defmodule ExAccounting.Schema.Customer do
   @moduledoc false
   use Ecto.Schema
 
   alias ExAccounting.Elem.{
-    Vendor,
+    Customer,
   }
 
-  schema "vendors" do
-    field(:vendor, Vendor)
+  schema "customers" do
+    field(:customer, Customer)
     belongs_to(:individual_entity, ExAccounting.Schema.IndividualEntity)
   end
 end
