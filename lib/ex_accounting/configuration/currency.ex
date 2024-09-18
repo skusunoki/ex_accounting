@@ -31,6 +31,9 @@ defmodule ExAccounting.Configuration.Currency do
     GenServer.call(@server, :read)
   end
 
+  @doc """
+  Persistentize the currency configuration.
+  """
   def save() do
     with server <- read() do
       DbGateway.save(server)

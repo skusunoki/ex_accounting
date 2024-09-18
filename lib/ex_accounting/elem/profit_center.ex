@@ -1,5 +1,7 @@
 defmodule ExAccounting.Elem.ProfitCenter do
-  @moduledoc false
+  @moduledoc """
+  _Profit Center_ is identifier of a profit center.
+  """
 
   use Ecto.Type
 

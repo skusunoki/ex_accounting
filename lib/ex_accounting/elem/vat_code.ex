@@ -1,6 +1,15 @@
 defmodule ExAccounting.Elem.VatCode do
+  @moduledoc """
+  _VAT Code_ destinguishes the type of tax incurred.
+
+  V1 - Standard Rate
+  V2 - Reduced Rate
+  V3 - Exempt
+
+  """
   use Ecto.Type
 
+  @typedoc "_VAT Code_"
   @type t :: %__MODULE__{
           vat_code: charlist()
         }

@@ -1,5 +1,7 @@
 defmodule ExAccounting.Elem.FunctionalArea do
-  @moduledoc false
+  @moduledoc """
+  _Functional Area_ is identifier of a functional area.
+  """
 
   use Ecto.Type
 

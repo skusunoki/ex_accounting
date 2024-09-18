@@ -1,8 +1,11 @@
 defmodule ExAccounting.Elem.Vendor do
-  @moduledoc false
+  @moduledoc """
+  _Vendor_ is identifier of a vendor.
+  """
 
   use Ecto.Type
 
+  @typedoc "_Vendor_"
   @type t :: %__MODULE__{
           vendor: charlist()
         }

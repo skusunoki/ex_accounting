@@ -1,5 +1,7 @@
 defmodule ExAccounting.Elem.Customer do
-  @moduledoc false
+  @moduledoc """
+  _Customer_ is identifier of a customer. Customer is a individual or entity that bus goods or services.
+  """
 
   use Ecto.Type
 

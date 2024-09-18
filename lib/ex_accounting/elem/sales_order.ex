@@ -1,6 +1,6 @@
 defmodule ExAccounting.Elem.SalesOrder do
   @moduledoc """
-  _Sales Order_ is sequential unique number to identify the accounting document.
+  _Sales Order_ is sequential unique number identifying the sales order.
   """
   use Ecto.Type
 

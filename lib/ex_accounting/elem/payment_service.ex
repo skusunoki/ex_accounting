@@ -1,5 +1,7 @@
 defmodule ExAccounting.Elem.PaymentService do
-  @moduledoc false
+  @moduledoc """
+  _Payment Service_ is identifier of a payment service.
+  """
 
   use Ecto.Type
 

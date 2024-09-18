@@ -1,5 +1,7 @@
 defmodule ExAccounting.Elem.PartnerFunctionalArea do
-  @moduledoc false
+  @moduledoc """
+  _Partner Functional Area_ is identifier of a partner functional area.
+  """
 
   use Ecto.Type
 
