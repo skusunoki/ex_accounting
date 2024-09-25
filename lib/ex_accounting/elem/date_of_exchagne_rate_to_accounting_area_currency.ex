@@ -39,7 +39,8 @@ defmodule ExAccounting.Elem.DateOfExchangeRateToAccountingAreaCurrency do
   """
   @spec dump(t) :: {:ok, Date.t()} | :error
   def dump(date_of_exchange_rate_to_accounting_area_currency) do
-    with %__MODULE__{date_of_exchange_rate_to_accounting_area_currency: date} <- date_of_exchange_rate_to_accounting_area_currency do
+    with %__MODULE__{date_of_exchange_rate_to_accounting_area_currency: date} <-
+           date_of_exchange_rate_to_accounting_area_currency do
       {:ok, date}
     else
       _ -> :error
@@ -72,6 +73,9 @@ defmodule ExAccounting.Elem.DateOfExchangeRateToAccountingAreaCurrency do
   """
   @spec create(Date.t()) :: t()
   def create(%Date{} = date_of_exchange_rate_to_accounting_area_currency) do
-    %__MODULE__{date_of_exchange_rate_to_accounting_area_currency: date_of_exchange_rate_to_accounting_area_currency}
+    %__MODULE__{
+      date_of_exchange_rate_to_accounting_area_currency:
+        date_of_exchange_rate_to_accounting_area_currency
+    }
   end
 end

@@ -1,6 +1,6 @@
 defmodule ExAccounting.Elem.AmountInAccountingUnitCurrency do
   @moduledoc """
-  _Amount in Accounting Unit Currency_ is the amount in the transaction currency.
+  _Amount in Accounting Unit Currency_ is the amount in the accounting unit currency.
   """
 
   use Ecto.Type

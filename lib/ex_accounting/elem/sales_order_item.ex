@@ -74,9 +74,7 @@ defmodule ExAccounting.Elem.SalesOrderItem do
       {:ok, 101}
   """
   @spec dump(t) :: {:ok, pos_integer} | :error
-  def dump(
-        %__MODULE__{sales_order_item: number} = _sales_order_item
-      ) do
+  def dump(%__MODULE__{sales_order_item: number} = _sales_order_item) do
     {:ok, number}
   end
 

@@ -12,11 +12,11 @@ defmodule ExAccounting.Utility do
 
   """
   @spec validate(charlist) :: {:ok, charlist} | {:error, charlist}
-  def validate(accounting_document_number_range_code) do
+  def validate(code) do
     {
-      accounting_document_number_range_code
+      code
       |> Enum.reduce(:ok, &is_valid_charactor(&1, &2)),
-      accounting_document_number_range_code
+      code
     }
   end
 

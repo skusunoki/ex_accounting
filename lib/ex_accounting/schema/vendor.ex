@@ -3,7 +3,7 @@ defmodule ExAccounting.Schema.Vendor do
   use Ecto.Schema
 
   alias ExAccounting.Elem.{
-    Vendor,
+    Vendor
   }
 
   schema "vendors" do

@@ -5,6 +5,7 @@ defmodule ExAccounting.Elem.PartnerProfitCenter do
 
   use Ecto.Type
 
+  @typedoc "_Partner Profit Center_"
   @type t :: %__MODULE__{
           partner_profit_center: charlist()
         }

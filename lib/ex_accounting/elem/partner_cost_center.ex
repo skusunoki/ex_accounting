@@ -1,5 +1,7 @@
 defmodule ExAccounting.Elem.PartnerCostCenter do
-  @moduledoc false
+  @moduledoc """
+  _Partner Cost Center_ is identifier of a partner cost center.
+  """
 
   use Ecto.Type
 

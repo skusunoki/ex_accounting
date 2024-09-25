@@ -31,7 +31,11 @@ defmodule ExAccounting.Elem.ExchangeRateTypeToAccountingAreaCurrency do
   end
 
   def dump(%__MODULE__{} = exchange_rate_type_to_accounting_area_currency),
-    do: {:ok, to_string(exchange_rate_type_to_accounting_area_currency.exchange_rate_type_to_accounting_area_currency)}
+    do:
+      {:ok,
+       to_string(
+         exchange_rate_type_to_accounting_area_currency.exchange_rate_type_to_accounting_area_currency
+       )}
 
   def dump(_), do: :error
 

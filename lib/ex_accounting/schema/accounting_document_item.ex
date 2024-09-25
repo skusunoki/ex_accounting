@@ -156,16 +156,20 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           partner_functional_area: PartnerFunctionalArea.t(),
           accounting_unit_currency: AccountingUnitCurrency.t(),
           amount_in_accounting_unit_currency: AmountInAccountingUnitCurrency.t(),
-          exchange_rate_type_to_accounting_unit_currency: ExchangeRateTypeToAccountingUnitCurrency.t(),
+          exchange_rate_type_to_accounting_unit_currency:
+            ExchangeRateTypeToAccountingUnitCurrency.t(),
           exchange_rate_to_accounting_unit_currency: ExchangeRateToAccountingUnitCurrency.t(),
-          date_of_exchange_rate_to_accounting_unit_currency: DateOfExchangeRateToAccountingUnitCurrency.t(),
+          date_of_exchange_rate_to_accounting_unit_currency:
+            DateOfExchangeRateToAccountingUnitCurrency.t(),
           transaction_currency: TransactionCurrency.t(),
           amount_in_transaction_currency: AmountInTransactionCurrency.t(),
           accounting_area_currency: AccountingAreaCurrency.t(),
           amount_in_accounting_area_currency: AmountInAccountingAreaCurrency.t(),
-          exchange_rate_type_to_accounting_area_currency: ExchangeRateTypeToAccountingAreaCurrency.t(),
+          exchange_rate_type_to_accounting_area_currency:
+            ExchangeRateTypeToAccountingAreaCurrency.t(),
           exchange_rate_to_accounting_area_currency: ExchangeRateToAccountingAreaCurrency.t(),
-          date_of_exchagne_rate_to_accounting_area_currency: DateOfExchangeRateToAccountingAreaCurrency.t(),
+          date_of_exchagne_rate_to_accounting_area_currency:
+            DateOfExchangeRateToAccountingAreaCurrency.t(),
           offsetting_general_ledger_account: OffsettingGeneralLedgerAccount.t(),
           offsetting_vendor: OffsettingVendor.t(),
           offsetting_customer: OffsettingCustomer.t(),
@@ -244,16 +248,36 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:partner_functional_area, PartnerFunctionalArea)
     field(:accounting_unit_currency, AccountingUnitCurrency)
     field(:amount_in_accounting_unit_currency, AmountInAccountingUnitCurrency)
-    field(:exchange_rate_type_to_accounting_unit_currency, ExchangeRateTypeToAccountingUnitCurrency)
+
+    field(
+      :exchange_rate_type_to_accounting_unit_currency,
+      ExchangeRateTypeToAccountingUnitCurrency
+    )
+
     field(:exchange_rate_to_accounting_unit_currency, ExchangeRateTypeToAccountingUnitCurrency)
-    field(:date_of_exchange_rate_to_accounting_unit_currency, DateOfExchangeRateToAccountingUnitCurrency)
+
+    field(
+      :date_of_exchange_rate_to_accounting_unit_currency,
+      DateOfExchangeRateToAccountingUnitCurrency
+    )
+
     field(:transaction_currency, TransactionCurrency)
     field(:amount_in_transaction_currency, AmountInTransactionCurrency)
     field(:accounting_area_currency, AccountingAreaCurrency)
     field(:amount_in_accounting_area_currency, AmountInAccountingAreaCurrency)
-    field(:exchange_rate_type_to_accounting_area_currency, ExchangeRateTypeToAccountingAreaCurrency)
+
+    field(
+      :exchange_rate_type_to_accounting_area_currency,
+      ExchangeRateTypeToAccountingAreaCurrency
+    )
+
     field(:exchange_rate_to_accounting_area_currency, ExchangeRateToAccountingAreaCurrency)
-    field(:date_of_exchagne_rate_to_accounting_area_currency, DateOfExchangeRateToAccountingAreaCurrency)
+
+    field(
+      :date_of_exchagne_rate_to_accounting_area_currency,
+      DateOfExchangeRateToAccountingAreaCurrency
+    )
+
     field(:offsetting_general_ledger_account, OffsettingGeneralLedgerAccount)
     field(:offsetting_vendor, OffsettingVendor)
     field(:offsetting_customer, OffsettingCustomer)

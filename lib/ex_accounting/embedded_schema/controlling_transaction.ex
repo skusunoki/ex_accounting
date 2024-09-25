@@ -1,5 +1,4 @@
 defmodule ExAccounting.EmbeddedSchema.ControllingTransaction do
-
   use Ecto.Schema
 
   embedded_schema do
