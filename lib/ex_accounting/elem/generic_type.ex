@@ -1,7 +1,12 @@
-defmodule ExAccounting.Elem.GenericType do
+defmodule ExAccounting.Elem.Language do
+  @moduledoc """
+  _Language_ refers to the natural language used as a means of business communication.
+  """
   use ExAccounting.Type
+  code(:language, type: :string, length: 2)
+end
 
-  # Defines custom types by the macro `code/4`
-  code(Language, :language, :string, 2)
-  code(Zip, :zip, :string, 13)
+defmodule ExAccounting.Elem.Zip do
+  use ExAccounting.Type
+  code(:zip, type: :string, length: 10)
 end

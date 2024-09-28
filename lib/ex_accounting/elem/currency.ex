@@ -1,6 +1,6 @@
 defmodule ExAccounting.Elem.Currency do
   @moduledoc """
-  __Currency__ represents a currency code.
+  _Currency_ represents a currency code.
   """
   use Ecto.Type
   defstruct currency: nil

@@ -10,7 +10,7 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumberTest do
     result =
       CurrentAccountingDocumentNumber.read(AccountingDocumentNumberRangeCode.create("01"))
 
-    assert result.number_range_code.accounting_document_number_range_code == "01"
+    assert result.number_range_code.accounting_document_number_range_code == ~c"01"
     assert result.current_document_number >= 1_000_000_000
   end
 
@@ -18,7 +18,7 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumberTest do
     result =
       CurrentAccountingDocumentNumber.read(AccountingDocumentNumberRangeCode.create("02"))
 
-    assert result.number_range_code.accounting_document_number_range_code == "02"
+    assert result.number_range_code.accounting_document_number_range_code == ~c"02"
     assert result.current_document_number.accounting_document_number >= 2_000_000_000
   end
 

@@ -9,6 +9,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
   alias ExAccounting.Elem.{
     FiscalYear,
     AccountingArea,
+    AccountingUnit,
     AccountingDocumentNumber,
     AccountingDocumentItemNumber,
     DebitCredit,
@@ -101,7 +102,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           fiscal_year: FiscalYear.t(),
           accounting_area: AccountingArea.t(),
           accounting_document_number: AccountingDocumentNumber.t(),
-          accounting_unit: String.t(),
+          accounting_unit: AccountingUnit.t(),
           accounting_document_item_number: AccountingDocumentItemNumber.t(),
           debit_credit: DebitCredit.t(),
           document_type: DocumentType.t(),
