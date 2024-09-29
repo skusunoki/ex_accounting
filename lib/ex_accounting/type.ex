@@ -199,7 +199,7 @@ defmodule ExAccounting.Type do
 
   ## Options
 
-  `:max` - Maximum number of the code. It must be a positive integer.
+  - `:max` - Maximum number of the code. It must be a positive integer.
   """
   defmacro sequence(field, opts) do
     quote do
@@ -304,6 +304,12 @@ defmodule ExAccounting.Type do
 
   @doc """
   Defines a custom type for representing amount. `field` must be a atom that represents the key of the struct.
+
+  ## Examples
+
+      iex> defmodule ExAccounting.Elem.UnitPrice do
+      ...>   amount(:unit_price)
+      ...> end
   """
   defmacro amount(field) do
     quote do
@@ -371,6 +377,15 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for period.
+
+  ## Examples
+
+      iex> defmodule ExAccounting.Elem.Period do
+      ...>   period(:period, max: 12)
+      ...> end
+  """
   defmacro period(field, opts) do
     quote do
       use Ecto.Type
@@ -444,6 +459,15 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for indicator field.
+
+  ## Examples
+
+      iex> defmodule ExAccounting.Elem.ApprovalIndicator do
+      ...>   indicator(:is_approved)
+      ...> end
+  """
   defmacro indicator(field) do
     quote do
       use Ecto.Type
@@ -529,6 +553,15 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for date.
+
+  ## Examples
+
+      iex> defmodule ExAccounting.Elem.PostingDate do
+      ...>   date(:posting_date)
+      ...> end
+  """
   defmacro date(field) do
     quote do
       use Ecto.Type
@@ -572,6 +605,15 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for year.
+
+  ## Examples
+
+      iex> defmodule YearDocumentPosted do
+      ...>   year(:fiscal_year)
+      ...> end
+  """
   defmacro year(field) do
     quote do
       use Ecto.Type
@@ -614,6 +656,17 @@ defmodule ExAccounting.Type do
       end
     end
   end
+
+  @doc """
+
+  Defines a custom type for username.
+
+  ## Exapmles
+
+      iex> defmodule PostedBy do
+      ...>   username(:user_name)
+      ...> end
+  """
 
   defmacro username(field) do
     quote do
