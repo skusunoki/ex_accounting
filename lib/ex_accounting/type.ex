@@ -6,11 +6,22 @@ defmodule ExAccounting.Type do
   end
 
   @doc """
-  Defines a custom type for alphanumeic code with fixed length. `field` must be a atom that represents the key of the struct. The database field type is `:string`.
+  Defines a Ecto custom type for alphanumeic code with **fixed** length.
+  `field` must be a atom. It represents the key of the struct.
+  The database field type is `:string`.
+
+  `field` can be used in multiple places in the type definition.
 
   ## Options
 
-  `:length` - Length of the code. It must be a positive integer.
+   - `length:` Length of the code. It must be a positive integer.
+   - `description:` Description of the entity. It must be a string. Used for documentation.
+
+  ## Example
+
+      iex> defmodule ExAccounting.Elem.CostCenter do
+      ...>   code(:document_type, length: 2, description: "Document Type")
+      ...> end
 
   """
   @spec code(atom, length: pos_integer) :: any()
@@ -47,7 +58,7 @@ defmodule ExAccounting.Type do
       def cast(term) do
         with true <- is_list(term) or is_binary(term),
              {:ok, _} <- validate(ExAccounting.Utility.to_c(term)) do
-          {:ok, create(term)}
+          cast(%__MODULE__{unquote(field) => ExAccounting.Utility.to_c(term)})
         else
           _ -> {:error, term}
         end
@@ -63,7 +74,7 @@ defmodule ExAccounting.Type do
       end
 
       @doc """
-      Dumps #{unquote(opts[:description])} into database field.
+      Dumps #{unquote(opts[:description])} to `:string` type.
       """
       def dump(code) do
         with %__MODULE__{unquote(field) => code} <- code,
@@ -105,6 +116,7 @@ defmodule ExAccounting.Type do
   ## Options
 
   `:length` - Maximum length of the code. It must be a positive integer.
+  `:description` - Description of the entity.
   """
   defmacro entity(field, opts) do
     quote do
@@ -164,7 +176,8 @@ defmodule ExAccounting.Type do
       end
 
       @doc """
-      Returns the result of comparison betweek two values. Entities are compared by key `#{unquote(:field)}` and its value not by the struct itself.
+      Returns the result of comparison betweek two values.
+      Entities are compared by key `#{unquote(:field)}` and its value not by the struct itself.
       """
       def equals(term1, term2) do
         with true <- Map.has_key?(term1, unquote(field)),

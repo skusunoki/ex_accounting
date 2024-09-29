@@ -95,7 +95,8 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     ExchangeRateToAccountingUnitCurrency,
     VatCode,
     DateOfExchangeRateToAccountingAreaCurrency,
-    DateOfExchangeRateToAccountingUnitCurrency
+    DateOfExchangeRateToAccountingUnitCurrency,
+    OffsettingWbsElement
   }
 
   @type t :: %__MODULE__{
@@ -180,7 +181,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           offsetting_payment_service: OffsettingPaymentService.t(),
           offsetting_cost_center: OffsettingCostCenter.t(),
           offsetting_functional_area: OffsettingFunctionalArea.t(),
-          offsetting_wbs_element: String.t(),
+          offsetting_wbs_element: OffsettingWbsElement.t(),
           vat_code: VatCode.t(),
           vat_amount_of_accounting_unit_currency: VatAmountOfAccountingUnitCurrency.t(),
           vat_amount_of_transaction_currency: VatAmountOfAccountingUnitCurrency.t(),
@@ -288,7 +289,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     field(:offsetting_payment_service, OffsettingPaymentService)
     field(:offsetting_cost_center, OffsettingCostCenter)
     field(:offsetting_functional_area, OffsettingFunctionalArea)
-    field(:offsetting_wbs_element, :string)
+    field(:offsetting_wbs_element, OffsettingWbsElement)
     field(:vat_code, VatCode)
     field(:vat_amount_of_accounting_unit_currency, VatAmountOfAccountingUnitCurrency)
     field(:vat_amount_of_transaction_currency, VatAmountOfTransactionCurrency)

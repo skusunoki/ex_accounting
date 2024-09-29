@@ -6,12 +6,12 @@ defmodule ExAccountingTest do
   test "Issue new document number for the number range 01" do
     before =
       CurrentAccountingDocumentNumber.read(
-        ExAccounting.Elem.AccountingDocumentNumberRangeCode.create("01")
+        ExAccounting.Elem.AccountingDocumentNumberRangeCode.create(~c"01")
       )
 
     {:ok, result} =
       ExAccounting.issue_accounting_document_number(
-        "01",
+        ~c"01",
         &CurrentAccountingDocumentNumber.read(&1),
         &AccountingDocumentNumberRange.read(&1)
       )
@@ -25,11 +25,11 @@ defmodule ExAccountingTest do
   test "Issue new document number for the number range x1" do
     {:error, result} =
       ExAccounting.issue_accounting_document_number(
-        "x1",
+        ~c"x1",
         &CurrentAccountingDocumentNumber.read(&1),
         &AccountingDocumentNumberRange.read(&1)
       )
 
-    assert result == "x1"
+    assert result == ~c"x1"
   end
 end

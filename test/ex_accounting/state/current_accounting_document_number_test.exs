@@ -92,12 +92,12 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumberTest do
   test "Issue new document number for the undefined document number range 10 should be first number" do
     result =
       CurrentAccountingDocumentNumber.issue(
-        AccountingDocumentNumberRangeCode.create("10"),
+        AccountingDocumentNumberRangeCode.create(~c"10"),
         fn _ -> nil end,
         fn _ ->
           [
             %AccountingDocumentNumberRange{
-              number_range_code: AccountingDocumentNumberRangeCode.create("10"),
+              number_range_code: AccountingDocumentNumberRangeCode.create(~c"10"),
               accounting_document_number_from: 1_000_000_000,
               accounting_document_number_to: 1_999_999_999
             }
@@ -105,7 +105,7 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumberTest do
         end
       )
 
-    assert result.number_range_code == AccountingDocumentNumberRangeCode.create("10")
+    assert result.number_range_code == AccountingDocumentNumberRangeCode.create(~c"10")
 
     assert result.current_document_number ==
              ExAccounting.Elem.AccountingDocumentNumber.create(1_000_000_000)
