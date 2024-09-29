@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.DocumentType do
   """
 
   use ExAccounting.Type
-  code(:document_type, type: :string, length: 2)
+  code(:document_type, length: 2, description: "Document Type")
 end

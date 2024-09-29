@@ -9,5 +9,5 @@ defmodule ExAccounting.Elem.VendorTransactionType do
 
   """
   use ExAccounting.Type
-  code(:vendor_transaction_type, type: :string, length: 3)
+  code(:vendor_transaction_type, type: :string, length: 3, description: "Vendor Transaction Type")
 end

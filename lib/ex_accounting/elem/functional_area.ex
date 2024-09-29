@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.FunctionalArea do
   """
 
   use ExAccounting.Type
-  entity(:functional_area, type: :string, length: 10)
+  entity(:functional_area, type: :string, length: 10, description: "Functional Area")
 end

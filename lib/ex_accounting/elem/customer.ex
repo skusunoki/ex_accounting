@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.Customer do
   """
 
   use ExAccounting.Type
-  entity(:customer, type: :string, length: 10)
+  entity(:customer, type: :string, length: 10, description: "Customer")
 end

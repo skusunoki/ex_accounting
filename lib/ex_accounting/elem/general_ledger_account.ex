@@ -5,5 +5,9 @@ defmodule ExAccounting.Elem.GeneralLedgerAccount do
 
   use ExAccounting.Type
 
-  entity(:general_ledger_account, type: :string, length: 10)
+  entity(:general_ledger_account,
+    type: :string,
+    length: 10,
+    description: "General Ledger Account"
+  )
 end

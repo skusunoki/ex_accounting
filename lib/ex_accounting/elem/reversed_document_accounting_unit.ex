@@ -3,5 +3,10 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingUnit do
   _Reversed Document Accounting Unit_ is the Accounting Unit of the document to be reversed.
   """
   use ExAccounting.Type
-  code(:accounting_unit, type: :string, length: 4)
+
+  code(:accounting_unit,
+    type: :string,
+    length: 4,
+    description: "Reversed Document Accounting Unit"
+  )
 end

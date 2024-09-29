@@ -3,5 +3,5 @@ defmodule ExAccounting.Elem.AccountingArea do
   _Accounting Area_ is an organization unit for aggregation (consolidation) of multiple entities.
   """
   use ExAccounting.Type
-  code(:accounting_area, type: :string, length: 4)
+  code(:accounting_area, length: 4, description: "Accounting Area")
 end

@@ -3,10 +3,10 @@ defmodule ExAccounting.Elem.Language do
   _Language_ refers to the natural language used as a means of business communication.
   """
   use ExAccounting.Type
-  code(:language, type: :string, length: 2)
+  code(:language, length: 2, description: "Language")
 end
 
 defmodule ExAccounting.Elem.Zip do
   use ExAccounting.Type
-  code(:zip, type: :string, length: 10)
+  code(:zip, length: 10, description: "Zip Code")
 end

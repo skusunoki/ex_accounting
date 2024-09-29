@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.AccountingUnit do
   """
 
   use ExAccounting.Type
-  code(:accounting_unit, type: :string, length: 4)
+  code(:accounting_unit, length: 4, description: "Accounting Unit")
 end

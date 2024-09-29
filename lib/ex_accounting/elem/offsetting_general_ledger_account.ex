@@ -4,5 +4,10 @@ defmodule ExAccounting.Elem.OffsettingGeneralLedgerAccount do
   """
 
   use ExAccounting.Type
-  entity(:general_ledger_account, type: :string, length: 10)
+
+  entity(:general_ledger_account,
+    type: :string,
+    length: 10,
+    description: "Offsetting General Ledger Account"
+  )
 end

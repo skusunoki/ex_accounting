@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.Order do
   """
 
   use ExAccounting.Type
-  entity(:order, type: :string, length: 10)
+  entity(:order, type: :string, length: 10, description: "Order")
 end

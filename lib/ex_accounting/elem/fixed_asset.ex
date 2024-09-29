@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.FixedAsset do
   """
 
   use ExAccounting.Type
-  entity :fixed_asset, type: :string, length: 10
+  entity(:fixed_asset, type: :string, length: 10, description: "Fixed Asset")
 end

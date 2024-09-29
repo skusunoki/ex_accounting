@@ -4,7 +4,7 @@ defmodule ExAccounting.Elem.ClearingDocumentAccountingUnit do
   """
   alias ExAccounting.Elem.AccountingUnit
   use ExAccounting.Type
-  code(:accounting_unit, type: :string, length: 4)
+  code(:accounting_unit, length: 4, description: "Accounting Unit of Clearing Document")
 
   @doc """
   Converts the _Clearing Document Accounting Unit_ to _Accounting Unit_.

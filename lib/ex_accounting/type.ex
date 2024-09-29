@@ -6,20 +6,32 @@ defmodule ExAccounting.Type do
   end
 
   @doc """
-  options:
-    type
-    length
+  Defines a custom type for alphanumeic code with fixed length. `field` must be a atom that represents the key of the struct. The database field type is `:string`.
+
+  ## Options
+
+  `:length` - Length of the code. It must be a positive integer.
+
   """
+  @spec code(atom, length: pos_integer) :: any()
   defmacro code(field, opts) do
     quote do
       use Ecto.Type
+
+      @typedoc unquote(opts[:description])
       @type t :: %__MODULE__{unquote(field) => charlist}
 
       defstruct [unquote(field)]
 
-      @spec type() :: unquote(opts[:type])
-      def type, do: unquote(opts[:type])
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:string`.
+      """
+      @spec type() :: :string
+      def type, do: :string
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       @spec cast(t) :: {:ok, t} | :error
       @spec cast(String.t() | charlist) :: {:ok, t} | :error | {:error, any}
       def cast(%__MODULE__{} = term) do
@@ -41,13 +53,20 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from corresponding database field with `:string` type.
+      """
+      @spec load(binary) :: {:ok, t}
       def load(data) when is_binary(data) do
         with stdata = %{unquote(field) => to_charlist(data)},
           do: {:ok, struct!(__MODULE__, stdata)}
       end
 
-      def dump(term) do
-        with %__MODULE__{unquote(field) => code} <- term,
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field.
+      """
+      def dump(code) do
+        with %__MODULE__{unquote(field) => code} <- code,
              {:ok, _validated} <- validate(code),
              dump = code |> to_string() do
           {:ok, dump}
@@ -56,18 +75,17 @@ defmodule ExAccounting.Type do
         end
       end
 
-      def create(term)
-          when term != nil and is_list(term) and length(term) == unquote(opts[:length]) do
-        %__MODULE__{unquote(field) => term}
+      @doc """
+      Creates a new #{unquote(opts[:description])} with the given term.
+      """
+      @spec create(charlist | binary) :: t | {:error, String.t()}
+      def create(term) do
+        with {:ok, code} <- cast(term) do
+          code
+        end
       end
 
-      def create(term) when is_binary(term) and term != nil do
-        term
-        |> to_charlist()
-        |> create()
-      end
-
-      def validate(code) do
+      defp validate(code) do
         with true <- code != nil,
              true <- is_list(code),
              true <- ExAccounting.Utility.len(code) == unquote(opts[:length]),
@@ -81,9 +99,17 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for alphanumeic code with maximum length. `field` must be a atom that represents the key of the struct.
+
+  ## Options
+
+  `:length` - Maximum length of the code. It must be a positive integer.
+  """
   defmacro entity(field, opts) do
     quote do
       use Ecto.Type
+
       @type t :: %__MODULE__{
               unquote(field) => charlist()
             }
@@ -92,12 +118,13 @@ defmodule ExAccounting.Type do
       def type, do: :string
 
       @doc """
-      Casts term to valid form of entity.
-      Length of the given term should be less than or equal to the defined length of the entity.
+      Casts term to valid form of #{unquote(opts[:description])}.
+      Length of the given term should be less than or equal to #{unquote(opts[:length])}.
       Letters of the given term should be alphanumeric: A-Z or 0 - 9.
       """
       @spec cast(t) :: {:ok, t} | :error
       def cast(%__MODULE__{} = term), do: {:ok, term}
+
       def cast(term) when is_binary(term) do
         with {:ok, validated} <- ExAccounting.Utility.validate(to_charlist(term)),
              true <- String.length(term) <= unquote(opts[:length]) do
@@ -118,9 +145,15 @@ defmodule ExAccounting.Type do
 
       def cast(_), do: :error
 
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:string`.
+      """
       def dump(%__MODULE__{} = entity), do: {:ok, to_string(entity.unquote(field))}
       def dump(_), do: :error
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:string`.
+      """
       def load(term) do
         with {:ok, validated} <- ExAccounting.Utility.validate(to_charlist(term)),
              true <- length(validated) <= unquote(opts[:length]) do
@@ -129,9 +162,32 @@ defmodule ExAccounting.Type do
           _ -> :error
         end
       end
+
+      @doc """
+      Returns the result of comparison betweek two values. Entities are compared by key `#{unquote(:field)}` and its value not by the struct itself.
+      """
+      def equals(term1, term2) do
+        with true <- Map.has_key?(term1, unquote(field)),
+             true <- Map.has_key?(term2, unquote(field)),
+            l = Map.get(term1, unquote(field)),
+            r = Map.get(term2, unquote(field)),
+            true <- l == r do
+            true
+          else
+            _ -> false
+
+          end
+      end
     end
   end
 
+  @doc """
+  Defines a custom type for numeric code with max number. `field` must be a atom that represents the key of the struct.
+
+  ## Options
+
+  `:max` - Maximum number of the code. It must be a positive integer.
+  """
   defmacro sequence(field, opts) do
     quote do
       use Ecto.Type
@@ -190,6 +246,9 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for currency. `field` must be a atom that represents the key of the struct.
+  """
   defmacro currency(field) do
     quote do
       use Ecto.Type
@@ -230,6 +289,9 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for representing amount. `field` must be a atom that represents the key of the struct.
+  """
   defmacro amount(field) do
     quote do
       use Ecto.Type
@@ -623,5 +685,4 @@ defmodule ExAccounting.Type do
       end
     end
   end
-
 end

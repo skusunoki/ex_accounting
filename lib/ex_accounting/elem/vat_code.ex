@@ -8,5 +8,5 @@ defmodule ExAccounting.Elem.VatCode do
 
   """
   use ExAccounting.Type
-  code(:vat_code, type: :string, length: 2)
+  code(:vat_code, length: 2, description: "VAT Code")
 end

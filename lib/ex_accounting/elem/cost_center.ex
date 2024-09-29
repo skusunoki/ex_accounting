@@ -5,5 +5,5 @@ defmodule ExAccounting.Elem.CostCenter do
   """
 
   use ExAccounting.Type
-  entity(:cost_center, type: :string, length: 10)
+  entity(:cost_center, type: :string, length: 10, description: "Cost Center")
 end

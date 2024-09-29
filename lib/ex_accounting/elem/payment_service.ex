@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.PaymentService do
   """
 
   use ExAccounting.Type
-  entity(:payment_service, type: :string, length: 10)
+  entity(:payment_service, type: :string, length: 10, description: "Payment Service")
 end

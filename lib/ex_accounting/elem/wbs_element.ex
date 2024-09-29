@@ -1,4 +1,4 @@
 defmodule ExAccounting.Elem.WbsElement do
   use ExAccounting.Type
-  entity(:wbs_element, type: :string, length: 256)
+  entity(:wbs_element, type: :string, length: 256, description: "WBS Element")
 end

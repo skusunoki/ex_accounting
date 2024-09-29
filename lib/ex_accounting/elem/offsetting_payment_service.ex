@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.OffsettingPaymentService do
   """
 
   use ExAccounting.Type
-  entity(:payment_service, type: :string, length: 10)
+  entity(:payment_service, type: :string, length: 10, description: "Offsetting Payment Service")
 end

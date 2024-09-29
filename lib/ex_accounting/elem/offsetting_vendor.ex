@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.OffsettingVendor do
   """
 
   use ExAccounting.Type
-  entity(:vendor, type: :string, length: 10)
+  entity(:vendor, type: :string, length: 10, description: "Offsetting Vendor")
 end
