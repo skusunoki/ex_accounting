@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.VatAmountOfTransactionCurrency do
   """
 
   use ExAccounting.Type
-  amount(:vat_amount_of_transaction_currency)
+  amount(:vat_amount_of_transaction_currency, description: "VAT Amount of Transaction Currency")
 end

@@ -3,5 +3,5 @@ defmodule ExAccounting.Elem.SalesOrder do
   _Sales Order_ is sequential unique number identifying the sales order.
   """
   use ExAccounting.Type
-  sequence(:sales_order, type: :integer, max: 999_999_999_999)
+  sequence(:sales_order, max: 999_999_999_999, description: "Sales Order")
 end

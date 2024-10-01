@@ -3,5 +3,5 @@ defmodule ExAccounting.Elem.EntryDate do
   EntryDate is the date of document created.
   """
   use ExAccounting.Type
-  date(:entry_date)
+  date(:entry_date, description: "Entry Date")
 end

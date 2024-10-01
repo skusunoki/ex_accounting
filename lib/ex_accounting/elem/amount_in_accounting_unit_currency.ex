@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.AmountInAccountingUnitCurrency do
   """
 
   use ExAccounting.Type
-  amount(:amount_in_accounting_unit_currency)
+  amount(:amount_in_accounting_unit_currency, description: "Amount in Accounting Unit Currency")
 end

@@ -6,5 +6,5 @@ defmodule ExAccounting.Elem.UserName do
   """
 
   use ExAccounting.Type
-  username(:user_name)
+  username(:user_name, description: "User Name")
 end

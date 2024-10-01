@@ -7,6 +7,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
   import Ecto.Changeset
 
   alias ExAccounting.Elem.{
+    ReferenceArea,
     FiscalYear,
     AccountingArea,
     AccountingUnit,
@@ -96,7 +97,9 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
     VatCode,
     DateOfExchangeRateToAccountingAreaCurrency,
     DateOfExchangeRateToAccountingUnitCurrency,
-    OffsettingWbsElement
+    OffsettingWbsElement,
+    ReferenceKey,
+    OffsettingMaterial
   }
 
   @type t :: %__MODULE__{
@@ -126,8 +129,8 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           clearing_document_accounting_document: ClearingDocumentAccountingDocument.t(),
           clearing_document_accounting_document_item: ClearingDocumentAccountingDocumentItem.t(),
           cleairng_document_accounting_period: ClearingDocumentAccountingPeriod.t(),
-          reference_area: String.t(),
-          reference_key: String.t(),
+          reference_area: ReferenceArea.t(),
+          reference_key: ReferenceKey.t(),
           general_ledger_account_transaction_type: GeneralLedgerAccountTransactionType.t(),
           general_ledger_account: GeneralLedgerAccount.t(),
           vendor_transaction_type: VendorTransactionType.t(),
@@ -176,7 +179,7 @@ defmodule ExAccounting.Schema.AccountingDocumentItem do
           offsetting_vendor: OffsettingVendor.t(),
           offsetting_customer: OffsettingCustomer.t(),
           offsetting_fixed_asset: OffsettingFixedAsset.t(),
-          offsetting_material: String.t(),
+          offsetting_material: OffsettingMaterial.t(),
           offsetting_bank: String.t(),
           offsetting_payment_service: OffsettingPaymentService.t(),
           offsetting_cost_center: OffsettingCostCenter.t(),

@@ -4,5 +4,9 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingDocumentItem do
   """
 
   use ExAccounting.Type
-  sequence(:accounting_document_item, type: :integer, max: 999_999)
+
+  sequence(:accounting_document_item,
+    max: 999_999,
+    description: "Accounting Document Item Number of Reversed Document"
+  )
 end

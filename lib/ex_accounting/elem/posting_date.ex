@@ -5,5 +5,5 @@ defmodule ExAccounting.Elem.PostingDate do
   _Posting date_ must be consistent with accounting period within an accounting document.
   """
   use ExAccounting.Type
-  date(:posting_date)
+  date(:posting_date, description: "Posting Date")
 end

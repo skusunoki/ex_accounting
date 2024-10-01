@@ -3,7 +3,7 @@ defmodule ExAccounting.Elem.PostedBy do
     _Entered By_ is the _User Name_ who posts the accounting document.
   """
   use ExAccounting.Type
-  username(:user_name)
+  username(:user_name, description: "Posted By")
 
   @doc """
   Convert to _Posted By_ to _User Name_.

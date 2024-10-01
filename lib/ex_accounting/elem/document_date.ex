@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.DocumentDate do
   """
 
   use ExAccounting.Type
-  date(:document_date)
+  date(:document_date, description: "Document Date")
 end

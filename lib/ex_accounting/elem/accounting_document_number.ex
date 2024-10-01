@@ -3,7 +3,12 @@ defmodule ExAccounting.Elem.AccountingDocumentNumber do
   _Accounting Document Number_ is sequential unique number to identify the accounting document.
   """
   use ExAccounting.Type
-  sequence(:accounting_document_number, type: :integer, max: 999_999_999_999)
+
+  sequence(:accounting_document_number,
+    type: :integer,
+    max: 999_999_999_999,
+    description: "Accounting Document Number"
+  )
 
   def to_reversed_accounting_document_number(
         %__MODULE__{accounting_document_number: number} = _accounting_document_number

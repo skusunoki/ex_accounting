@@ -16,5 +16,4 @@ defmodule ExAccounting.Elem.ReferenceKey do
   def dump(reference_key), do: {:ok, reference_key}
 
   def load(term), do: {:ok, %__MODULE__{reference_key: term}}
-
 end

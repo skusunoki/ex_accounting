@@ -3,7 +3,7 @@ defmodule ExAccounting.Elem.EnteredBy do
   _Entered By_ is _User Name_ who inputs the accounting document.
   """
   use ExAccounting.Type
-  username(:user_name)
+  username(:user_name, description: "Entered By")
 
   @doc """
   Convert to _Entered By_ to _User Name_.

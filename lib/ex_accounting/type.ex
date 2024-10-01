@@ -19,8 +19,12 @@ defmodule ExAccounting.Type do
 
   ## Example
 
-      iex> defmodule ExAccounting.Elem.CostCenter do
+      iex> defmodule DocumentType do
       ...>   code(:document_type, length: 2, description: "Document Type")
+      ...> end
+
+      iex> defmodule ReversedDocumentType do
+      ...>   code(:document_type, length: 2, description: "Document Type of Reversed Document")
       ...> end
 
   """
@@ -76,6 +80,7 @@ defmodule ExAccounting.Type do
       @doc """
       Dumps #{unquote(opts[:description])} to `:string` type.
       """
+      @spec dump(t) :: {:ok, binary} | :error
       def dump(code) do
         with %__MODULE__{unquote(field) => code} <- code,
              {:ok, _validated} <- validate(code),
@@ -96,6 +101,28 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Returns the result of comparison betweek two #{unquote(opts[:description])}s.
+      """
+      @spec equal?(t, t) :: boolean()
+      def equal?(term1, term2) do
+        with true <- Map.has_key?(term1, unquote(field)),
+             true <- Map.has_key?(term2, unquote(field)),
+             l = Map.get(term1, unquote(field)),
+             r = Map.get(term2, unquote(field)),
+             true <- l == r do
+          true
+        else
+          _ -> false
+        end
+      end
+
+      @doc """
+      Defines the form of the #{unquote(opts[:description])} in the embedded schema.
+      """
+      @spec embed_as(atom()) :: :self
+      def embed_as(_), do: :self
+
       defp validate(code) do
         with true <- code != nil,
              true <- is_list(code),
@@ -107,6 +134,7 @@ defmodule ExAccounting.Type do
           {:error, reason} -> {:error, reason}
         end
       end
+
     end
   end
 
@@ -117,16 +145,31 @@ defmodule ExAccounting.Type do
 
   `:length` - Maximum length of the code. It must be a positive integer.
   `:description` - Description of the entity.
+
+  ## Examples
+
+      iex> defmodule Employee do
+      ...>   entity(:employee, length: 10, description: "Employee")
+      ...> end
+
+      iex> Employee.cast("10245023")
+      {:ok, %Employee{employee: "10245023"}}
   """
   defmacro entity(field, opts) do
     quote do
       use Ecto.Type
 
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{
               unquote(field) => charlist()
             }
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:string`.
+      """
       def type, do: :string
 
       @doc """
@@ -176,20 +219,19 @@ defmodule ExAccounting.Type do
       end
 
       @doc """
-      Returns the result of comparison betweek two values.
-      Entities are compared by key `#{unquote(:field)}` and its value not by the struct itself.
+      Returns the result of comparison betweek two #{unquote(opts[:description])}s.
+      The #{unquote(opts[:description])}s are compared by key `#{unquote(field)}` and its value not by the struct itself.
       """
-      def equals(term1, term2) do
+      def equal?(term1, term2) do
         with true <- Map.has_key?(term1, unquote(field)),
-             true <- Map.has_key?(term2, unquote(field)),
-            l = Map.get(term1, unquote(field)),
-            r = Map.get(term2, unquote(field)),
-            true <- l == r do
-            true
-          else
-            _ -> false
-
-          end
+        true <- Map.has_key?(term2, unquote(field)),
+        l = Map.get(term1, unquote(field)),
+        r = Map.get(term2, unquote(field)),
+        true <- l == r do
+     true
+   else
+     _ -> false
+   end
       end
     end
   end
@@ -200,37 +242,51 @@ defmodule ExAccounting.Type do
   ## Options
 
   - `:max` - Maximum number of the code. It must be a positive integer.
+  - `:description` - Description of the custom type. It must be a string. Used for documentation.
   """
   defmacro sequence(field, opts) do
     quote do
       use Ecto.Type
+
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{unquote(field) => pos_integer}
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:integer`.
+      """
       @spec type() :: :integer
       def type, do: :integer
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       @spec cast(t | pos_integer) :: {:ok, t()} | {:error, pos_integer}
-      def cast(%__MODULE__{} = sequence) do
-        with %__MODULE__{unquote(field) => number} <- sequence,
+      def cast(%__MODULE__{} = term) do
+        with %__MODULE__{unquote(field) => number} <- term,
              true <- is_number(number),
              true <- number > 0,
              true <- number <= unquote(opts[:max]) do
-          {:ok, sequence}
+          {:ok, term}
         else
-          _ -> {:error, sequence}
+          _ -> {:error, term}
         end
       end
 
-      def cast(sequence) when is_number(sequence) do
-        with true <- sequence > 0,
-             true <- sequence <= unquote(opts[:max]) do
-          {:ok, %__MODULE__{unquote(field) => sequence}}
+      def cast(term) when is_number(term) do
+        with true <- term > 0,
+             true <- term <= unquote(opts[:max]) do
+          {:ok, %__MODULE__{unquote(field) => term}}
         else
-          _ -> {:error, sequence}
+          _ -> {:error, term}
         end
       end
 
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:integer`.
+      """
       @spec dump(t) :: {:ok, pos_integer} | :error
       def dump(%__MODULE__{} = sequence) do
         with %__MODULE__{unquote(field) => number} <- sequence do
@@ -240,6 +296,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:integer`.
+      """
       @spec load(integer) :: {:ok, t} | :error
       def load(number) when is_number(number) do
         with true <- number > 0,
@@ -250,29 +309,63 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Creates a new #{unquote(opts[:description])} with the given term.
+      """
       @spec create(pos_integer) :: t()
       def create(sequence)
           when is_integer(sequence) and sequence > 0 and
                  sequence <= unquote(opts[:max]) do
         %__MODULE__{unquote(field) => sequence}
       end
+
+      @doc """
+      Returns the result of comparison betweek two #{unquote(opts[:description])}s.
+      """
+      @spec equal?(t, t) :: boolean()
+      def equal?(term1, term2) do
+        with true <- Map.has_key?(term1, unquote(field)),
+             true <- Map.has_key?(term2, unquote(field)),
+             l = Map.get(term1, unquote(field)),
+             r = Map.get(term2, unquote(field)),
+             true <- l == r do
+          true
+        else
+          _ -> false
+        end
+      end
     end
   end
 
   @doc """
   Defines a custom type for currency. `field` must be a atom that represents the key of the struct.
+
+  ## Examples
+
+      iex> defmodule TransactionCurrency do
+      ...>   currency(:transaction_currency)
+      ...> end
   """
-  defmacro currency(field) do
+  defmacro currency(field, opts) do
     quote do
       use Ecto.Type
 
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{unquote(field) => atom}
 
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:string`.
+      """
       @spec type() :: :string
       def type, do: :string
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       def cast(%ExAccounting.EmbeddedSchema.Money{} = money) do
         with {:ok, value} <- ExAccounting.Elem.Currency.cast(money.currency) do
           {:ok, %__MODULE__{unquote(field) => value.currency}}
@@ -281,6 +374,18 @@ defmodule ExAccounting.Type do
         end
       end
 
+      def cast(%__MODULE__{} = currency) do
+        with %__MODULE__{unquote(field) => value} <- currency,
+             true <- is_atom(value) do
+          {:ok, currency}
+        else
+          _ -> :error
+        end
+      end
+
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:string`.
+      """
       @spec dump(t) :: String.t() | :error
       def dump(%__MODULE__{} = currency) do
         with %__MODULE__{unquote(field) => value} <- currency,
@@ -291,6 +396,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:string`.
+      """
       @spec load(String.t()) :: t | :error
       def load(data) do
         with true <- is_binary(data) do
@@ -299,11 +407,31 @@ defmodule ExAccounting.Type do
           _ -> :error
         end
       end
+
+      @doc """
+      Returns the result of comparison betweek two #{unquote(opts[:description])}s.
+      """
+      @spec equal?(t, t) :: boolean()
+      def equal?(term1, term2) do
+        with true <- Map.has_key?(term1, unquote(field)),
+             true <- Map.has_key?(term2, unquote(field)),
+             l = Map.get(term1, unquote(field)),
+             r = Map.get(term2, unquote(field)),
+             true <- l == r do
+          true
+        else
+          _ -> false
+        end
+      end
     end
   end
 
   @doc """
   Defines a custom type for representing amount. `field` must be a atom that represents the key of the struct.
+
+  ## Options
+
+  - `:description` - Description of the amount. It must be a string. Used for documentation.
 
   ## Examples
 
@@ -311,7 +439,7 @@ defmodule ExAccounting.Type do
       ...>   amount(:unit_price)
       ...> end
   """
-  defmacro amount(field) do
+  defmacro amount(field, opts) do
     quote do
       use Ecto.Type
 
@@ -319,9 +447,15 @@ defmodule ExAccounting.Type do
 
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:decimal`.
+      """
       @spec type() :: :decimal
       def type, do: :decimal
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       @spec cast(Decimal.t() | t | integer) :: {:ok, t} | :error
       def cast(%__MODULE__{} = amount) do
         with %__MODULE__{unquote(field) => value} <- amount,
@@ -356,6 +490,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:decimal`.
+      """
       @spec dump(t) :: Decimal.t() | :error
       def dump(%__MODULE__{} = amount) do
         with %__MODULE__{unquote(field) => value} <- amount,
@@ -366,6 +503,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:decimal`.
+      """
       @spec load(Decimal.t()) :: t | :error
       def load(data) do
         with %Decimal{} <- data do
@@ -460,13 +600,19 @@ defmodule ExAccounting.Type do
   end
 
   @doc """
-  Defines a custom type for indicator field.
+  Defines a custom type for indicator field that represents boolean value.
 
   ## Examples
 
       iex> defmodule ExAccounting.Elem.ApprovalIndicator do
       ...>   indicator(:is_approved)
       ...> end
+
+      iex> ExAccounting.Elem.ApprovalIndicator.cast(true)
+      {:ok, %ExAccounting.Elem.ApprovalIndicator{is_approved: true}}
+
+      iex> dump(%ExAccounting.Elem.ApprovalIndicator{is_approved: true})
+      {:ok, "X"}
   """
   defmacro indicator(field) do
     quote do
@@ -517,6 +663,18 @@ defmodule ExAccounting.Type do
     end
   end
 
+  @doc """
+  Defines a custom type for time field.
+
+  ## Examples
+
+      iex> defmodule ExAccounting.Elem.EnteredAt do
+      ...>   time(:entered_at)
+      ...> end
+
+      iex> ExAccounting.Elem.EnteredAt.cast(~T[12:00:00])
+      {:ok, %ExAccounting.Elem.EnteredAt{entered_at: ~T[12:00:00] }}
+  """
   defmacro time(field) do
     quote do
       use Ecto.Type
@@ -562,51 +720,70 @@ defmodule ExAccounting.Type do
       ...>   date(:posting_date)
       ...> end
   """
-  defmacro date(field) do
+  defmacro date(field, opts) do
     quote do
       use Ecto.Type
 
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{unquote(field) => Date.t()}
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:date`.
+      """
       def type, do: :date
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       @spec cast(Date.t()) :: {:ok, t()} | :error
-      def cast(date) do
-        with %Date{} <- date do
-          {:ok, %__MODULE__{unquote(field) => date}}
+      def cast(term) do
+        with %Date{} <- term do
+          {:ok, %__MODULE__{unquote(field) => term}}
         else
           _ -> :error
         end
       end
 
+      @doc """
+      Dumps #{unquote(opts[:description])}  into database field with type `:date`.
+      """
       @spec dump(t) :: {:ok, Date.t()} | :error
-      def dump(posting_date) do
-        with %__MODULE__{unquote(field) => date} <- posting_date do
+      def dump(date) do
+        with %__MODULE__{unquote(field) => date} <- date do
           {:ok, date}
         else
           _ -> :error
         end
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:date`.
+      """
       @spec load(Date.t()) :: {:ok, t()} | {:error, Date.t()}
-      def load(date) do
-        with %Date{} <- date do
-          {:ok, %__MODULE__{unquote(field) => date}}
+      def load(term) do
+        with %Date{} <- term do
+          {:ok, %__MODULE__{unquote(field) => term}}
         else
-          _ -> {:error, date}
+          _ -> {:error, term}
         end
       end
 
+      @doc """
+      Creates a new #{unquote(opts[:description])} with the given term.
+      """
       @spec create(Date.t()) :: t()
-      def create(%Date{} = posting_date) do
-        %__MODULE__{unquote(field) => posting_date}
+      def create(%Date{} = term) do
+        %__MODULE__{unquote(field) => term}
       end
     end
   end
 
   @doc """
   Defines a custom type for year.
+  Year must be a positive integer and less than or equal to 9999.
 
   ## Examples
 
@@ -614,22 +791,34 @@ defmodule ExAccounting.Type do
       ...>   year(:fiscal_year)
       ...> end
   """
-  defmacro year(field) do
+  defmacro year(field, opts) do
     quote do
       use Ecto.Type
 
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{unquote(field) => pos_integer}
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:integer`.
+      """
       @spec type() :: :integer
       def type, do: :integer
 
+      @doc """
+      Creates a new #{unquote(opts[:description])} with the given term.
+      """
       @spec create(pos_integer) :: t()
       def create(fiscal_year)
           when is_integer(fiscal_year) and fiscal_year > 0 and fiscal_year <= 9999 do
-        %__MODULE__{fiscal_year: fiscal_year}
+        %__MODULE__{unquote(field) => fiscal_year}
       end
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       @spec cast(pos_integer) :: {:ok, t()} | {:error, pos_integer}
       def cast(term) do
         with true <- is_integer(term),
@@ -641,6 +830,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:integer`.
+      """
       @spec dump(t) :: {:ok, pos_integer} | :error
       def dump(%__MODULE__{} = term) do
         {:ok, term.fiscal_year}
@@ -650,9 +842,28 @@ defmodule ExAccounting.Type do
         :error
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:integer`.
+      """
       @spec load(pos_integer) :: {:ok, t()} | :error
       def load(term) do
         {:ok, create(term)}
+      end
+
+      @doc """
+      Returns the result of comparison betweek two years.
+      Years are compared by key `#{unquote(:field)}` and its value not by the struct itself.
+      """
+      def equal?(term1, term2) do
+        with true <- Map.has_key?(term1, unquote(field)),
+             true <- Map.has_key?(term2, unquote(field)),
+             l = Map.get(term1, unquote(field)),
+             r = Map.get(term2, unquote(field)),
+             true <- l == r do
+          true
+        else
+          _ -> false
+        end
       end
     end
   end
@@ -668,13 +879,24 @@ defmodule ExAccounting.Type do
       ...> end
   """
 
-  defmacro username(field) do
+  defmacro username(field, opts) do
     quote do
+      use Ecto.Type
+
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{unquote(field) => charlist}
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:string`.
+      """
       def type, do: :string
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       @spec cast(t) :: {:ok, t}
       @spec cast(String.t() | charlist) :: {:ok, t} | :error
       def cast(%__MODULE__{} = term) do
@@ -692,6 +914,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:string`.
+      """
       @spec dump(t) :: binary() | :error
       def dump(term) do
         with %__MODULE__{user_name: code} <- term do
@@ -702,6 +927,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:string`.
+      """
       def load(data) do
         with user_name = to_charlist(data),
              {:ok, _} <- validate_user_name(user_name) do
@@ -711,6 +939,9 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Creates a new #{unquote(opts[:description])} with the given term.
+      """
       @spec create(charlist) :: t() | {:error, String.t()}
       def create(user_name) when is_list(user_name) and length(user_name) <= 16 do
         case validate_user_name(convert_to_lowercase(user_name)) do
@@ -723,6 +954,22 @@ defmodule ExAccounting.Type do
         user_name
         |> to_charlist
         |> create
+      end
+
+      @doc """
+      Returns the result of comparison betweek two #{unquote(opts[:description])}s.
+      The #{unquote(opts[:description])}s are compared by key `#{unquote(field)}` and its value not by the struct itself.
+      """
+      def equal?(term1, term2) do
+        with true <- Map.has_key?(term1, unquote(field)),
+             true <- Map.has_key?(term2, unquote(field)),
+             l = Map.get(term1, unquote(field)),
+             r = Map.get(term2, unquote(field)),
+             true <- l == r do
+          true
+        else
+          _ -> false
+        end
       end
 
       @spec validate_user_name(charlist) :: {:ok, charlist} | {:error, charlist}
