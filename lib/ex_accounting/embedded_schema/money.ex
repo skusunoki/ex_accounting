@@ -154,4 +154,6 @@ defmodule ExAccounting.EmbeddedSchema.Money do
   """
   @spec allocate(t, integer) :: [t]
   defdelegate allocate(money, parts), to: Impl
+
+  defdelegate changeset(money, params), to: Impl
 end

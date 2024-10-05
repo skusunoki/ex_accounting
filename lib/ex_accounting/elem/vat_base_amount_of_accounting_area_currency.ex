@@ -4,5 +4,8 @@ defmodule ExAccounting.Elem.VatBaseAmountOfAccountingAreaCurrency do
   """
 
   use ExAccounting.Type
-  amount(:vat_base_amount_of_accounting_area_currency, description: "VAT Base Amount of Accounting Area Currency")
+
+  amount(:vat_base_amount_of_accounting_area_currency,
+    description: "VAT Base Amount of Accounting Area Currency"
+  )
 end

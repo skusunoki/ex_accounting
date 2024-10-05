@@ -1,6 +1,6 @@
 defmodule ExAccounting.Elem.DocumentDate do
   @moduledoc """
-  DocumentDate is the date of document.
+  _Document Date_ is the date on the original document.
   """
 
   use ExAccounting.Type

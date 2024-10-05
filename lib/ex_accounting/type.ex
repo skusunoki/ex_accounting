@@ -15,7 +15,7 @@ defmodule ExAccounting.Type do
   ## Options
 
    - `length:` Length of the code. It must be a positive integer.
-   - `description:` Description of the entity. It must be a string. Used for documentation.
+   - `description:` Description of the code. It must be a string. Used for documentation.
 
   ## Example
 
@@ -55,6 +55,16 @@ defmodule ExAccounting.Type do
           {:ok, term}
         else
           {:error, _reason} -> {:error, term}
+          _ -> :error
+        end
+      end
+
+      def cast(%{unquote(field) => code}) do
+        with true <- is_list(code) or is_binary(code),
+             true <- ExAccounting.Utility.len(code) == unquote(opts[:length]),
+             code = ExAccounting.Utility.to_c(code) do
+          cast(%__MODULE__{unquote(field) => code})
+        else
           _ -> :error
         end
       end
@@ -105,11 +115,11 @@ defmodule ExAccounting.Type do
       Returns the result of comparison betweek two #{unquote(opts[:description])}s.
       """
       @spec equal?(t, t) :: boolean()
-      def equal?(term1, term2) do
+      def equal?(term1, term2) when is_map(term1) and is_map(term2) do
         with true <- Map.has_key?(term1, unquote(field)),
              true <- Map.has_key?(term2, unquote(field)),
-             l = Map.get(term1, unquote(field)),
-             r = Map.get(term2, unquote(field)),
+             l <- Map.get(term1, unquote(field)),
+             r <- Map.get(term2, unquote(field)),
              true <- l == r do
           true
         else
@@ -117,11 +127,13 @@ defmodule ExAccounting.Type do
         end
       end
 
+      def equal?(term1, term2), do: false
+
       @doc """
       Defines the form of the #{unquote(opts[:description])} in the embedded schema.
       """
-      @spec embed_as(atom()) :: :self
-      def embed_as(_), do: :self
+      @spec embed_as(atom()) :: :dump
+      def embed_as(_), do: :dump
 
       defp validate(code) do
         with true <- code != nil,
@@ -134,7 +146,6 @@ defmodule ExAccounting.Type do
           {:error, reason} -> {:error, reason}
         end
       end
-
     end
   end
 
@@ -146,14 +157,6 @@ defmodule ExAccounting.Type do
   `:length` - Maximum length of the code. It must be a positive integer.
   `:description` - Description of the entity.
 
-  ## Examples
-
-      iex> defmodule Employee do
-      ...>   entity(:employee, length: 10, description: "Employee")
-      ...> end
-
-      iex> Employee.cast("10245023")
-      {:ok, %Employee{employee: "10245023"}}
   """
   defmacro entity(field, opts) do
     quote do
@@ -222,17 +225,19 @@ defmodule ExAccounting.Type do
       Returns the result of comparison betweek two #{unquote(opts[:description])}s.
       The #{unquote(opts[:description])}s are compared by key `#{unquote(field)}` and its value not by the struct itself.
       """
-      def equal?(term1, term2) do
+      def equal?(term1, term2) when is_map(term1) and is_map(term2) do
         with true <- Map.has_key?(term1, unquote(field)),
-        true <- Map.has_key?(term2, unquote(field)),
-        l = Map.get(term1, unquote(field)),
-        r = Map.get(term2, unquote(field)),
-        true <- l == r do
-     true
-   else
-     _ -> false
-   end
+             true <- Map.has_key?(term2, unquote(field)),
+             l = Map.get(term1, unquote(field)),
+             r = Map.get(term2, unquote(field)),
+             true <- l == r do
+          true
+        else
+          _ -> false
+        end
       end
+
+      def equal?(_term1, _term2), do: false
     end
   end
 
@@ -339,12 +344,6 @@ defmodule ExAccounting.Type do
 
   @doc """
   Defines a custom type for currency. `field` must be a atom that represents the key of the struct.
-
-  ## Examples
-
-      iex> defmodule TransactionCurrency do
-      ...>   currency(:transaction_currency)
-      ...> end
   """
   defmacro currency(field, opts) do
     quote do
@@ -366,6 +365,7 @@ defmodule ExAccounting.Type do
       @doc """
       Casts the given term to #{unquote(opts[:description])}.
       """
+      @spec cast(t) :: {:ok, t} | :error
       def cast(%ExAccounting.EmbeddedSchema.Money{} = money) do
         with {:ok, value} <- ExAccounting.Elem.Currency.cast(money.currency) do
           {:ok, %__MODULE__{unquote(field) => value.currency}}
@@ -374,12 +374,34 @@ defmodule ExAccounting.Type do
         end
       end
 
-      def cast(%__MODULE__{} = currency) do
-        with %__MODULE__{unquote(field) => value} <- currency,
-             true <- is_atom(value) do
-          {:ok, currency}
+      def cast(%__MODULE__{} = term) do
+        with %__MODULE__{unquote(field) => code} = term,
+             {:M1, true} <- {:M1, is_atom(code)},
+             {:M2, true} <- {:M2, to_string(code) == String.upcase(to_string(code))} do
+          {:ok, term}
         else
-          _ -> :error
+          {:M1, _} -> {:error, "currency must be 3 letters"}
+          {:M2, _} -> {:error, "currency must be uppercase"}
+        end
+      end
+
+      def cast(term) when is_atom(term) do
+        with {:M1, true} <- {:M1, String.length(to_string(term)) == 3},
+             {:M2, true} <- {:M2, to_string(term) == String.upcase(to_string(term))} do
+          {:ok, %__MODULE__{unquote(field) => term}}
+        else
+          {:M1, _} -> {:error, "currency must be 3 letters"}
+          {:M2, _} -> {:error, "currency must be uppercase"}
+        end
+      end
+
+      def cast(term) when is_binary(term) do
+        with {:M1, true} <- {:M1, String.length(term) == 3},
+             {:M2, true} <- {:M2, term == String.upcase(term)} do
+          {:ok, %__MODULE__{unquote(field) => String.to_atom(term)}}
+        else
+          {:M1, _} -> {:error, "currency must be 3 letters"}
+          {:M2, _} -> {:error, "currency must be uppercase"}
         end
       end
 
@@ -412,7 +434,7 @@ defmodule ExAccounting.Type do
       Returns the result of comparison betweek two #{unquote(opts[:description])}s.
       """
       @spec equal?(t, t) :: boolean()
-      def equal?(term1, term2) do
+      def equal?(term1, term2) when is_map(term1) and is_map(term2) do
         with true <- Map.has_key?(term1, unquote(field)),
              true <- Map.has_key?(term2, unquote(field)),
              l = Map.get(term1, unquote(field)),
@@ -423,6 +445,8 @@ defmodule ExAccounting.Type do
           _ -> false
         end
       end
+
+      def equal?(_term1, _term2), do: false
     end
   end
 
@@ -432,12 +456,6 @@ defmodule ExAccounting.Type do
   ## Options
 
   - `:description` - Description of the amount. It must be a string. Used for documentation.
-
-  ## Examples
-
-      iex> defmodule ExAccounting.Elem.UnitPrice do
-      ...>   amount(:unit_price)
-      ...> end
   """
   defmacro amount(field, opts) do
     quote do
@@ -601,23 +619,14 @@ defmodule ExAccounting.Type do
 
   @doc """
   Defines a custom type for indicator field that represents boolean value.
-
-  ## Examples
-
-      iex> defmodule ExAccounting.Elem.ApprovalIndicator do
-      ...>   indicator(:is_approved)
-      ...> end
-
-      iex> ExAccounting.Elem.ApprovalIndicator.cast(true)
-      {:ok, %ExAccounting.Elem.ApprovalIndicator{is_approved: true}}
-
-      iex> dump(%ExAccounting.Elem.ApprovalIndicator{is_approved: true})
-      {:ok, "X"}
   """
-  defmacro indicator(field) do
+  defmacro indicator(field, opts) do
     quote do
       use Ecto.Type
 
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{unquote(field) => boolean}
       defstruct [unquote(field)]
 
@@ -714,11 +723,6 @@ defmodule ExAccounting.Type do
   @doc """
   Defines a custom type for date.
 
-  ## Examples
-
-      iex> defmodule ExAccounting.Elem.PostingDate do
-      ...>   date(:posting_date)
-      ...> end
   """
   defmacro date(field, opts) do
     quote do
@@ -778,18 +782,36 @@ defmodule ExAccounting.Type do
       def create(%Date{} = term) do
         %__MODULE__{unquote(field) => term}
       end
+
+      @doc """
+      Defines the form of the #{unquote(opts[:description])} as `:self` in the embedded schema.
+      """
+      @spec embed_as(atom()) :: :self
+      def embed_as(_), do: :self
+
+      @doc """
+      Returns the result of comparison betweek two #{unquote(opts[:description])}s.
+      """
+      @spec equal?(t, t) :: boolean()
+      def equal?(term1, term2) when is_map(term1) and is_map(term2) do
+        with true <- Map.has_key?(term1, unquote(field)),
+             true <- Map.has_key?(term2, unquote(field)),
+             l = Map.get(term1, unquote(field)),
+             r = Map.get(term2, unquote(field)),
+             true <- l == r do
+          true
+        else
+          _ -> false
+        end
+      end
+
+      def equal?(_term1, _term2), do: false
     end
   end
 
   @doc """
   Defines a custom type for year.
   Year must be a positive integer and less than or equal to 9999.
-
-  ## Examples
-
-      iex> defmodule YearDocumentPosted do
-      ...>   year(:fiscal_year)
-      ...> end
   """
   defmacro year(field, opts) do
     quote do
@@ -835,7 +857,7 @@ defmodule ExAccounting.Type do
       """
       @spec dump(t) :: {:ok, pos_integer} | :error
       def dump(%__MODULE__{} = term) do
-        {:ok, term.fiscal_year}
+        {:ok, term.unquote(field)}
       end
 
       def dump(_) do
@@ -854,7 +876,7 @@ defmodule ExAccounting.Type do
       Returns the result of comparison betweek two years.
       Years are compared by key `#{unquote(:field)}` and its value not by the struct itself.
       """
-      def equal?(term1, term2) do
+      def equal?(term1, term2) when is_map(term1) and is_map(term2) do
         with true <- Map.has_key?(term1, unquote(field)),
              true <- Map.has_key?(term2, unquote(field)),
              l = Map.get(term1, unquote(field)),
@@ -865,18 +887,14 @@ defmodule ExAccounting.Type do
           _ -> false
         end
       end
+
+      def equal?(_term1, _term2), do: false
     end
   end
 
   @doc """
 
   Defines a custom type for username.
-
-  ## Exapmles
-
-      iex> defmodule PostedBy do
-      ...>   username(:user_name)
-      ...> end
   """
 
   defmacro username(field, opts) do
@@ -960,7 +978,7 @@ defmodule ExAccounting.Type do
       Returns the result of comparison betweek two #{unquote(opts[:description])}s.
       The #{unquote(opts[:description])}s are compared by key `#{unquote(field)}` and its value not by the struct itself.
       """
-      def equal?(term1, term2) do
+      def equal?(term1, term2) when is_map(term1) and is_map(term2) do
         with true <- Map.has_key?(term1, unquote(field)),
              true <- Map.has_key?(term2, unquote(field)),
              l = Map.get(term1, unquote(field)),
@@ -971,6 +989,8 @@ defmodule ExAccounting.Type do
           _ -> false
         end
       end
+
+      def equal?(_term1, _term2), do: false
 
       @spec validate_user_name(charlist) :: {:ok, charlist} | {:error, charlist}
       def validate_user_name(user_name) do
