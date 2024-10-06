@@ -40,7 +40,6 @@ defmodule ExAccounting.EmbeddedSchema.GenralLedgerTransactionTest do
              }
 
       assert result.transaction_value.amount == Decimal.new("100")
-      IO.inspect(result)
     end
   end
 end

@@ -25,8 +25,6 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
 
   @spec changeset(t, map) :: Ecto.Changeset.t()
   def changeset(journal_entry_header, params) do
-    IO.inspect(params)
-
     params_comp =
       case Map.has_key?(params, :accouting_unit_attr) do
         false ->
@@ -37,7 +35,6 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
           params
       end
 
-      IO.inspect(params_comp)
     journal_entry_header
     |> cast(params_comp, [
       :accounting_unit,

@@ -56,6 +56,6 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryTest do
       %ExAccounting.EmbeddedSchema.JournalEntry{}
       |> ExAccounting.EmbeddedSchema.JournalEntry.changeset(parameter)
 
-    assert result.errors == []
+    assert result |> Ecto.Changeset.traverse_errors(fn {msg, opts} -> {msg, opts} end) == %{}
   end
 end
