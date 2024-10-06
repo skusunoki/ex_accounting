@@ -54,7 +54,7 @@ defmodule ExAccounting.Type do
              {:ok, validated} <- validate(code) do
           {:ok, term}
         else
-          {:error, _reason} -> {:error, term}
+          {:error, reason} -> {:error, reason}
           _ -> :error
         end
       end
@@ -74,6 +74,7 @@ defmodule ExAccounting.Type do
              {:ok, _} <- validate(ExAccounting.Utility.to_c(term)) do
           cast(%__MODULE__{unquote(field) => ExAccounting.Utility.to_c(term)})
         else
+          {:error, reason} -> {:error, reason}
           _ -> {:error, term}
         end
       end
@@ -136,14 +137,25 @@ defmodule ExAccounting.Type do
       def embed_as(_), do: :dump
 
       defp validate(code) do
-        with true <- code != nil,
-             true <- is_list(code),
-             true <- ExAccounting.Utility.len(code) == unquote(opts[:length]),
+        with {:M1, true} <- {:M1, code != nil},
+             {:M2, true} <- {:M2, is_list(code)},
+             {:M3, true} <- {:M3, ExAccounting.Utility.len(code) == unquote(opts[:length])},
              {:ok, _validated} <- ExAccounting.Utility.validate(code) do
           {:ok, code}
         else
-          false -> {:error, code}
-          {:error, reason} -> {:error, reason}
+          {:M1, false} ->
+            {:error, "#{unquote(opts[:description])} must not be nil. #{inspect(code)} is nill"}
+
+          {:M2, false} ->
+            {:error,
+             "#{unquote(opts[:description])} must be a list. #{inspect(code)} is not a list"}
+
+          {:M3, false} ->
+            {:error,
+             "#{unquote(opts[:description])} must be #{unquote(opts[:length])} characters. #{inspect(code)} is #{inspect(ExAccounting.Utility.len(code))} charactors."}
+
+          {:error, reason} ->
+            {:error, reason}
         end
       end
     end
@@ -328,7 +340,7 @@ defmodule ExAccounting.Type do
       Returns the result of comparison betweek two #{unquote(opts[:description])}s.
       """
       @spec equal?(t, t) :: boolean()
-      def equal?(term1, term2) do
+      def equal?(term1, term2) when is_map(term1) and is_map(term2) do
         with true <- Map.has_key?(term1, unquote(field)),
              true <- Map.has_key?(term2, unquote(field)),
              l = Map.get(term1, unquote(field)),
@@ -339,6 +351,8 @@ defmodule ExAccounting.Type do
           _ -> false
         end
       end
+
+      def equal?(_term1, _term2), do: false
     end
   end
 
@@ -366,6 +380,10 @@ defmodule ExAccounting.Type do
       Casts the given term to #{unquote(opts[:description])}.
       """
       @spec cast(t) :: {:ok, t} | :error
+      @spec cast(ExAccounting.EmbeddedSchema.Money.t()) :: {:ok, t} | :error
+      @spec cast(atom) :: {:ok, t} | :error
+      @spec cast(binary) :: {:ok, t} | :error
+
       def cast(%ExAccounting.EmbeddedSchema.Money{} = money) do
         with {:ok, value} <- ExAccounting.Elem.Currency.cast(money.currency) do
           {:ok, %__MODULE__{unquote(field) => value.currency}}

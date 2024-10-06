@@ -132,7 +132,7 @@ defmodule ExAccounting.EmbeddedSchema.Money do
       iex> new(Decimal.new("1000"), "USD")
       %Money{amount: Decimal.new("1000"), cent_factor: 100, currency: %Currency{currency: :USD}}
   """
-  @spec new(integer | Decimal.t(), currency) :: t
+  @spec new(integer | Decimal.t(), currency | atom | binary) :: t
   defdelegate new(amount, currency), to: Impl
 
   @spec new(%{amount: integer | Decimal.t(), currency: currency}) :: t
@@ -155,5 +155,8 @@ defmodule ExAccounting.EmbeddedSchema.Money do
   @spec allocate(t, integer) :: [t]
   defdelegate allocate(money, parts), to: Impl
 
+  @doc """
+  Make changeset of Money by params.
+  """
   defdelegate changeset(money, params), to: Impl
 end

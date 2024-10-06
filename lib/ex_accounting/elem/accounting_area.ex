@@ -9,7 +9,7 @@ defmodule ExAccounting.Elem.AccountingArea do
       {:ok, %ExAccounting.Elem.AccountingArea{accounting_area: ~c"0001"}}
 
       iex> ExAccounting.Elem.AccountingArea.cast("000")
-      {:error, "000"}
+      {:error, "Accounting Area must be 4 characters. ~c\\"000\\" is 3 charactors."}
   """
   use ExAccounting.Type
   code(:accounting_area, length: 4, description: "Accounting Area")

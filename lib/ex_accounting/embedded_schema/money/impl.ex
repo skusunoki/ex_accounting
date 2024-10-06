@@ -107,7 +107,7 @@ defmodule ExAccounting.EmbeddedSchema.Money.Impl do
     end
   end
 
-  @spec new(Decimal.t() | integer, currency) :: Money.t() | :error
+  @spec new(Decimal.t() | integer, currency | atom | binary) :: Money.t() | :error
   def new(%Decimal{} = amount, currency) do
     with {:ok, currency} <- Currency.cast(currency),
          {:ok, return} <-

@@ -2,7 +2,26 @@ defmodule ExAccounting.EmbeddedSchema.GeneralLedgerTransaction do
   @moduledoc """
   _General Ledger Transaction_ is the transaction that is recorded in the general ledger.
   """
+  alias ExAccounting.EmbeddedSchema.GeneralLedgerTransaction.Impl
   use Ecto.Schema
+
+  @type t :: %__MODULE__{
+          accounting_area: ExAccounting.Elem.AccountingArea.t(),
+          accounting_unit: ExAccounting.Elem.AccountingUnit.t(),
+          profit_center: ExAccounting.Elem.ProfitCenter.t(),
+          fiscal_year: ExAccounting.Elem.FiscalYear.t(),
+          accounting_period: ExAccounting.Elem.AccountingPeriod.t(),
+          posting_date: ExAccounting.Elem.PostingDate.t(),
+          general_ledger_account: ExAccounting.Elem.GeneralLedgerAccount.t(),
+          general_ledger_account_transaction_type:
+            ExAccounting.Elem.GeneralLedgerAccountTransactionType.t(),
+          debit_credit: ExAccounting.Elem.DebitCredit.t(),
+          accounting_document_number: ExAccounting.Elem.AccountingDocumentNumber.t(),
+          accounting_document_item_number: ExAccounting.Elem.AccountingDocumentItemNumber.t(),
+          transaction_value: ExAccounting.EmbeddedSchema.Money.t(),
+          accounting_area_value: ExAccounting.EmbeddedSchema.Money.t(),
+          accounting_unit_value: ExAccounting.EmbeddedSchema.Money.t()
+        }
 
   @primary_key false
   embedded_schema do
@@ -50,20 +69,8 @@ defmodule ExAccounting.EmbeddedSchema.GeneralLedgerTransaction do
     }
   end
 
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> Ecto.Changeset.cast(params, [
-      :accounting_area,
-      :accounting_unit,
-      :profit_center,
-      :fiscal_year,
-      :accounting_period,
-      :posting_date,
-      :general_ledger_account,
-      :general_ledger_account_transaction_type,
-      :debit_credit
-    ])
-  end
+  @spec changeset(t, map) :: Ecto.Changeset.t()
+  defdelegate changeset(general_ledger_transaction, params), to: Impl
 
   def reverse(%__MODULE__{} = transaction) do
     %__MODULE__{

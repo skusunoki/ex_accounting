@@ -1,6 +1,6 @@
 defmodule ExAccounting.Elem.AccountingDocumentItemNumber do
   @moduledoc """
-  _Accounting Document Item Number_ is identifier of accounting document item in the accounting document.
+  _Accounting Document Item Number_ is an identifier of accounting document item in the accounting document.
   Accounting Document Item Number must be unique positive integer within the accounting document.
 
   ## Examples
