@@ -6,6 +6,11 @@ defmodule ExAccounting.EmbeddedSchema.AccountingUnit do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{
+          accounting_unit: ExAccounting.Elem.AccountingUnit.t(),
+          accounting_unit_currency: ExAccounting.Elem.AccountingUnitCurrency.t(),
+          accounting_area: ExAccounting.EmbeddedSchema.AccountingArea.t()
+        }
   embedded_schema do
     field(:accounting_unit, ExAccounting.Elem.AccountingUnit)
     field(:accounting_unit_currency, ExAccounting.Elem.AccountingUnitCurrency)
@@ -13,9 +18,10 @@ defmodule ExAccounting.EmbeddedSchema.AccountingUnit do
   end
 
   def changeset(accounting_unit, params) do
-    params_comp = params
-    |> determine_accounting_unit_currency()
-    |> determine_accounting_area()
+    params_comp =
+      params
+      |> determine_accounting_unit_currency()
+      |> determine_accounting_area()
 
     accounting_unit
     |> cast(params_comp, [:accounting_unit, :accounting_unit_currency])
@@ -30,8 +36,11 @@ defmodule ExAccounting.EmbeddedSchema.AccountingUnit do
   end
 
   defp determine_accounting_unit_currency(params) when is_map(params) do
-      params
-      |> Map.put(:accounting_unit_currency, ExAccounting.Configuration.AccountingUnit.currency(params.accounting_unit))
+    params
+    |> Map.put(
+      :accounting_unit_currency,
+      ExAccounting.Configuration.AccountingUnit.currency(params.accounting_unit)
+    )
   end
 
   defp determine_accounting_area(%{accounting_area: key} = params) when not is_nil(key) do
@@ -40,6 +49,9 @@ defmodule ExAccounting.EmbeddedSchema.AccountingUnit do
 
   defp determine_accounting_area(params) when is_map(params) do
     params
-    |> Map.put(:accounting_area, %{accounting_area: ExAccounting.Configuration.AccountingUnit.accounting_area(params.accounting_unit)})
+    |> Map.put(:accounting_area, %{
+      accounting_area:
+        ExAccounting.Configuration.AccountingUnit.accounting_area(params.accounting_unit)
+    })
   end
 end

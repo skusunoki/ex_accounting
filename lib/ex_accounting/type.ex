@@ -1036,4 +1036,61 @@ defmodule ExAccounting.Type do
       end
     end
   end
+
+  @doc """
+  Defines a custom type for text field for code description.
+  """
+  defmacro description(field, opts) do
+    quote do
+      use Ecto.Type
+
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
+      @type t :: %__MODULE__{unquote(field) => String.t()}
+      defstruct [unquote(field)]
+
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:string`.
+      """
+      def type, do: :string
+
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
+      @spec cast(t) :: {:ok, t}
+      @spec cast(String.t()) :: {:ok, t} | :error
+      def cast(%__MODULE__{} = term) do
+        {:ok, term}
+      end
+
+      def cast(term) do
+        with true <- is_binary(term),
+             true <- ExAccounting.Utility.len(term) <= unquote(opts[:length]) do
+          {:ok, %__MODULE__{unquote(field) => term}}
+        else
+          _ -> :error
+        end
+      end
+
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:string`.
+      """
+      @spec dump(t) :: binary() | :error
+      def dump(description) do
+        with %__MODULE__{unquote(field) => text} <- description do
+          {:ok, text}
+        else
+          _ -> :error
+        end
+      end
+
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:string`.
+      """
+      def load(data) do
+        {:ok, %__MODULE__{unquote(field) => data}}
+      end
+    end
+  end
 end

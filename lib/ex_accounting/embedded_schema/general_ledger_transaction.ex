@@ -69,6 +69,9 @@ defmodule ExAccounting.EmbeddedSchema.GeneralLedgerTransaction do
     }
   end
 
+  @doc """
+  Builds a changeset of General Ledger Transaction from the `params`.
+  """
   @spec changeset(t, map) :: Ecto.Changeset.t()
   defdelegate changeset(general_ledger_transaction, params), to: Impl
 

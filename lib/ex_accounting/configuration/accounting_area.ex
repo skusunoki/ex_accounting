@@ -20,4 +20,8 @@ defmodule ExAccounting.Configuration.AccountingArea do
   def currency(_) do
     :USD
   end
+
+  def description(_) do
+    "Default"
+  end
 end

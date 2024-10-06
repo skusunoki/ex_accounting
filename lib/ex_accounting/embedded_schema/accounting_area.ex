@@ -6,27 +6,48 @@ defmodule ExAccounting.EmbeddedSchema.AccountingArea do
   import Ecto.Changeset
   alias ExAccounting.Configuration.AccountingArea
 
+  @typedoc """
+  _Accounting Area_
+  """
+  @type t :: %__MODULE__{
+          accounting_area: ExAccounting.Elem.AccountingArea.t(),
+          accounting_area_currency: ExAccounting.Elem.AccountingAreaCurrency.t()
+        }
   embedded_schema do
     field(:accounting_area, ExAccounting.Elem.AccountingArea)
+    field(:accounting_area_description, ExAccounting.Elem.AccountingAreaDescription)
     field(:accounting_area_currency, ExAccounting.Elem.AccountingAreaCurrency)
   end
 
   def changeset(accounting_area, params) do
-    param_comp = params
-    |> determine_accounting_area_currency()
+    param_comp =
+      params
+      |> determine_accounting_area_currency()
+      |> determine_accounting_area_description()
 
     accounting_area
-    |> cast(param_comp, [:accounting_area, :accounting_area_currency])
+    |> cast(param_comp, [:accounting_area, :accounting_area_description, :accounting_area_currency])
     |> validate_required([:accounting_area, :accounting_area_currency])
     |> validate_inclusion(:accounting_area, AccountingArea.read())
   end
 
-  defp determine_accounting_area_currency(%{accounting_area_currency: key} = params) when not is_nil(key) do
+  defp determine_accounting_area_currency(%{accounting_area_currency: key} = params)
+       when not is_nil(key) do
     params
   end
 
   defp determine_accounting_area_currency(params) when is_map(params) do
     params
     |> Map.put(:accounting_area_currency, AccountingArea.currency(params.accounting_area))
+  end
+
+  defp determine_accounting_area_description(%{accounting_area_description: key} = params)
+       when not is_nil(key) do
+    params
+  end
+
+  defp determine_accounting_area_description(params) when is_map(params) do
+    params
+    |> Map.put(:accounting_area_description, AccountingArea.description(params.accounting_area))
   end
 end

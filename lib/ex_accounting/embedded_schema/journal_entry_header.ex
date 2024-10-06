@@ -11,7 +11,8 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
           document_date: ExAccounting.Elem.DocumentDate.t(),
           posting_date: ExAccounting.Elem.PostingDate.t(),
           accounting_document_number: ExAccounting.Elem.AccountingDocumentNumber.t(),
-          accounting_unit: ExAccounting.EmbeddedSchema.AccountingUnit.t()
+          transaction_currency: ExAccounting.Elem.TransactionCurrency.t(),
+          accounting_unit_attr: ExAccounting.EmbeddedSchema.AccountingUnit.t()
         }
 
   embedded_schema do
@@ -29,7 +30,10 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
       case Map.has_key?(params, :accouting_unit_attr) do
         false ->
           params
-          |> Map.put(:accounting_unit_attr, %{} |> Map.put(:accounting_unit, params.accounting_unit))
+          |> Map.put(
+            :accounting_unit_attr,
+            %{} |> Map.put(:accounting_unit, params.accounting_unit)
+          )
 
         _ ->
           params

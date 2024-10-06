@@ -7,6 +7,10 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
   alias ExAccounting.EmbeddedSchema.Money
   alias ExAccounting.Configuration.AccountingArea
 
+  @type t :: %__MODULE__{
+          header: ExAccounting.EmbeddedSchema.JournalEntryHeader.t(),
+          item: [ExAccounting.EmbeddedSchema.JournalEntryItem.t()]
+        }
   embedded_schema do
     embeds_one(:header, ExAccounting.EmbeddedSchema.JournalEntryHeader)
     embeds_many(:item, ExAccounting.EmbeddedSchema.JournalEntryItem)
@@ -100,7 +104,6 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
           :completed_document,
           "Debit and credit amount of Transaction Currency must be same.",
           error: error
-
         )
     end
   end
