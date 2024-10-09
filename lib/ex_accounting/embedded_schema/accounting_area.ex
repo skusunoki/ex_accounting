@@ -19,6 +19,7 @@ defmodule ExAccounting.EmbeddedSchema.AccountingArea do
     field(:accounting_area_currency, ExAccounting.Elem.AccountingAreaCurrency)
   end
 
+  @spec changeset(t, map) :: Ecto.Changeset.t
   def changeset(accounting_area, params) do
     param_comp =
       params
@@ -31,16 +32,19 @@ defmodule ExAccounting.EmbeddedSchema.AccountingArea do
     |> validate_inclusion(:accounting_area, AccountingArea.read())
   end
 
-  defp determine_accounting_area_currency(%{accounting_area_currency: key} = params)
-       when not is_nil(key) do
+  @spec determine_accounting_area_currency(map) :: map
+  defp determine_accounting_area_currency(%{accounting_area: key, accounting_area_currency: curr} = params)
+       when not is_nil(key) and not is_nil(curr) do
     params
   end
 
-  defp determine_accounting_area_currency(params) when is_map(params) do
+  defp determine_accounting_area_currency(%{accounting_area: key} = params)
+      when not is_nil(key)  do
     params
     |> Map.put(:accounting_area_currency, AccountingArea.currency(params.accounting_area))
   end
 
+  @spec determine_accounting_area_description(map) :: map
   defp determine_accounting_area_description(%{accounting_area_description: key} = params)
        when not is_nil(key) do
     params

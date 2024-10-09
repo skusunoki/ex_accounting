@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.ReversedDocumentAccountingPeriod do
   """
 
   use ExAccounting.Type
-  period(:accouting_period, max: 12)
+  period(:accouting_period, max: 12, description: "Accounting Period of Reversed Document")
 end

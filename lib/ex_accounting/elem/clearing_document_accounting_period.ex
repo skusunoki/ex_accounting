@@ -4,5 +4,5 @@ defmodule ExAccounting.Elem.ClearingDocumentAccountingPeriod do
   """
 
   use ExAccounting.Type
-  period(:accounting_period, max: 12)
+  period(:accounting_period, max: 12, description: "Accounting Period of Clearing Document")
 end

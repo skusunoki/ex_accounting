@@ -555,28 +555,31 @@ defmodule ExAccounting.Type do
 
   @doc """
   Defines a custom type for period.
-
-  ## Examples
-
-      iex> defmodule ExAccounting.Elem.Period do
-      ...>   period(:period, max: 12)
-      ...> end
   """
   defmacro period(field, opts) do
     quote do
       use Ecto.Type
 
+      @typedoc """
+      #{unquote(opts[:description])}
+      """
       @type t :: %__MODULE__{unquote(field) => pos_integer}
       defstruct [unquote(field)]
 
+      @doc """
+      Defines the type of #{unquote(opts[:description])} in database as `:integer`.
+      """
       @spec type() :: :integer
       def type, do: :integer
 
+      @doc """
+      Casts the given term to #{unquote(opts[:description])}.
+      """
       @spec cast(t | pos_integer | charlist) :: {:ok, t()} | {:error, pos_integer}
       def cast(%__MODULE__{} = period) do
         with %__MODULE__{unquote(field) => number} <- period,
              true <- is_number(number),
-             true <- number > 0,
+             true <- number >= 0,
              true <- number <= unquote(opts[:max]) do
           {:ok, period}
         else
@@ -584,17 +587,8 @@ defmodule ExAccounting.Type do
         end
       end
 
-      def cast(period) when is_number(period) do
-        with true <- period > 0,
-             true <- period <= unquote(opts[:max]) do
-          {:ok, %__MODULE__{unquote(field) => period}}
-        else
-          _ -> {:error, period}
-        end
-      end
-
       def cast(period) when is_list(period) do
-        with true <- length(period) == 2,
+        with true <- length(period) == unquote(opts[:max]) |> to_charlist() |> length(),
              true <-
                List.to_integer(period) >= 0 and
                  List.to_integer(period) <= unquote(opts[:max]) do
@@ -604,6 +598,18 @@ defmodule ExAccounting.Type do
         end
       end
 
+      def cast(period) when is_number(period) do
+        with true <- period >= 0,
+             true <- period <= unquote(opts[:max]) do
+          {:ok, %__MODULE__{unquote(field) => period}}
+        else
+          _ -> {:error, period}
+        end
+      end
+
+      @doc """
+      Dumps #{unquote(opts[:description])} into database field with type `:integer`.
+      """
       @spec dump(t) :: {:ok, pos_integer} | :error
       def dump(%__MODULE__{} = period) do
         with %__MODULE__{unquote(field) => number} <- period do
@@ -611,11 +617,17 @@ defmodule ExAccounting.Type do
         end
       end
 
+      @doc """
+      Loads #{unquote(opts[:description])} from database field with type `:integer`.
+      """
       @spec load(data :: integer) :: {:ok, t} | :error
       def load(data) when is_integer(data) do
         with stdata = %{unquote(field) => data}, do: {:ok, struct!(__MODULE__, stdata)}
       end
 
+      @doc """
+      Creates a new #{unquote(opts[:description])} with the given term.
+      """
       @spec create(pos_integer) :: t()
       @spec create(charlist) :: t()
       def create(period) when is_list(period) do

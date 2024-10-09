@@ -52,10 +52,25 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryTest do
       ]
     }
 
+    # Build a changeset
     result =
       %ExAccounting.EmbeddedSchema.JournalEntry{}
       |> ExAccounting.EmbeddedSchema.JournalEntry.changeset(parameter)
 
-    assert result |> Ecto.Changeset.traverse_errors(fn {msg, opts} -> {msg, opts} end) == %{}
+    # retrieve the errors
+    assert result
+              |> Ecto.Changeset.traverse_errors(fn {msg, opts} -> {msg, opts} end)
+            == %{}
+
+    # retrieve the changes
+    assert Ecto.Changeset.get_embed(result, :header)
+             |> Ecto.Changeset.get_embed(:accounting_unit_attr)
+             |> Ecto.Changeset.get_embed(:accounting_area)
+             |> Ecto.Changeset.get_field(:accounting_area_description)
+             |> Map.get(:accounting_area_description)
+            == "Default"
+
+    assert Ecto.Changeset.apply_action(result, :insert) |> elem(0) == :ok
+
   end
 end
