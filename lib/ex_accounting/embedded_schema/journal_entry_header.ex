@@ -10,6 +10,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
           accounting_unit: ExAccounting.Elem.AccountingUnit.t(),
           document_date: ExAccounting.Elem.DocumentDate.t(),
           posting_date: ExAccounting.Elem.PostingDate.t(),
+          document_type: ExAccounting.Elem.DocumentType.t(),
           accounting_document_number: ExAccounting.Elem.AccountingDocumentNumber.t(),
           transaction_currency: ExAccounting.Elem.TransactionCurrency.t(),
           accounting_unit_attr: ExAccounting.EmbeddedSchema.AccountingUnit.t()
@@ -19,6 +20,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
     field(:accounting_unit, ExAccounting.Elem.AccountingUnit)
     field(:document_date, ExAccounting.Elem.DocumentDate)
     field(:posting_date, ExAccounting.Elem.PostingDate)
+    field(:document_type, ExAccounting.Elem.DocumentType)
     field(:accounting_document_number, ExAccounting.Elem.AccountingDocumentNumber)
     field(:transaction_currency, ExAccounting.Elem.TransactionCurrency)
     embeds_one(:accounting_unit_attr, ExAccounting.EmbeddedSchema.AccountingUnit)
@@ -44,12 +46,14 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
       :accounting_unit,
       :document_date,
       :posting_date,
+      :document_type,
       :transaction_currency
     ])
     |> validate_required([
       :accounting_unit,
       :document_date,
       :posting_date,
+      :document_type,
       :transaction_currency
     ])
     |> validate_inclusion(:accounting_document_number, [nil])

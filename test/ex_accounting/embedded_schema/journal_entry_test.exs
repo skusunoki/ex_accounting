@@ -6,8 +6,9 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryTest do
       header: %{
         accounting_unit: "1000",
         document_date: ~D[2024-10-01],
+        document_type: "SA",
         posting_date: ~D[2024-10-01],
-        accounting_document_number: 0_000_000_001,
+        accounting_document_number: nil,
         transaction_currency: "USD"
       },
       item: [
@@ -59,18 +60,30 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryTest do
 
     # retrieve the errors
     assert result
-              |> Ecto.Changeset.traverse_errors(fn {msg, opts} -> {msg, opts} end)
-            == %{}
+           |> Ecto.Changeset.traverse_errors(fn {msg, opts} -> {msg, opts} end) ==
+             %{}
 
     # retrieve the changes
     assert Ecto.Changeset.get_embed(result, :header)
-             |> Ecto.Changeset.get_embed(:accounting_unit_attr)
-             |> Ecto.Changeset.get_embed(:accounting_area)
-             |> Ecto.Changeset.get_field(:accounting_area_description)
-             |> Map.get(:accounting_area_description)
-            == "Default"
+           |> Ecto.Changeset.get_embed(:accounting_unit_attr)
+           |> Ecto.Changeset.get_embed(:accounting_area)
+           |> Ecto.Changeset.get_field(:accounting_area_description)
+           |> Map.get(:accounting_area_description) ==
+             "Default"
 
     assert Ecto.Changeset.apply_action(result, :insert) |> elem(0) == :ok
 
+    assert result
+           |> Ecto.Changeset.apply_changes()
+           |> Map.get(:header)
+           |> Map.get(:accounting_document_number) >=
+             1_000_000_001
+
+    assert result
+           |> Ecto.Changeset.apply_changes()
+           |> Map.get(:header)
+           |> Map.get(:document_date)
+           |> Map.get(:document_date) ==
+             ~D[2024-10-01]
   end
 end

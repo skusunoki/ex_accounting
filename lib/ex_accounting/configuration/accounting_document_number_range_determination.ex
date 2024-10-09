@@ -14,4 +14,13 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination 
     |> cast(params, [:accounting_unit, :document_type, :to_fiscal_year, :number_range_code])
     |> unique_constraint([:accounting_unit, :document_type, :to_fiscal_year])
   end
+
+  def determine(_document_type) do
+    # __MODULE__
+    # |> ExAccounting.Repo.get_by(document_type: document_type)
+    with {:ok, accounting_document_number_range_code} <-
+           ExAccounting.Elem.AccountingDocumentNumberRangeCode.cast("01") do
+      accounting_document_number_range_code
+    end
+  end
 end

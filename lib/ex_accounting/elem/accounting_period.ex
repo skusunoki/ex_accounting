@@ -55,5 +55,4 @@ defmodule ExAccounting.Elem.AccountingPeriod do
   def previous(%__MODULE__{accounting_period: period}) when period > 1 and period < 12 do
     %__MODULE__{accounting_period: period - 1}
   end
-
 end

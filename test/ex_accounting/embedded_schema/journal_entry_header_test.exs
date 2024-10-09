@@ -34,7 +34,9 @@ defmodule JournalEntryHeaderTest do
                },
                accounting_area: %ExAccounting.EmbeddedSchema.AccountingArea{
                  accounting_area: %ExAccounting.Elem.AccountingArea{accounting_area: ~c"0001"},
-                 accounting_area_description: %ExAccounting.Elem.AccountingAreaDescription{accounting_area_description: "Default"},
+                 accounting_area_description: %ExAccounting.Elem.AccountingAreaDescription{
+                   accounting_area_description: "Default"
+                 },
                  accounting_area_currency: %ExAccounting.Elem.AccountingAreaCurrency{
                    currency: :USD
                  }

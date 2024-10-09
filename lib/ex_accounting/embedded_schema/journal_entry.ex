@@ -23,6 +23,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
     |> cast_embed(:item, with: &ExAccounting.EmbeddedSchema.JournalEntryItem.changeset/2)
     |> validate_accounting_area_value()
     |> validate_transaction_value()
+    |> determine_accounting_document_number()
   end
 
   def validate_accounting_area_value(changeset) do
@@ -105,6 +106,16 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
           "Debit and credit amount of Transaction Currency must be same.",
           error: error
         )
+    end
+  end
+
+  def determine_accounting_document_number(changeset) do
+    with journal_entry = apply_changes(changeset),
+         {:ok, issued} <- ExAccounting.State.Issueable.number(journal_entry) do
+      changeset
+      |> put_embed(:header, issued.header)
+    else
+      _ -> changeset
     end
   end
 end
