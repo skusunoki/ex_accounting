@@ -871,7 +871,19 @@ defmodule ExAccounting.Type do
       @doc """
       Casts the given term to #{unquote(opts[:description])}.
       """
+      @spec cast(t) :: {:ok, t} | :error
       @spec cast(pos_integer) :: {:ok, t()} | {:error, pos_integer}
+
+      def cast(%__MODULE__{unquote(field) => year} = term) do
+        with true <- is_integer(year),
+             true <- year > 0,
+             true <- year <= 9999 do
+          {:ok, term}
+        else
+          _ -> {:error, term}
+        end
+      end
+
       def cast(term) do
         with true <- is_integer(term),
              true <- term > 0,
@@ -886,8 +898,13 @@ defmodule ExAccounting.Type do
       Dumps #{unquote(opts[:description])} into database field with type `:integer`.
       """
       @spec dump(t) :: {:ok, pos_integer} | :error
+      @spec dump(pos_integer) :: {:ok, pos_integer} | :error
       def dump(%__MODULE__{} = term) do
         {:ok, term.unquote(field)}
+      end
+
+      def dump(term) when is_integer(term) and term > 0 and term <= 9999 do
+        {:ok, term}
       end
 
       def dump(_) do

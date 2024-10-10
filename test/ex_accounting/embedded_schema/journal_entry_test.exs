@@ -5,6 +5,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryTest do
     parameter = %{
       header: %{
         accounting_unit: "1000",
+        fiscal_year: 2024,
         document_date: ~D[2024-10-01],
         document_type: "SA",
         posting_date: ~D[2024-10-01],
@@ -73,17 +74,29 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryTest do
 
     assert Ecto.Changeset.apply_action(result, :insert) |> elem(0) == :ok
 
+    # accounting document number must be issued by number range
     assert result
            |> Ecto.Changeset.apply_changes()
            |> Map.get(:header)
            |> Map.get(:accounting_document_number) >=
              1_000_000_001
 
+    # header item must be filled
     assert result
            |> Ecto.Changeset.apply_changes()
            |> Map.get(:header)
-           |> Map.get(:document_date)
            |> Map.get(:document_date) ==
-             ~D[2024-10-01]
+             %ExAccounting.Elem.DocumentDate{document_date: ~D[2024-10-01]}
+
+    # accounting document number in item must be same with header
+
+    assert result
+           |> Ecto.Changeset.apply_changes()
+           |> Map.get(:item)
+           |> Enum.map(&Map.get(&1, :general_ledger_transaction))
+           |> Enum.map(&Map.get(&1, :accounting_document_number))
+           |> Enum.map(&Map.get(&1, :accounting_document_number))
+           |> Enum.map(fn x -> x >= 1_000_000_001 end)
+           |> Enum.all?(fn x -> x == true end)
   end
 end

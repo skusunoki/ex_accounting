@@ -8,6 +8,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
 
   @type t :: %__MODULE__{
           accounting_unit: ExAccounting.Elem.AccountingUnit.t(),
+          fiscal_year: ExAccounting.Elem.FiscalYear.t(),
           document_date: ExAccounting.Elem.DocumentDate.t(),
           posting_date: ExAccounting.Elem.PostingDate.t(),
           document_type: ExAccounting.Elem.DocumentType.t(),
@@ -18,6 +19,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
 
   embedded_schema do
     field(:accounting_unit, ExAccounting.Elem.AccountingUnit)
+    field(:fiscal_year, ExAccounting.Elem.FiscalYear)
     field(:document_date, ExAccounting.Elem.DocumentDate)
     field(:posting_date, ExAccounting.Elem.PostingDate)
     field(:document_type, ExAccounting.Elem.DocumentType)
@@ -44,6 +46,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
     journal_entry_header
     |> cast(params_comp, [
       :accounting_unit,
+      :fiscal_year,
       :document_date,
       :posting_date,
       :document_type,
@@ -51,6 +54,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntryHeader do
     ])
     |> validate_required([
       :accounting_unit,
+      :fiscal_year,
       :document_date,
       :posting_date,
       :document_type,

@@ -114,6 +114,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
          {:ok, issued} <- ExAccounting.State.Issueable.number(journal_entry) do
       changeset
       |> put_embed(:header, issued.header)
+      |> put_embed(:item, issued.item)
     else
       _ -> changeset
     end
