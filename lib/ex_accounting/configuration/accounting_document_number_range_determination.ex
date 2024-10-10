@@ -24,6 +24,12 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination 
   - Configured Document Type should be identical to the Document Type of the document.
   - Configured Fiscal Year should be larger than or equal to the Fiscal Year of the document. Used minimum Fiscal Year to determine the number range code.
   """
+  @spec determine(
+          ExAccounting.Elem.AccountingUnit.t(),
+          ExAccounting.Elem.DocumentType.t(),
+          ExAccounting.Elem.FiscalYear.t(),
+          (-> module) | nil
+        ) :: {:error, String.t()} | ExAccounting.Elem.AccountingDocumentNumberRangeCode.t()
   def determine(
         accounting_unit,
         document_type,
