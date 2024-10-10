@@ -30,24 +30,30 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination 
         to_fiscal_year,
         repo \\ fn -> ExAccounting.Repo end
       ) do
-    with q =
-           from(m in __MODULE__,
-             where:
-               m.accounting_unit == ^accounting_unit and
-                 m.document_type == ^document_type and
-                 m.to_fiscal_year >= ^to_fiscal_year
-           ),
-         result when result != [] <-
-           q
+    with result when result != [] <-
+           query(accounting_unit, document_type, to_fiscal_year)
            |> repo.().all() do
       result
-      |> Enum.filter(fn r -> r.to_fiscal_year.fiscal_year >= to_fiscal_year.fiscal_year end)
-      |> Enum.sort(fn r, l -> r.to_fiscal_year.fiscal_year < l.to_fiscal_year.fiscal_year end)
-      |> tap(&IO.inspect/1)
-      |> Enum.at(0)
-      |> Map.get(:number_range_code)
+      |> choose_nearest_fiscal_year(to_fiscal_year)
     else
       _ -> {:error, "Accounting Document Number Range Determination not found"}
     end
+  end
+
+  defp query(accounting_unit, document_type, to_fiscal_year) do
+    from(m in __MODULE__,
+      where:
+        m.accounting_unit == ^accounting_unit and
+          m.document_type == ^document_type and
+          m.to_fiscal_year >= ^to_fiscal_year
+    )
+  end
+
+  defp choose_nearest_fiscal_year(result, to_fiscal_year) do
+    result
+    |> Enum.filter(fn r -> r.to_fiscal_year.fiscal_year >= to_fiscal_year.fiscal_year end)
+    |> Enum.sort(fn r, l -> r.to_fiscal_year.fiscal_year < l.to_fiscal_year.fiscal_year end)
+    |> Enum.at(0)
+    |> Map.get(:number_range_code)
   end
 end
