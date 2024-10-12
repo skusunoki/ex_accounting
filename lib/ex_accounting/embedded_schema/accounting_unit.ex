@@ -36,11 +36,13 @@ defmodule ExAccounting.EmbeddedSchema.AccountingUnit do
   end
 
   defp determine_accounting_unit_currency(params) when is_map(params) do
-    params
-    |> Map.put(
-      :accounting_unit_currency,
-      ExAccounting.Configuration.AccountingUnit.currency(params.accounting_unit)
-    )
+    with {:ok, accounting_unit} <- ExAccounting.Elem.AccountingUnit.cast(params.accounting_unit) do
+      params
+      |> Map.put(
+        :accounting_unit_currency,
+        ExAccounting.Configuration.currency(accounting_unit)
+      )
+    end
   end
 
   defp determine_accounting_area(%{accounting_area: key} = params) when not is_nil(key) do
@@ -50,8 +52,7 @@ defmodule ExAccounting.EmbeddedSchema.AccountingUnit do
   defp determine_accounting_area(params) when is_map(params) do
     params
     |> Map.put(:accounting_area, %{
-      accounting_area:
-        ExAccounting.Configuration.accounting_area(params.accounting_unit)
+      accounting_area: ExAccounting.Configuration.accounting_area(params.accounting_unit)
     })
   end
 end

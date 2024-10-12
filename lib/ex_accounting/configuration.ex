@@ -4,7 +4,11 @@ defmodule ExAccounting.Configuration do
     %ExAccounting.Elem.AccountingArea{accounting_area: ~c"0001"}
   end
 
-  def currency(_) do
+  def currency(%ExAccounting.Elem.AccountingArea{accounting_area: _key}) do
+    :USD
+  end
+
+  def currency(%ExAccounting.Elem.AccountingUnit{accounting_unit: _key}) do
     :USD
   end
 
@@ -16,7 +20,7 @@ defmodule ExAccounting.Configuration do
     end
   end
 
-  def description(_) do
+  def description(%ExAccounting.Elem.AccountingArea{accounting_area: _key}) do
     "Default"
   end
 end

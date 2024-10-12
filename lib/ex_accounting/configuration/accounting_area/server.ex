@@ -1,5 +1,4 @@
 defmodule ExAccounting.Configuration.AccountingArea.Server do
-
   use GenServer
   alias ExAccounting.Configuration.AccountingArea.DbGateway
 
@@ -19,5 +18,4 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
   #   with
   #   {:reply, }
   # end
-
 end

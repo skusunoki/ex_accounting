@@ -18,5 +18,4 @@ defmodule ExAccounting.Configuration.AccountingArea.DbGateway do
     |> ExAccounting.Repo.one()
     |> ExAccounting.Repo.preload(:accounting_units)
   end
-
 end

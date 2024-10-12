@@ -28,19 +28,23 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
 
   def validate_accounting_area_value(changeset) do
     with journal_entry = apply_changes(changeset),
+         {:ok, accounting_area} <-
+           ExAccounting.Elem.AccountingArea.cast(
+             journal_entry.header.accounting_unit_attr.accounting_area.accounting_area
+           ),
          total =
            journal_entry.item
            |> Enum.reduce(
              Money.new(
                Decimal.new("0"),
-               Configuration.currency(journal_entry.header.accounting_unit_attr.accounting_area)
+               Configuration.currency(accounting_area)
              ),
              fn item, acc ->
-               case item.general_ledger_transaction.debit_credit.debit_credit do
-                 :debit ->
+               case item.general_ledger_transaction.debit_credit do
+                 %ExAccounting.Elem.DebitCredit{debit_credit: :debit} ->
                    Money.add(item.general_ledger_transaction.accounting_area_value, acc)
 
-                 :credit ->
+                 %ExAccounting.Elem.DebitCredit{debit_credit: :credit} ->
                    Money.add(
                      Money.negate(item.general_ledger_transaction.accounting_area_value),
                      acc
@@ -53,17 +57,27 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
              total,
              Money.new(
                Decimal.new("0"),
-               Configuration.currency(journal_entry.header.accounting_unit_attr.accounting_area)
+               Configuration.currency(accounting_area)
              )
            ) do
       changeset
     else
-      _ ->
+      false ->
         add_error(
           changeset,
           :completed_document,
           "Debit and credit amount of Accounting Area Currency must be same."
         )
+
+      {:error, reason} ->
+        add_error(
+          changeset,
+          :other_error,
+          reason
+        )
+
+      :error ->
+        add_error(changeset, :error, "#{inspect(changeset |> apply_changes)}")
     end
   end
 
