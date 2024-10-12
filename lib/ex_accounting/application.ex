@@ -11,7 +11,8 @@ defmodule ExAccounting.Application do
       ExAccounting.Repo,
       ExAccounting.Configuration.Currency.Server,
       ExAccounting.Configuration.AccountingDocumentNumberRange.Server,
-      ExAccounting.State.CurrentAccountingDocumentNumber.Server
+      ExAccounting.State.CurrentAccountingDocumentNumber.Server,
+      ExAccounting.Configuration.AccountingUnit.Server
     ]
 
     opts = [strategy: :one_for_one, name: ExAccounting.Supervisor]

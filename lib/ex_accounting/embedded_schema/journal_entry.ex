@@ -5,7 +5,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
   use Ecto.Schema
   import Ecto.Changeset
   alias ExAccounting.EmbeddedSchema.Money
-  alias ExAccounting.Configuration.AccountingArea
+  alias ExAccounting.Configuration
 
   @type t :: %__MODULE__{
           header: ExAccounting.EmbeddedSchema.JournalEntryHeader.t(),
@@ -33,7 +33,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
            |> Enum.reduce(
              Money.new(
                Decimal.new("0"),
-               AccountingArea.currency(journal_entry.header.accounting_unit_attr.accounting_area)
+               Configuration.currency(journal_entry.header.accounting_unit_attr.accounting_area)
              ),
              fn item, acc ->
                case item.general_ledger_transaction.debit_credit.debit_credit do
@@ -53,7 +53,7 @@ defmodule ExAccounting.EmbeddedSchema.JournalEntry do
              total,
              Money.new(
                Decimal.new("0"),
-               AccountingArea.currency(journal_entry.header.accounting_unit_attr.accounting_area)
+               Configuration.currency(journal_entry.header.accounting_unit_attr.accounting_area)
              )
            ) do
       changeset

@@ -4,7 +4,7 @@ defmodule ExAccounting.EmbeddedSchema.AccountingArea do
   """
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExAccounting.Configuration.AccountingArea
+  alias ExAccounting.Configuration
 
   @typedoc """
   _Accounting Area_
@@ -33,7 +33,7 @@ defmodule ExAccounting.EmbeddedSchema.AccountingArea do
       :accounting_area_currency
     ])
     |> validate_required([:accounting_area, :accounting_area_currency])
-    |> validate_inclusion(:accounting_area, AccountingArea.read())
+    |> validate_inclusion(:accounting_area, Configuration.read())
   end
 
   @spec determine_accounting_area_currency(map) :: map
@@ -47,7 +47,7 @@ defmodule ExAccounting.EmbeddedSchema.AccountingArea do
   defp determine_accounting_area_currency(%{accounting_area: key} = params)
        when not is_nil(key) do
     params
-    |> Map.put(:accounting_area_currency, AccountingArea.currency(params.accounting_area))
+    |> Map.put(:accounting_area_currency, Configuration.currency(params.accounting_area))
   end
 
   @spec determine_accounting_area_description(map) :: map
@@ -58,6 +58,6 @@ defmodule ExAccounting.EmbeddedSchema.AccountingArea do
 
   defp determine_accounting_area_description(params) when is_map(params) do
     params
-    |> Map.put(:accounting_area_description, AccountingArea.description(params.accounting_area))
+    |> Map.put(:accounting_area_description, Configuration.description(params.accounting_area))
   end
 end

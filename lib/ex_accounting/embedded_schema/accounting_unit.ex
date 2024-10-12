@@ -51,7 +51,7 @@ defmodule ExAccounting.EmbeddedSchema.AccountingUnit do
     params
     |> Map.put(:accounting_area, %{
       accounting_area:
-        ExAccounting.Configuration.AccountingUnit.accounting_area(params.accounting_unit)
+        ExAccounting.Configuration.accounting_area(params.accounting_unit)
     })
   end
 end
