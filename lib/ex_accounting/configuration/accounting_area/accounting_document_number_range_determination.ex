@@ -1,4 +1,4 @@
-defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination do
+defmodule ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query

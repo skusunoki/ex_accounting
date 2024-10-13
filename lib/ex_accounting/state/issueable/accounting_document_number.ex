@@ -1,5 +1,5 @@
 defimpl ExAccounting.State.Issueable, for: ExAccounting.EmbeddedSchema.JournalEntry do
-  alias ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination
+  alias ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination
   alias ExAccounting.State.CurrentAccountingDocumentNumber
 
   @impl true

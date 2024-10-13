@@ -1,24 +1,24 @@
-defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationTest do
+defmodule ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDeterminationTest do
   use ExUnit.Case
 
   test "from zero configuration" do
-    assert ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination.determine(
+    assert ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination.determine(
              %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"1000"},
              %ExAccounting.Elem.DocumentType{document_type: ~c"SA"},
              %ExAccounting.Elem.FiscalYear{fiscal_year: 2024},
              fn ->
-               ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationTest.DummyRepo
+               ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDeterminationTest.DummyRepo
              end
            ) == {:error, "Accounting Document Number Range Determination not found"}
   end
 
   test "hit configuration" do
-    assert ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination.determine(
+    assert ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination.determine(
              %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"1000"},
              %ExAccounting.Elem.DocumentType{document_type: ~c"SA"},
              %ExAccounting.Elem.FiscalYear{fiscal_year: 2024},
              fn ->
-               ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationTest.FakeRepo
+               ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDeterminationTest.FakeRepo
              end
            ) == %ExAccounting.Elem.AccountingDocumentNumberRangeCode{
              accounting_document_number_range_code: ~c"01"
@@ -26,12 +26,12 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationT
   end
 
   test "guess configuration" do
-    assert ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination.determine(
+    assert ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination.determine(
              %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"1000"},
              %ExAccounting.Elem.DocumentType{document_type: ~c"SA"},
              %ExAccounting.Elem.FiscalYear{fiscal_year: 2024},
              fn ->
-               ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationTest.MockRepo
+               ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDeterminationTest.MockRepo
              end
            ) == %ExAccounting.Elem.AccountingDocumentNumberRangeCode{
              accounting_document_number_range_code: ~c"01"
@@ -47,7 +47,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationT
   defmodule FakeRepo do
     def all(_) do
       [
-        %ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination{
+        %ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination{
           accounting_unit: %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"1000"},
           document_type: %ExAccounting.Elem.DocumentType{document_type: ~c"SA"},
           to_fiscal_year: %ExAccounting.Elem.FiscalYear{fiscal_year: 2024},
@@ -62,7 +62,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationT
   defmodule MockRepo do
     def all(_) do
       [
-        %ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination{
+        %ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination{
           accounting_unit: %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"1000"},
           document_type: %ExAccounting.Elem.DocumentType{document_type: ~c"SA"},
           to_fiscal_year: %ExAccounting.Elem.FiscalYear{fiscal_year: 2021},
@@ -70,7 +70,7 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRangeDeterminationT
             accounting_document_number_range_code: ~c"XX"
           }
         },
-        %ExAccounting.Configuration.AccountingDocumentNumberRangeDetermination{
+        %ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRangeDetermination{
           accounting_unit: %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"1000"},
           document_type: %ExAccounting.Elem.DocumentType{document_type: ~c"SA"},
           to_fiscal_year: %ExAccounting.Elem.FiscalYear{fiscal_year: 9999},
