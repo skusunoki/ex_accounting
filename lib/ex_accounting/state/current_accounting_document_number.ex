@@ -9,7 +9,7 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumber do
 
   alias ExAccounting.Elem.AccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange
+  alias ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange
   alias ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway
 
   @typedoc "_Accounting Document Number Range Code_"
@@ -67,7 +67,7 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumber do
     issue(
       number_range_code,
       &read/1,
-      &ExAccounting.Configuration.AccountingDocumentNumberRange.read/1
+      &ExAccounting.Configuration.AccountingArea.read_accounting_document_number_range("", &1)
     )
   end
 

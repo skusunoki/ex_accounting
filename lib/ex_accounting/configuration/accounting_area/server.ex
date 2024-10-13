@@ -27,6 +27,21 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
   end
 
   def handle_call(
+        {:read_accounting_document_number_range, accounting_area, number_range_code},
+        _from,
+        accounting_areas
+      ) do
+    with {:ok, accounting_area} <- ExAccounting.Elem.AccountingArea.cast(accounting_area),
+         data when not is_nil(data) <- find_by_accounting_area(accounting_areas, accounting_area),
+         number_ranges <- apply_changes(data) |> Map.get(:accounting_document_number_ranges),
+         number_range <- find_by_number_range_code(number_ranges, number_range_code) do
+      {:reply, number_range, accounting_areas}
+    else
+      _ -> {:reply, {:error, "Accounting document number range not found"}, accounting_areas}
+    end
+  end
+
+  def handle_call(
         {:add_accounting_area,
          %{accounting_area: _accounting_area, accounting_area_currency: _accounting_area_currency} =
            addend_param},
@@ -65,6 +80,35 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
     end
   end
 
+  def handle_call(
+        {:add_accounting_document_number_range, accounting_area,
+         %{
+           number_range_code: _number_range_code,
+           accounting_document_number_from: _accounting_document_number_from,
+           accounting_document_number_to: _accounting_document_number_to
+         } = append_param},
+        _from,
+        accounting_areas
+      ) do
+    with {:ok, accounting_area} <- ExAccounting.Elem.AccountingArea.cast(accounting_area),
+         data when not is_nil(data) <- find_by_accounting_area(accounting_areas, accounting_area),
+         changeset =
+           data
+           |> cast(
+             get_accounting_document_number_ranges(data)
+             |> build_param_of_accounting_document_number_ranges(append_param),
+             []
+           )
+           |> cast_assoc(:accounting_document_number_ranges,
+             with:
+               &ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange.changeset/2
+           ) do
+      {:reply, changeset, modify_list(changeset, accounting_areas, data)}
+    else
+      _ -> {:reply, {:error, "Accounting area not found"}, accounting_areas}
+    end
+  end
+
   def handle_call(:save, _from, accounting_areas) do
     for x <- accounting_areas do
       DbGateway.save(x)
@@ -87,6 +131,14 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
     end)
   end
 
+  defp find_by_number_range_code(data, number_range_code) do
+    with {:ok, number_range_code} <- ExAccounting.Elem.AccountingDocumentNumberRangeCode.cast(number_range_code) do
+      Enum.find(data, fn x -> x.number_range_code == number_range_code end)
+    else
+      _ -> nil
+    end
+  end
+
   defp append_to_list(changesets, changeset) do
     [changeset | changesets]
   end
@@ -99,10 +151,25 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
     apply_changes(changeset) |> Map.get(:accounting_units)
   end
 
+  defp get_accounting_document_number_ranges(changeset) do
+    apply_changes(changeset) |> Map.get(:accounting_document_number_ranges)
+  end
+
   defp build_param_of_accounting_units(accounting_units, append_param) do
     %{
       accounting_units:
         Enum.map(accounting_units, fn x -> Map.from_struct(x) end) ++
+          [append_param]
+    }
+  end
+
+  defp build_param_of_accounting_document_number_ranges(
+         accounting_document_number_ranges,
+         append_param
+       ) do
+    %{
+      accounting_document_number_ranges:
+        Enum.map(accounting_document_number_ranges, fn x -> Map.from_struct(x) end) ++
           [append_param]
     }
   end

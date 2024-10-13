@@ -1,4 +1,4 @@
-defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
+defmodule ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange do
   @moduledoc """
   _Configuration_ module configures the ExAccounting system.
 
@@ -17,9 +17,9 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   """
 
   use Ecto.Schema
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange.DbGateway
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
   alias ExAccounting.Elem.AccountingDocumentNumber
+  import Ecto.Changeset
 
   @typedoc "_Accounting Document Number Range_"
   @type t :: %__MODULE__{
@@ -39,64 +39,25 @@ defmodule ExAccounting.Configuration.AccountingDocumentNumberRange do
   @typedoc "_Accounting Document Number Range Code_"
   @type accounting_document_number_range_code :: AccountingDocumentNumberRangeCode.t()
 
-  @server ExAccounting.Configuration.AccountingDocumentNumberRange.Server
-
   schema "accounting_document_number_ranges" do
     field(:number_range_code, ExAccounting.Elem.AccountingDocumentNumberRangeCode)
     field(:accounting_document_number_from, ExAccounting.Elem.AccountingDocumentNumber)
     field(:accounting_document_number_to, ExAccounting.Elem.AccountingDocumentNumber)
+    belongs_to(:accounting_area, ExAccounting.Configuration.AccountingArea)
   end
 
-  @doc """
-  Reads the accounting document number ranges.
-
-  ## Examples
-
-      iex> modify("TS", 100, 199)
-      iex> read("TS")
-      [
-        %ExAccounting.Configuration.AccountingDocumentNumberRange{
-          __meta__: #Ecto.Schema.Metadata<:loaded, "accounting_document_number_ranges">,
-          id: nil,
-          number_range_code: "TS",
-          accounting_document_number_from: 100,
-          accounting_document_number_to: 199
-        }
-      ]
-  """
-  @spec read() :: [t]
-  @spec read(number_range_code) :: [t]
-  def read() do
-    GenServer.call(@server, :read)
-  end
-
-  def read(number_range_code) do
-    GenServer.call(@server, {:read, number_range_code})
-  end
-
-  @spec modify(
-          number_range_code :: String.t(),
-          accounting_document_number_from :: integer(),
-          accounting_document_number_to :: integer()
-        ) :: [t]
-  def modify(
-        number_range_code,
-        accounting_document_number_from,
-        accounting_document_number_to
-      ) do
-    GenServer.call(
-      @server,
-      {:modify, number_range_code, accounting_document_number_from, accounting_document_number_to}
-    )
-  end
-
-  @doc """
-  Saves the accouting document number ranges to the database.
-  """
-  @spec save() :: {:ok, [Ecto.Changeset.t()]} | {:error, [Ecto.Changeset.t()]}
-  def save() do
-    with server = read() do
-      DbGateway.save(server)
-    end
+  def changeset(accounting_document_number_range, params) do
+    accounting_document_number_range
+    |> cast(params, [
+      :number_range_code,
+      :accounting_document_number_from,
+      :accounting_document_number_to
+    ])
+    |> validate_required([
+      :number_range_code,
+      :accounting_document_number_from,
+      :accounting_document_number_to
+    ])
+    |> unique_constraint([:number_range_code, :accounting_area])
   end
 end

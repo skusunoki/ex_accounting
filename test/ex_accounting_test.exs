@@ -1,7 +1,7 @@
 defmodule ExAccountingTest do
   use ExUnit.Case
   alias ExAccounting.State.CurrentAccountingDocumentNumber
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange
+  alias ExAccounting.Configuration.AccountingArea
 
   test "Issue new document number for the number range 01" do
     before =
@@ -13,7 +13,7 @@ defmodule ExAccountingTest do
       ExAccounting.issue_accounting_document_number(
         ~c"01",
         &CurrentAccountingDocumentNumber.read(&1),
-        &AccountingDocumentNumberRange.read(&1)
+        &AccountingArea.read_accounting_document_number_range("0001", &1)
       )
 
     assert result.current_document_number.accounting_document_number ==
@@ -27,7 +27,7 @@ defmodule ExAccountingTest do
       ExAccounting.issue_accounting_document_number(
         ~c"x1",
         &CurrentAccountingDocumentNumber.read(&1),
-        &AccountingDocumentNumberRange.read(&1)
+        &AccountingArea.read_accounting_document_number_range("0001", &1)
       )
 
     assert result == ~c"x1"

@@ -59,7 +59,7 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway do
     end
   end
 
-  @spec insert(ExAccounting.Configuration.AccountingDocumentNumberRange.t()) ::
+  @spec insert(ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange.t()) ::
           {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
   defp insert(accounting_document_number_range) do
     create()
@@ -70,7 +70,7 @@ defmodule ExAccounting.State.CurrentAccountingDocumentNumber.DbGateway do
     |> ExAccounting.Repo.insert()
   end
 
-  @spec update(ExAccounting.Configuration.AccountingDocumentNumberRange.t()) ::
+  @spec update(ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange.t()) ::
           {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
   defp update(accounting_document_number_range) do
     read(accounting_document_number_range.number_range_code)

@@ -7,7 +7,8 @@ defmodule ExAccounting do
   """
   alias ExAccounting.State.CurrentAccountingDocumentNumber
   alias ExAccounting.Elem.AccountingDocumentNumberRangeCode
-  alias ExAccounting.Configuration.AccountingDocumentNumberRange
+  alias ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange
+  alias ExAccounting.Configuration.AccountingArea
 
   @doc """
   An accounting document number is issued within the specified number range.
@@ -30,9 +31,10 @@ defmodule ExAccounting do
     end
   end
 
-  def issue_accounting_document_number(number_range_code) do
+  def issue_accounting_document_number(accounting_area, number_range_code) do
     with current_value_reader <- &CurrentAccountingDocumentNumber.read/1,
-         config_reader <- &AccountingDocumentNumberRange.read/1 do
+         config_reader <-
+           &AccountingArea.read_accounting_document_number_range(accounting_area, &1) do
       issue_accounting_document_number(number_range_code, current_value_reader, config_reader)
     end
   end

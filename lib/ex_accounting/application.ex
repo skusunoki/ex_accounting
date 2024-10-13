@@ -10,7 +10,6 @@ defmodule ExAccounting.Application do
     children = [
       ExAccounting.Repo,
       ExAccounting.Configuration.Currency.Server,
-      ExAccounting.Configuration.AccountingDocumentNumberRange.Server,
       ExAccounting.State.CurrentAccountingDocumentNumber.Server,
       ExAccounting.Configuration.AccountingArea.Server
     ]
