@@ -18,4 +18,8 @@ defmodule ExAccounting.Configuration.AccountingArea.DbGateway do
     |> ExAccounting.Repo.one()
     |> ExAccounting.Repo.preload(:accounting_units)
   end
+
+  def save(changeset) do
+    ExAccounting.Repo.insert_or_update(changeset)
+  end
 end

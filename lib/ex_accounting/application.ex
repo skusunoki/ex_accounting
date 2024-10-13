@@ -12,7 +12,6 @@ defmodule ExAccounting.Application do
       ExAccounting.Configuration.Currency.Server,
       ExAccounting.Configuration.AccountingDocumentNumberRange.Server,
       ExAccounting.State.CurrentAccountingDocumentNumber.Server,
-      ExAccounting.Configuration.AccountingUnit.Server,
       ExAccounting.Configuration.AccountingArea.Server
     ]
 

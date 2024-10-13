@@ -38,18 +38,49 @@ defmodule ExAccounting.Configuration.AccountingAreaTest do
              %ExAccounting.Elem.AccountingAreaCurrency{currency: :USD}
 
     assert result |> elem(1) |> Map.get(:accounting_units) == [
-             %ExAccounting.Configuration.AccountingUnit{
+             %ExAccounting.Configuration.AccountingArea.AccountingUnit{
                accounting_unit: %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"2000"},
                accounting_unit_currency: %ExAccounting.Elem.AccountingUnitCurrency{currency: :USD}
              },
-             %ExAccounting.Configuration.AccountingUnit{
+             %ExAccounting.Configuration.AccountingArea.AccountingUnit{
                accounting_unit: %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"2001"},
                accounting_unit_currency: %ExAccounting.Elem.AccountingUnitCurrency{currency: :USD}
              },
-             %ExAccounting.Configuration.AccountingUnit{
+             %ExAccounting.Configuration.AccountingArea.AccountingUnit{
                accounting_unit: %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"2002"},
                accounting_unit_currency: %ExAccounting.Elem.AccountingUnitCurrency{currency: :USD}
              }
            ]
+  end
+
+  test "add_accounting_unit to existing accounting area" do
+    accounting_area = %{
+      accounting_area: "9901",
+      accounting_area_currency: "GBP"
+    }
+
+    accounting_unit = %{
+      accounting_unit: "9000",
+      accounting_unit_currency: "EUR"
+    }
+
+    ExAccounting.Configuration.AccountingArea.add_accounting_area(accounting_area)
+    ExAccounting.Configuration.AccountingArea.add_accounting_unit("9901", accounting_unit)
+
+    assert ExAccounting.Configuration.AccountingArea.read()
+           |> Enum.find(fn x ->
+             Map.get(x, :accounting_area) == %ExAccounting.Elem.AccountingArea{
+               accounting_area: ~c"9901"
+             }
+           end)
+           |> Map.get(:accounting_units) ==
+             [
+               %ExAccounting.Configuration.AccountingArea.AccountingUnit{
+                 accounting_unit: %ExAccounting.Elem.AccountingUnit{accounting_unit: ~c"9000"},
+                 accounting_unit_currency: %ExAccounting.Elem.AccountingUnitCurrency{
+                   currency: :EUR
+                 }
+               }
+             ]
   end
 end
