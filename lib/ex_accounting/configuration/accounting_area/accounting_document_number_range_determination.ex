@@ -3,8 +3,17 @@ defmodule ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRang
   import Ecto.Changeset
   import Ecto.Query
 
+  @type t :: %__MODULE__{
+          __meta__: Ecto.Schema.Metadata.t(),
+          id: integer() | nil,
+          accounting_unit: ExAccounting.Elem.AccountingUnit.t(),
+          document_type: ExAccounting.Elem.DocumentType.t(),
+          to_fiscal_year: ExAccounting.Elem.FiscalYear.t(),
+          number_range_code: ExAccounting.Elem.AccountingDocumentNumberRangeCode.t(),
+        }
+
   schema "accounting_document_number_range_determinations" do
-    field(:accounting_unit, ExAccounting.Elem.AccountingUnit)
+    belongs_to(:accounting_units, ExAccounting.Configuration.AccountingArea.AccountingUnit, foreign_key: :accounting_unit, references: :accounting_unit, type: ExAccounting.Elem.AccountingUnit, source: :accounting_unit)
     field(:document_type, ExAccounting.Elem.DocumentType)
     field(:to_fiscal_year, ExAccounting.Elem.FiscalYear)
     field(:number_range_code, ExAccounting.Elem.AccountingDocumentNumberRangeCode)

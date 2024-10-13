@@ -117,8 +117,17 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
     {:reply, :ok, changeset_from_db_read()}
   end
 
+  def handle_call({:accounting_area_from_accounting_unit, accounting_unit}, _from, accounting_areas) do
+    with {:ok, accounting_unit} <- ExAccounting.Elem.AccountingUnit.cast(accounting_unit),
+          data when not is_nil(data) <- Enum.find(accounting_areas, fn x -> Enum.find(get_assoc(x, :accounting_units, :struct) , fn y -> y.accounting_unit == accounting_unit end) != nil end),
+          accounting_area when not is_nil(accounting_area) <- get_field(data, :accouning_area) do
+            {:reply, accounting_area, accounting_areas}
+          end
+  end
+
   defp changeset_from_db_read() do
-    DbGateway.read() |> Enum.map(fn x -> Ecto.Changeset.cast(x, %{}, []) end)
+    DbGateway.read()
+    |> Enum.map(fn x -> Ecto.Changeset.cast(x, %{}, []) end)
   end
 
   defp apply_changes_to_list(changesets) do
@@ -132,7 +141,8 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
   end
 
   defp find_by_number_range_code(data, number_range_code) do
-    with {:ok, number_range_code} <- ExAccounting.Elem.AccountingDocumentNumberRangeCode.cast(number_range_code) do
+    with {:ok, number_range_code} <-
+           ExAccounting.Elem.AccountingDocumentNumberRangeCode.cast(number_range_code) do
       Enum.find(data, fn x -> x.number_range_code == number_range_code end)
     else
       _ -> nil
@@ -156,10 +166,11 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
   end
 
   defp build_param_of_accounting_units(accounting_units, append_param) do
+
     %{
       accounting_units:
         Enum.map(accounting_units, fn x -> Map.from_struct(x) end) ++
-          [append_param]
+          [Map.put(append_param, :accounting_document_number_range_determinations, [])]
     }
   end
 

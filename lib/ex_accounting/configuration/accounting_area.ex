@@ -23,6 +23,7 @@ defmodule ExAccounting.Configuration.AccountingArea do
       :accounting_document_number_ranges,
       ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange
     )
+
   end
 
   defdelegate changeset(accounting_area, params),
@@ -83,6 +84,13 @@ defmodule ExAccounting.Configuration.AccountingArea do
     )
   end
 
+  def accounting_area_from_accounting_unit(accounting_unit) do
+    GenServer.call(@server, {:accounting_area_from_accounting_unit, accounting_unit})
+  end
+
+  # def determine_accounting_document_number_range( accounting_unit, document_type, fiscal_year) do
+  #   GenServer.call(@server, {:determine_accounting_document_number_range, accounting_area, accounting_unit, document_type, fiscal_year})
+  # end
   def save() do
     GenServer.call(@server, :save)
   end

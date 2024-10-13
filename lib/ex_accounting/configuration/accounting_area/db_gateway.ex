@@ -6,19 +6,20 @@ defmodule ExAccounting.Configuration.AccountingArea.DbGateway do
   @spec read(ExAccounting.Elem.AccountingArea.t()) ::
           ExAccounting.Configuration.AccountingArea.t()
   def read() do
-    AccountingArea
-    |> ExAccounting.Repo.all()
-    |> ExAccounting.Repo.preload(:accounting_units)
-    |> ExAccounting.Repo.preload(:accounting_document_number_ranges)
+    ExAccounting.Repo.all from p in AccountingArea,
+      left_join: u in assoc(p, :accounting_units),
+      left_join: _ in assoc(u, :accounting_document_number_range_determinations),
+      left_join: _ in assoc(p, :accounting_document_number_ranges),
+      preload: [:accounting_document_number_ranges, accounting_units: {u, :accounting_document_number_range_determinations}]
   end
 
   def read(accounting_area) do
-    from(p in ExAccounting.Configuration.AccountingArea,
-      where: p.accounting_area == ^accounting_area
-    )
-    |> ExAccounting.Repo.one()
-    |> ExAccounting.Repo.preload(:accounting_units)
-    |> ExAccounting.Repo.preload(:accounting_document_number_ranges)
+    ExAccounting.Repo.one from p in AccountingArea,
+    left_join: u in assoc(p, :accounting_units),
+    left_join: _ in assoc(u, :accounting_document_number_range_determinations),
+    left_join: _ in assoc(p, :accounting_document_number_ranges),
+    where: p.accounting_area == ^accounting_area
+
   end
 
   def save(changeset) do
