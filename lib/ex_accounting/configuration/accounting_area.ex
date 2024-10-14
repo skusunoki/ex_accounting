@@ -23,7 +23,6 @@ defmodule ExAccounting.Configuration.AccountingArea do
       :accounting_document_number_ranges,
       ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRange
     )
-
   end
 
   defdelegate changeset(accounting_area, params),

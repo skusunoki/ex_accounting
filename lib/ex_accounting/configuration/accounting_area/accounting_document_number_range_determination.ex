@@ -9,11 +9,17 @@ defmodule ExAccounting.Configuration.AccountingArea.AccountingDocumentNumberRang
           accounting_unit: ExAccounting.Elem.AccountingUnit.t(),
           document_type: ExAccounting.Elem.DocumentType.t(),
           to_fiscal_year: ExAccounting.Elem.FiscalYear.t(),
-          number_range_code: ExAccounting.Elem.AccountingDocumentNumberRangeCode.t(),
+          number_range_code: ExAccounting.Elem.AccountingDocumentNumberRangeCode.t()
         }
 
   schema "accounting_document_number_range_determinations" do
-    belongs_to(:accounting_units, ExAccounting.Configuration.AccountingArea.AccountingUnit, foreign_key: :accounting_unit, references: :accounting_unit, type: ExAccounting.Elem.AccountingUnit, source: :accounting_unit)
+    belongs_to(:accounting_units, ExAccounting.Configuration.AccountingArea.AccountingUnit,
+      foreign_key: :accounting_unit,
+      references: :accounting_unit,
+      type: ExAccounting.Elem.AccountingUnit,
+      source: :accounting_unit
+    )
+
     field(:document_type, ExAccounting.Elem.DocumentType)
     field(:to_fiscal_year, ExAccounting.Elem.FiscalYear)
     field(:number_range_code, ExAccounting.Elem.AccountingDocumentNumberRangeCode)

@@ -117,12 +117,32 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
     {:reply, :ok, changeset_from_db_read()}
   end
 
-  def handle_call({:accounting_area_from_accounting_unit, accounting_unit}, _from, accounting_areas) do
+  def handle_call(
+        {:accounting_area_from_accounting_unit, accounting_unit},
+        _from,
+        accounting_areas
+      ) do
     with {:ok, accounting_unit} <- ExAccounting.Elem.AccountingUnit.cast(accounting_unit),
-          data when not is_nil(data) <- Enum.find(accounting_areas, fn x -> Enum.find(get_assoc(x, :accounting_units, :struct) , fn y -> y.accounting_unit == accounting_unit end) != nil end),
-          accounting_area when not is_nil(accounting_area) <- get_field(data, :accouning_area) do
-            {:reply, accounting_area, accounting_areas}
-          end
+         {:M1, data} when not is_nil(data) <-
+           {:M1, find_by_accounting_unit(accounting_areas, accounting_unit)},
+         {:M2, accounting_area} when not is_nil(accounting_area) <-
+           {:M2, get_field(data, :accounting_area)} do
+      {:reply, accounting_area, accounting_areas}
+    else
+      {:error, reason} ->
+        {:reply, {:error, "Accounting unit is invalid: #{reason}"}, accounting_areas}
+
+      {:M1, nil} ->
+        {:reply, {:error, "No accounting unit found in #{inspect(accounting_areas)}"},
+         accounting_areas}
+
+      {:M2, nil} ->
+        {:reply, {:error, "Accounting area is nill in #{inspect(accounting_areas)}"},
+         accounting_areas}
+
+      _ ->
+        {:reply, {:error, "Accounting area not found"}, accounting_areas}
+    end
   end
 
   defp changeset_from_db_read() do
@@ -137,6 +157,14 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
   defp find_by_accounting_area(changesets, accounting_area) do
     Enum.find(changesets, fn x ->
       Ecto.Changeset.get_field(x, :accounting_area) == accounting_area
+    end)
+  end
+
+  defp find_by_accounting_unit(changeset, accounting_unit) do
+    Enum.find(changeset, fn x ->
+      Enum.find(get_assoc(x, :accounting_units, :struct), fn y ->
+        y.accounting_unit == accounting_unit
+      end) != nil
     end)
   end
 
@@ -166,6 +194,8 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
   end
 
   defp build_param_of_accounting_units(accounting_units, append_param) do
+
+    # Includes key and value of Accounting Document Number Range Determination because of assoc.
 
     %{
       accounting_units:
