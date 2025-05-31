@@ -194,7 +194,6 @@ defmodule ExAccounting.Configuration.AccountingArea.Server do
   end
 
   defp build_param_of_accounting_units(accounting_units, append_param) do
-
     # Includes key and value of Accounting Document Number Range Determination because of assoc.
 
     %{
